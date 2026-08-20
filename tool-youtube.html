@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Akshay AI Tools — Powering the Future</title>
+  <meta name="description" content="Generate viral-ready YouTube scripts with AI. Hook your audience from the first second. Free for creators.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff"></head>
+<body data-page="tool-youtube">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+      
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <a href="tools.html" class="back-btn">← Back</a>
+        <div class="tool-page-icon card-icon pink">🎬</div>
+        <div class="tool-page-info"><h1>AI YouTube Script Writer</h1><p>Create viral video scripts with AI</p></div>
+      </div>
+      <div class="tool-workspace">
+        <div class="workspace-topbar">
+          <span class="workspace-topbar-title">🎬 YouTube Script Writer</span>
+          <span style="font-size:.75rem;background:rgba(59,35,216,.1);border:1px solid rgba(59,35,216,.2);color:var(--accent-primary);padding:3px 10px;border-radius:50px;font-weight:600">🟢 LIVE AI</span>
+        </div>
+        <div class="workspace-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+            <div>
+              <label style="font-size:.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">📺 Video Topic</label>
+              <input type="text" id="yt-topic" placeholder="How AI is changing coding in 2025" style="width:100%;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:.93rem;outline:none"/>
+            </div>
+            <div>
+              <label style="font-size:.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">🎯 Channel Niche</label>
+              <input type="text" id="yt-niche" placeholder="Tech, Education, Motivation..." style="width:100%;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:.93rem;outline:none"/>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <select id="yt-duration" style="padding:10px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:.88rem;outline:none;cursor:pointer">
+              <option value="5-7 minute">⏱️ Short (5-7 min)</option>
+              <option value="10-12 minute">📺 Medium (10-12 min)</option>
+              <option value="15-20 minute">🎥 Long (15-20 min)</option>
+            </select>
+            <select id="yt-style" style="padding:10px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:.88rem;outline:none;cursor:pointer">
+              <option value="engaging and energetic">⚡ Energetic</option>
+              <option value="educational and informative">📚 Educational</option>
+              <option value="storytelling">📖 Storytelling</option>
+              <option value="conversational">💬 Conversational</option>
+            </select>
+            <select id="yt-lang" style="padding:10px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:.88rem;outline:none;cursor:pointer">
+              <option value="English">🇺🇸 English</option>
+              <option value="Hindi">🇮🇳 Hindi</option>
+              <option value="Marathi">🇮🇳 Marathi</option>
+            </select>
+            <button class="btn-neon" id="generate-yt-btn" style="margin-left:auto;padding:12px 28px">🎬 Generate Script</button>
+          </div>
+          <div id="yt-output" style="margin-top:20px;min-height:350px;padding:24px;background:var(--bg-surface);border:1px solid var(--border);border-radius:16px;white-space:pre-wrap;font-size:.88rem;line-height:1.8;color:var(--text-body);box-shadow:var(--shadow)">
+            <div style="text-align:center;padding:60px 20px;color:var(--text-muted)"><span style="font-size:3rem;display:block;margin-bottom:12px">🎬</span><p>Enter your topic and click Generate Script</p></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+            <button class="btn-secondary" onclick="copyYT()" style="padding:10px 18px;font-size:.85rem">📋 Copy Script</button>
+            <button class="btn-secondary" onclick="document.getElementById('generate-yt-btn').click()" style="padding:10px 18px;font-size:.85rem">🔄 Regenerate</button>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-top:24px;margin-bottom:36px">
+        <h3 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:12px;color:var(--text-head)">🔥 Trending Topics</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button onclick="setYT('How to make money with AI in 2025','Tech')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">💰 AI Money</button>
+          <button onclick="setYT('Top 10 AI tools every developer needs','Tech')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">🛠️ AI Tools</button>
+          <button onclick="setYT('My journey from zero to full stack developer','Education')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">🚀 Dev Journey</button>
+          <button onclick="setYT('5 habits that changed my life','Motivation')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">💪 Habits</button>
+          <button onclick="setYT('AI बद्दल सगळ्यांनी हे माहीत असायला हवं','Tech')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">🇮🇳 मराठी</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a><p>Best free AI tools for students and creators.</p></div>
+        <div class="footer-col"><h4>Orbital Map</h4><a href="index.html">Home</a><a href="tools.html">Directory</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Akshay AI Tools. All rights reserved.</span><span>Made with ❤️ in India</span></div>
+    </div>
+  </footer>
+  <div id="toast" class="toast"></div>
+  <script src="insforge.js"></script>
+  <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+  <script src="antigravity.js"></script>
+  <script>
+    if(typeof guardProtectedPage==='function'&&!guardProtectedPage()){}
+    document.getElementById('generate-yt-btn').addEventListener('click',async()=>{
+      const topic=document.getElementById('yt-topic').value.trim();
+      if(!topic){showToast('Enter a video topic!','error','⚠');return}
+      const niche=document.getElementById('yt-niche').value||'General';
+      const duration=document.getElementById('yt-duration').value;
+      const style=document.getElementById('yt-style').value;
+      const lang=document.getElementById('yt-lang').value;
+      const btn=document.getElementById('generate-yt-btn');
+      const output=document.getElementById('yt-output');
+      btn.disabled=true;btn.textContent='⏳ Writing...';
+      output.innerHTML='<div class="generating"><div class="gen-dot"></div><div class="gen-dot"></div><div class="gen-dot"></div><span>Writing your script…</span></div>';
+      const prompt=`Write a complete ${duration} YouTube video script in ${lang} language.
+Topic: ${topic}
+Channel Niche: ${niche}
+Style: ${style}
+Include these sections:
+1. HOOK (first 30 seconds - grab attention immediately)
+2. INTRO (introduce the topic, tell viewers what they'll learn)
+3. MAIN CONTENT (detailed content with timestamps like [0:30], [2:00] etc.)
+4. ENGAGEMENT (ask viewers to like, comment, subscribe)
+5. CONCLUSION & CTA (strong ending with call-to-action)
+6. SEO: 5 viral title suggestions
+7. DESCRIPTION: YouTube description with keywords
+8. 15 relevant hashtags
+Make it ${style}, viral-worthy and keep the audience hooked throughout!`;
+      try{
+        const result=await callAI(prompt,'You are a professional YouTube scriptwriter. Create engaging, viral scripts with clear structure. Return plain text only.');
+        output.textContent='';
+        typewriterEffect(output,result,8,()=>{
+          showToast('Script ready! 🎬','success','✓');
+          if(typeof HISTORY!=='undefined')HISTORY.add({type:'youtube',tool:'YouTube Script Writer',prompt:topic});
+        });
+      }catch(err){output.textContent='❌ Error: '+err.message;showToast('Error','error','❌')}
+      btn.disabled=false;btn.textContent='🎬 Generate Script';
+    });
+    function setYT(t,n){document.getElementById('yt-topic').value=t;document.getElementById('yt-niche').value=n;showToast('Topic set!','success','✓')}
+    function copyYT(){const t=document.getElementById('yt-output').textContent;if(t)navigator.clipboard.writeText(t).then(()=>showToast('Copied!','success','📋'))}
+  </script>
+<script src="help-widget.js"></script></body>
+</html>

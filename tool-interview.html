@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free AI Interview Copilot — Real-time AI-powered answers for job interviews. Ace your next interview with live AI suggestions.">
+    <meta name="keywords" content="ai interview assistant, interview copilot, parakeet ai, job interview helper, real-time ai, free interview tool">
+    <title>Akshay AI Tools — Powering the Future</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+    <style>
+        /* ── Interview Copilot Custom Styles ── */
+        :root {
+            --green-glow: rgba(0, 230, 118, 0.18);
+            --green-solid: #00e676;
+            --red-solid: #ff5252;
+            --amber-solid: #ffd740;
+        }
+
+        .interview-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+        @media (max-width: 800px) {
+            .interview-layout { grid-template-columns: 1fr; }
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+        }
+        .status-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--green-solid);
+            box-shadow: 0 0 8px var(--green-solid);
+            animation: pulse-dot 2s infinite;
+            flex-shrink: 0;
+        }
+        .status-dot.idle { background: #888; box-shadow: none; animation: none; }
+        .status-dot.listening { background: var(--red-solid); box-shadow: 0 0 12px var(--red-solid); }
+        .status-dot.thinking { background: var(--amber-solid); box-shadow: 0 0 12px var(--amber-solid); animation: pulse-amber 1s infinite; }
+        @keyframes pulse-dot { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+        @keyframes pulse-amber { 0%,100% { transform:scale(1); } 50% { transform:scale(1.4); } }
+        .status-text { font-size: 0.85rem; font-weight: 600; color: var(--text-head); }
+        .status-time { margin-left: auto; font-size: 0.8rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+        /* Mic & Controls */
+        .controls-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .btn-mic {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            flex: 1;
+            justify-content: center;
+        }
+        .btn-mic-start {
+            background: linear-gradient(135deg, #00e676, #00b248);
+            color: #000;
+            box-shadow: 0 4px 20px rgba(0,230,118,0.35);
+        }
+        .btn-mic-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,230,118,0.5); }
+        .btn-mic-stop {
+            background: linear-gradient(135deg, #ff5252, #c62828);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255,82,82,0.35);
+        }
+        .btn-mic-stop:hover { transform: translateY(-2px); }
+        .btn-manual {
+            background: var(--gradient);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .btn-manual:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(123,47,255,0.4); }
+        .btn-clear-session {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-clear-session:hover { border-color: var(--red-solid); color: var(--red-solid); }
+
+        /* Transcript Panel */
+        .panel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 420px;
+        }
+        .panel-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-surface);
+            font-family: var(--font-display, 'Syne',sans-serif);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-head);
+        }
+        .panel-icon { font-size: 1.2rem; }
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .panel-body::-webkit-scrollbar { width: 4px; }
+        .panel-body::-webkit-scrollbar-track { background: transparent; }
+        .panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+        /* Transcript Bubbles */
+        .transcript-item {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            animation: fadeSlideIn 0.3s ease;
+            border-left: 3px solid var(--border);
+        }
+        .transcript-item.interviewer {
+            background: rgba(123,47,255,0.08);
+            border-left-color: var(--accent-primary, #7b2fff);
+            color: var(--text-head);
+        }
+        .transcript-item.user-manual {
+            background: rgba(0,230,118,0.06);
+            border-left-color: var(--green-solid);
+            color: var(--text-head);
+        }
+        .transcript-item .t-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 4px;
+            opacity: 0.7;
+        }
+        .transcript-item.interim {
+            opacity: 0.5;
+            font-style: italic;
+            border-style: dashed;
+        }
+        @keyframes fadeSlideIn {
+            from { opacity:0; transform:translateY(8px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        /* AI Answer Panel */
+        .answer-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            font-size: 0.88rem;
+            line-height: 1.75;
+            color: var(--text-body);
+            animation: fadeSlideIn 0.35s ease;
+            position: relative;
+        }
+        .answer-item .answer-q {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-primary, #7b2fff);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .answer-item .answer-body {
+            color: var(--text-body);
+        }
+        .answer-item .answer-body ul { padding-left: 18px; margin: 6px 0; }
+        .answer-item .answer-body li { margin-bottom: 4px; }
+        .answer-item .answer-body strong { color: var(--text-head); }
+        .answer-copy-btn {
+            position: absolute; top: 10px; right: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .answer-copy-btn:hover { color: var(--accent-primary, #7b2fff); border-color: var(--accent-primary, #7b2fff); }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 12px 16px;
+        }
+        .typing-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent-primary, #7b2fff);
+            animation: typingBounce 1.2s infinite;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce {
+            0%,80%,100% { transform:scale(0.7); opacity:0.4; }
+            40% { transform:scale(1); opacity:1; }
+        }
+
+        /* Manual Input */
+        .manual-input-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+        }
+        .manual-input-wrap label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .manual-input-row {
+            display: flex;
+            gap: 10px;
+        }
+        .manual-textarea {
+            flex: 1;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text-head);
+            font-size: 0.9rem;
+            font-family: inherit;
+            resize: none;
+            min-height: 56px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .manual-textarea:focus { border-color: var(--accent-primary, #7b2fff); }
+        .manual-submit {
+            background: var(--gradient);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 18px;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            align-self: flex-end;
+        }
+        .manual-submit:hover { transform: scale(1.05); }
+
+        /* Role Selector */
+        .role-chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .role-chip {
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1.5px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .role-chip.active, .role-chip:hover {
+            border-color: var(--accent-primary, #7b2fff);
+            color: var(--accent-primary, #7b2fff);
+            background: rgba(123,47,255,0.08);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .empty-state .empty-icon { font-size: 2.2rem; opacity: 0.5; }
+        .empty-state p { max-width: 220px; line-height: 1.6; }
+
+        /* Live mic wave */
+        .mic-wave {
+            display: none;
+            align-items: center;
+            gap: 3px;
+            height: 24px;
+        }
+        .mic-wave.active { display: flex; }
+        .wave-bar {
+            width: 4px;
+            background: var(--red-solid);
+            border-radius: 2px;
+            animation: waveAnim 0.8s ease-in-out infinite;
+        }
+        .wave-bar:nth-child(1) { animation-delay: 0s; height: 8px; }
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; height: 16px; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 20px; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; height: 14px; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; height: 8px; }
+        @keyframes waveAnim {
+            0%,100% { transform: scaleY(0.4); }
+            50% { transform: scaleY(1); }
+        }
+
+        /* Sample Questions bar */
+        .sample-qs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+        .sample-q-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .sample-q-btn:hover { border-color: var(--accent-primary, #7b2fff); color: var(--accent-primary, #7b2fff); }
+
+        /* Answer count badge */
+        .answer-count-badge {
+            background: var(--accent-primary, #7b2fff);
+            color: #fff;
+            border-radius: 50px;
+            padding: 1px 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body data-page="tool-interview">
+    <div id="loading-screen">
+        <div class="loader-logo">
+            <span>Akshay AI Tools</span>
+        </div>
+        <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+        <div class="loader-text">Loading Interview Copilot...</div>
+    </div>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="login.html" id="nav-login">Login</a></li>
+                <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+                <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="tool-page">
+        <div class="container">
+            <div class="tool-page-header">
+                <a href="tools.html" class="back-btn">← Back</a>
+                <div class="tool-page-icon card-icon" style="background:linear-gradient(135deg,rgba(0,230,118,0.2),rgba(123,47,255,0.2))">🎯</div>
+                <div class="tool-page-info">
+                    <h1>AI Interview Copilot</h1>
+                    <p style="color:var(--text-muted);font-size:0.85rem;margin-top:4px;">Real-time AI answers for your job interviews — like Parakeet AI, but free!</p>
+                </div>
+            </div>
+
+            <!-- Role / Job Type Selector -->
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:18px 20px;margin-bottom:20px;">
+                <p style="font-size:0.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">🎓 Select Your Role / Interview Type</p>
+                <div class="role-chip-row" id="role-chips">
+                    <span class="role-chip active" data-role="software-engineer">💻 Software Engineer</span>
+                    <span class="role-chip" data-role="data-science">📊 Data Science</span>
+                    <span class="role-chip" data-role="product-manager">📋 Product Manager</span>
+                    <span class="role-chip" data-role="marketing">📣 Marketing</span>
+                    <span class="role-chip" data-role="sales">💼 Sales</span>
+                    <span class="role-chip" data-role="hr">🤝 HR / Behavioral</span>
+                    <span class="role-chip" data-role="finance">💰 Finance</span>
+                    <span class="role-chip" data-role="general">🌐 General Interview</span>
+                </div>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-dot idle" id="status-dot"></div>
+                <span class="status-text" id="status-text">Ready — Start mic or type a question</span>
+                <div class="mic-wave" id="mic-wave">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+                <span class="status-time" id="session-timer">00:00</span>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-row">
+                <button class="btn-mic btn-mic-start" id="btn-start-mic">🎤 Start Listening</button>
+                <button class="btn-mic btn-mic-stop" id="btn-stop-mic" style="display:none">⏹ Stop Mic</button>
+                <button class="btn-clear-session" id="btn-clear">🗑️ Clear Session</button>
+            </div>
+
+            <!-- Manual Question Input -->
+            <div class="manual-input-wrap">
+                <label>✏️ Type/Paste the interview question manually</label>
+                <div class="manual-input-row">
+                    <textarea class="manual-textarea" id="manual-q-input" placeholder="e.g. Tell me about yourself... or What are your strengths?" rows="2"></textarea>
+                    <button class="manual-submit" id="manual-submit-btn" title="Get AI Answer">➤</button>
+                </div>
+            </div>
+
+            <!-- Sample Questions -->
+            <div class="sample-qs" id="sample-qs-container">
+                <!-- Populated by JS based on role -->
+            </div>
+
+            <!-- Main Layout: Transcript + AI Answers -->
+            <div class="interview-layout">
+                <!-- Left: Audio Transcript -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <span class="panel-icon">🎙️</span>
+                        Live Transcript
+                        <span style="margin-left:auto;font-size:0.72rem;font-weight:400;color:var(--text-muted)">Interviewer's speech</span>
+                    </div>
+                    <div class="panel-body" id="transcript-panel">
+                        <div class="empty-state" id="transcript-empty">
+                            <div class="empty-icon">🎤</div>
+                            <p>Click <strong>Start Listening</strong> to capture the interviewer's questions in real-time.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: AI Answers -->
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <span class="panel-icon">🤖</span>
+                        AI Suggestions
+                        <span class="answer-count-badge" id="answer-count">0</span>
+                    </div>
+                    <div class="panel-body" id="answers-panel">
+                        <div class="empty-state" id="answers-empty">
+                            <div class="empty-icon">💡</div>
+                            <p>AI answers will appear here instantly as questions are detected.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-top:20px;margin-bottom:40px;">
+                <p style="font-size:0.82rem;font-weight:700;color:var(--text-muted);margin-bottom:8px;">💡 Pro Tips</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    <span style="font-size:0.78rem;color:var(--text-body);background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:5px 10px;">🔊 Use headphones so mic only picks up interviewer</span>
+                    <span style="font-size:0.78rem;color:var(--text-body);background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:5px 10px;">⌨️ You can also type questions manually for better accuracy</span>
+                    <span style="font-size:0.78rem;color:var(--text-body);background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:5px 10px;">🌐 Works best on Chrome / Edge</span>
+                    <span style="font-size:0.78rem;color:var(--text-body);background:var(--bg-surface);border:1px solid var(--border);border-radius:8px;padding:5px 10px;">📋 Click Copy on any answer to use it</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                    <p>Discover the best free AI tools for students and creators in one place.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="tools.html">Tools</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Akshay AI Tools. All rights reserved.</span>
+                <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+            </div>
+        </div>
+    </footer>
+    <div id="toast" class="toast"></div>
+
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+
+    <script>
+    // ══════════════════════════════════════════════════════
+    //  AI Interview Copilot — Main Logic
+    // ══════════════════════════════════════════════════════
+
+    const ROLE_QUESTIONS = {
+        'software-engineer': [
+            'Tell me about yourself',
+            'What are your strengths as a developer?',
+            'Explain REST vs GraphQL',
+            'How do you handle merge conflicts?',
+            'What is your experience with Agile?',
+        ],
+        'data-science': [
+            'Explain overfitting in ML',
+            'What is gradient descent?',
+            'Difference between supervised and unsupervised learning',
+            'Tell me about your past projects',
+            'How do you handle missing data?',
+        ],
+        'product-manager': [
+            'How do you prioritize features?',
+            'Tell me about a product you love',
+            'What metrics would you track for a new feature?',
+            'How do you work with engineers?',
+            'Describe your roadmap planning process',
+        ],
+        'marketing': [
+            'What is your experience with SEO?',
+            'How do you measure campaign success?',
+            'Describe a successful marketing campaign you ran',
+            'How do you identify your target audience?',
+            'What tools do you use for analytics?',
+        ],
+        'sales': [
+            'How do you handle objections?',
+            'Describe your sales process',
+            'Tell me about your biggest deal',
+            'How do you qualify leads?',
+            'What is your average deal size?',
+        ],
+        'hr': [
+            'Tell me about yourself',
+            'What are your greatest strengths?',
+            'Where do you see yourself in 5 years?',
+            'Describe a conflict at work and how you resolved it',
+            'Why do you want to leave your current job?',
+        ],
+        'finance': [
+            'Walk me through a DCF',
+            'Explain EBITDA',
+            'What are financial statements?',
+            'How do you value a company?',
+            'Describe a time you worked under pressure',
+        ],
+        'general': [
+            'Tell me about yourself',
+            'Why do you want to work here?',
+            'What are your strengths and weaknesses?',
+            'Where do you see yourself in 5 years?',
+            'Do you have any questions for us?',
+        ],
+    };
+
+    const SYSTEM_PROMPTS = {
+        'software-engineer': `You are an expert interview coach helping a software engineering candidate. 
+            When given an interview question, provide a concise, structured answer using the STAR method or bullet points. 
+            Focus on technical depth, clear communication, and professional tone. 
+            Keep answers under 150 words. Use bullet points where helpful.`,
+        'data-science': `You are an expert data science interview coach. 
+            Provide clear, concise answers to data science interview questions. 
+            Explain technical concepts simply, include examples, and use bullet points. Keep under 150 words.`,
+        'product-manager': `You are an expert product management interview coach. 
+            Help candidates answer PM interview questions with structured, strategic thinking. 
+            Use frameworks like RICE, CIRCLES, etc. Keep answers under 150 words.`,
+        'marketing': `You are an expert marketing interview coach. 
+            Provide data-driven, creative answers to marketing interview questions. 
+            Mention relevant metrics and tools. Keep answers under 150 words.`,
+        'sales': `You are an expert sales interview coach. 
+            Provide confident, results-focused answers to sales interview questions. 
+            Emphasize numbers, outcomes, and relationship-building. Keep under 150 words.`,
+        'hr': `You are an expert HR and behavioral interview coach. 
+            Use the STAR (Situation, Task, Action, Result) method. 
+            Be professional, honest, and positive. Keep answers under 150 words.`,
+        'finance': `You are an expert finance interview coach. 
+            Provide technically accurate answers to finance interview questions. 
+            Use proper financial terminology and structured explanations. Keep under 150 words.`,
+        'general': `You are an expert interview coach for general job interviews. 
+            Provide professional, concise, and confident answers. 
+            Use STAR method for behavioral questions. Keep answers under 150 words.`,
+    };
+
+    // State
+    let currentRole = 'software-engineer';
+    let recognition = null;
+    let isListening = false;
+    let sessionActive = false;
+    let timerInterval = null;
+    let sessionSeconds = 0;
+    let answerCount = 0;
+    let pendingTranscript = '';
+    let transcriptItems = [];
+    let pendingQuestionTimer = null;
+
+    // DOM refs
+    const $statusDot   = document.getElementById('status-dot');
+    const $statusText  = document.getElementById('status-text');
+    const $micWave     = document.getElementById('mic-wave');
+    const $sessionTimer= document.getElementById('session-timer');
+    const $btnStart    = document.getElementById('btn-start-mic');
+    const $btnStop     = document.getElementById('btn-stop-mic');
+    const $btnClear    = document.getElementById('btn-clear');
+    const $transcript  = document.getElementById('transcript-panel');
+    const $transcriptEmpty = document.getElementById('transcript-empty');
+    const $answers     = document.getElementById('answers-panel');
+    const $answersEmpty = document.getElementById('answers-empty');
+    const $answerCount = document.getElementById('answer-count');
+    const $manualInput = document.getElementById('manual-q-input');
+    const $manualBtn   = document.getElementById('manual-submit-btn');
+    const $sampleQs    = document.getElementById('sample-qs-container');
+
+    // ── Role Chips ──
+    document.querySelectorAll('.role-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            currentRole = chip.dataset.role;
+            renderSampleQuestions();
+        });
+    });
+
+    function renderSampleQuestions() {
+        const qs = ROLE_QUESTIONS[currentRole] || ROLE_QUESTIONS['general'];
+        $sampleQs.innerHTML = qs.map(q =>
+            `<button class="sample-q-btn" onclick="useSampleQ(this)">${q}</button>`
+        ).join('');
+    }
+
+    function useSampleQ(btn) {
+        $manualInput.value = btn.textContent;
+        $manualInput.focus();
+        handleManualQuestion();
+    }
+
+    renderSampleQuestions();
+
+    // ── Status helpers ──
+    function setStatus(state, text) {
+        $statusDot.className = 'status-dot ' + state;
+        $statusText.textContent = text;
+        $micWave.className = 'mic-wave' + (state === 'listening' ? ' active' : '');
+    }
+
+    // ── Timer ──
+    function startTimer() {
+        if (timerInterval) return;
+        sessionSeconds = 0;
+        timerInterval = setInterval(() => {
+            sessionSeconds++;
+            const m = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+            const s = String(sessionSeconds % 60).padStart(2, '0');
+            $sessionTimer.textContent = `${m}:${s}`;
+        }, 1000);
+    }
+    function stopTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+
+    // ── Speech Recognition ──
+    function initRecognition() {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRec) {
+            showToast('Your browser does not support Speech Recognition. Use Chrome or Edge.', 'error', '⚠️');
+            return null;
+        }
+        const rec = new SpeechRec();
+        rec.continuous = true;
+        rec.interimResults = true;
+        rec.lang = 'en-US';
+        rec.maxAlternatives = 1;
+
+        let interimEl = null;
+
+        rec.onresult = (event) => {
+            let interim = '';
+            let final = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const t = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    final += t + ' ';
+                } else {
+                    interim += t;
+                }
+            }
+
+            // Show interim transcript
+            if (interim) {
+                if (!interimEl) {
+                    $transcriptEmpty && ($transcriptEmpty.style.display = 'none');
+                    interimEl = document.createElement('div');
+                    interimEl.className = 'transcript-item interviewer interim';
+                    interimEl.innerHTML = '<div class="t-label">🎙 Listening...</div><div id="interim-text"></div>';
+                    $transcript.appendChild(interimEl);
+                }
+                interimEl.querySelector('#interim-text').textContent = interim;
+                $transcript.scrollTop = $transcript.scrollHeight;
+            }
+
+            if (final.trim()) {
+                // Remove interim element
+                if (interimEl) { interimEl.remove(); interimEl = null; }
+                pendingTranscript += final;
+
+                addTranscriptItem(final.trim(), 'interviewer');
+
+                // Debounce: wait 1.5s after last word before sending to AI
+                clearTimeout(pendingQuestionTimer);
+                pendingQuestionTimer = setTimeout(() => {
+                    const q = pendingTranscript.trim();
+                    pendingTranscript = '';
+                    if (q.length > 5) getAIAnswer(q);
+                }, 1500);
+            }
+        };
+
+        rec.onerror = (e) => {
+            if (e.error === 'not-allowed') {
+                showToast('Microphone permission denied. Please allow mic access.', 'error', '🚫');
+                stopMic();
+            } else if (e.error === 'no-speech') {
+                // silent — just keep going
+            } else {
+                console.warn('Speech error:', e.error);
+            }
+        };
+
+        rec.onend = () => {
+            if (isListening) {
+                // Auto-restart if we're still supposed to be listening
+                try { rec.start(); } catch(e) {}
+            }
+        };
+
+        return rec;
+    }
+
+    function startMic() {
+        recognition = initRecognition();
+        if (!recognition) return;
+        try {
+            recognition.start();
+            isListening = true;
+            sessionActive = true;
+            $btnStart.style.display = 'none';
+            $btnStop.style.display = 'flex';
+            setStatus('listening', 'Listening to interviewer...');
+            startTimer();
+            showToast('Mic started — speak clearly!', 'success', '🎤');
+        } catch(e) {
+            showToast('Could not start microphone.', 'error', '⚠️');
+        }
+    }
+
+    function stopMic() {
+        isListening = false;
+        if (recognition) { try { recognition.stop(); } catch(e) {} recognition = null; }
+        $btnStart.style.display = 'flex';
+        $btnStop.style.display = 'none';
+        setStatus('idle', 'Mic stopped');
+        stopTimer();
+    }
+
+    $btnStart.addEventListener('click', startMic);
+    $btnStop.addEventListener('click', stopMic);
+
+    // ── Clear Session ──
+    $btnClear.addEventListener('click', () => {
+        stopMic();
+        $transcript.innerHTML = `<div class="empty-state" id="transcript-empty">
+            <div class="empty-icon">🎤</div>
+            <p>Click <strong>Start Listening</strong> to capture the interviewer's questions in real-time.</p>
+        </div>`;
+        $answers.innerHTML = `<div class="empty-state" id="answers-empty">
+            <div class="empty-icon">💡</div>
+            <p>AI answers will appear here instantly as questions are detected.</p>
+        </div>`;
+        answerCount = 0;
+        $answerCount.textContent = '0';
+        $sessionTimer.textContent = '00:00';
+        pendingTranscript = '';
+        setStatus('idle', 'Ready — Start mic or type a question');
+        showToast('Session cleared!', 'success', '🗑️');
+    });
+
+    // ── Add Transcript Item ──
+    function addTranscriptItem(text, type) {
+        // Remove empty state
+        const emptyEl = $transcript.querySelector('.empty-state');
+        if (emptyEl) emptyEl.remove();
+
+        const el = document.createElement('div');
+        el.className = `transcript-item ${type}`;
+        const label = type === 'interviewer' ? '🎙 Interviewer' : '✏️ You (typed)';
+        el.innerHTML = `<div class="t-label">${label}</div><div>${text}</div>`;
+        $transcript.appendChild(el);
+        $transcript.scrollTop = $transcript.scrollHeight;
+    }
+
+    // ── Manual Question ──
+    function handleManualQuestion() {
+        const q = $manualInput.value.trim();
+        if (!q) { showToast('Please type a question first!', 'error', '⚠️'); return; }
+        addTranscriptItem(q, 'user-manual');
+        $manualInput.value = '';
+        getAIAnswer(q);
+        if (!sessionActive) {
+            sessionActive = true;
+            startTimer();
+        }
+    }
+
+    $manualBtn.addEventListener('click', handleManualQuestion);
+    $manualInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleManualQuestion(); }
+    });
+
+    // ── AI Answer ──
+    async function getAIAnswer(question) {
+        // Remove empty state from answers panel
+        const emptyEl = $answers.querySelector('.empty-state');
+        if (emptyEl) emptyEl.remove();
+
+        // Show typing indicator
+        const typingEl = document.createElement('div');
+        typingEl.className = 'answer-item';
+        typingEl.innerHTML = `<div class="answer-q">Q: ${question.substring(0, 80)}${question.length > 80 ? '...' : ''}</div>
+        <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <span style="font-size:0.8rem;color:var(--text-muted);margin-left:6px">AI is thinking...</span>
+        </div>`;
+        $answers.appendChild(typingEl);
+        $answers.scrollTop = $answers.scrollHeight;
+
+        setStatus('thinking', 'AI is generating answer...');
+
+        try {
+            const systemPrompt = SYSTEM_PROMPTS[currentRole] || SYSTEM_PROMPTS['general'];
+            const prompt = `${systemPrompt}\n\nInterview Question: "${question}"\n\nProvide a helpful, structured answer:`;
+
+            // Use the site's existing AI infrastructure
+            const answer = await callAI(prompt);
+            
+            // Replace typing indicator with actual answer
+            typingEl.innerHTML = `
+                <div class="answer-q">Q: ${escHtml(question.substring(0, 100))}${question.length > 100 ? '...' : ''}</div>
+                <button class="answer-copy-btn" onclick="copyAnswer(this)">📋 Copy</button>
+                <div class="answer-body">${formatAnswer(answer)}</div>
+            `;
+            typingEl.dataset.raw = answer;
+
+            answerCount++;
+            $answerCount.textContent = answerCount;
+            $answers.scrollTop = $answers.scrollHeight;
+            setStatus(isListening ? 'listening' : 'idle', isListening ? 'Listening to interviewer...' : 'Answer ready!');
+
+        } catch (err) {
+            typingEl.innerHTML = `<div class="answer-q">⚠️ Error</div>
+                <div class="answer-body" style="color:var(--red-solid);">${err.message || 'Could not fetch AI answer. Check your connection.'}</div>`;
+            setStatus('idle', 'Error — try again');
+            console.error(err);
+        }
+    }
+
+    // ── Call AI (uses existing insforge/OpenRouter setup) ──
+    async function callAI(prompt) {
+        // Try OpenRouter first (same as other tools on the site)
+        const toolCfg = (window.CONFIG && window.CONFIG.tools && window.CONFIG.tools['tool-interview'])
+            || (window.CONFIG && window.CONFIG.tools && window.CONFIG.tools['default'])
+            || { provider: 'openrouter', model: 'google/gemini-2.0-flash-001' };
+
+        // Use site's callAI function if available
+        if (typeof window.callGeminiOrOpenRouter === 'function') {
+            return await window.callGeminiOrOpenRouter(prompt, 'tool-interview');
+        }
+
+        // Fallback: use site's standard fetch through script.js globals
+        if (typeof window.sendToAI === 'function') {
+            return await window.sendToAI(prompt);
+        }
+
+        // Direct OpenRouter call using insforge proxy
+        if (window.Insforge && typeof window.Insforge.chat === 'function') {
+            const res = await window.Insforge.chat([{ role: 'user', content: prompt }]);
+            return res;
+        }
+
+        // Last resort: try ai-proxy.js pattern
+        const resp = await fetch('/api/ai-proxy', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                messages: [{ role: 'user', content: prompt }],
+                model: toolCfg.model || 'google/gemini-2.0-flash-001',
+                provider: toolCfg.provider || 'openrouter'
+            })
+        });
+        if (!resp.ok) throw new Error(`API error ${resp.status}`);
+        const data = await resp.json();
+        return data.choices?.[0]?.message?.content || data.text || data.answer || '';
+    }
+
+    // ── Format AI answer to HTML ──
+    function formatAnswer(text) {
+        if (!text) return '<em>No answer generated.</em>';
+        // Convert markdown-style ** bold **, bullet points, newlines
+        let html = escHtml(text)
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/^[-•]\s+(.+)$/gm, '<li>$1</li>')
+            .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+            .replace(/\n{2,}/g, '</p><p>')
+            .replace(/\n/g, '<br>');
+        return `<p>${html}</p>`;
+    }
+
+    function escHtml(t) {
+        return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ── Copy Answer ──
+    function copyAnswer(btn) {
+        const card = btn.closest('.answer-item');
+        const raw = card.dataset.raw || card.querySelector('.answer-body')?.textContent || '';
+        navigator.clipboard.writeText(raw).then(() => {
+            btn.textContent = '✅ Copied!';
+            setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+        });
+    }
+
+    // ── Scroll reveal (reuse site pattern) ──
+    const revealEls = document.querySelectorAll('section, .card, .stat-block, .hero > *');
+    revealEls.forEach(el => el.classList.add('scroll-reveal'));
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+    </script>
+<script src="help-widget.js"></script>
+</body>
+</html>

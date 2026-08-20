@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create talking AI avatar videos from scripts with lip-sync technology. No camera needed. Free AI video generator by Akshay AI Tools.">
+    <meta name="keywords" content="ai avatar video, lip sync ai, talking avatar, script to video, free ai tools, akshay ai, deepfake free">
+    <title>Akshay AI Tools — Powering the Future</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        /* ── Step Wizard ── */
+        .step-wizard {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 32px;
+            position: relative;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.35s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .step-item + .step-item { margin-left: -8px; }
+        .step-item .step-num {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(123,47,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: all 0.35s ease;
+        }
+        .step-item .step-label {
+            font-size: 0.82rem; font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.35s ease;
+        }
+        .step-item.active {
+            background: linear-gradient(135deg, rgba(224,64,251,0.12), rgba(123,47,255,0.12));
+            border-color: rgba(224,64,251,0.4);
+            box-shadow: 0 0 20px rgba(224,64,251,0.15);
+        }
+        .step-item.active .step-num {
+            background: linear-gradient(135deg, #e040fb, #7b2fff);
+            color: #fff;
+        }
+        .step-item.active .step-label { color: var(--text-head); }
+        .step-item.completed .step-num {
+            background: linear-gradient(135deg, #00e676, #00bfa5);
+            color: #fff;
+        }
+        .step-item.completed .step-label { color: var(--text-body); }
+
+        /* ── Step Panels ── */
+        .step-panel { display: none; animation: fadeSlide 0.4s ease; }
+        .step-panel.active { display: block; }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Script Area ── */
+        .script-area {
+            width: 100%; min-height: 160px; max-height: 300px;
+            background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+            border-radius: var(--radius-md); padding: 16px;
+            color: var(--text-head); font-size: 0.95rem;
+            line-height: 1.7; resize: vertical;
+            font-family: inherit; outline: none;
+            transition: border-color 0.3s ease;
+        }
+        .script-area:focus { border-color: rgba(224,64,251,0.5); }
+        .script-area::placeholder { color: var(--text-muted); }
+
+        /* ── Voice Controls ── */
+        .voice-controls {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 16px; margin: 20px 0;
+        }
+        .voice-control-group { display: flex; flex-direction: column; gap: 6px; }
+        .voice-control-group label {
+            font-size: 0.78rem; font-weight: 600;
+            color: var(--text-body);
+        }
+        .voice-control-group select,
+        .voice-control-group input[type="range"] {
+            padding: 10px 14px; border-radius: 10px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            color: var(--text-head); font-size: 0.85rem;
+            outline: none; cursor: pointer;
+        }
+        .voice-control-group input[type="range"] {
+            -webkit-appearance: none; appearance: none; height: 6px;
+            border-radius: 3px; padding: 0;
+            background: linear-gradient(90deg, #e040fb, #7b2fff);
+        }
+
+        /* ── Audio Preview ── */
+        .audio-preview-box {
+            background: rgba(224,64,251,0.06);
+            border: 1px solid rgba(224,64,251,0.2);
+            border-radius: var(--radius-md);
+            padding: 20px; text-align: center;
+            margin: 20px 0; display: none;
+        }
+        .audio-preview-box.show { display: block; }
+
+        /* ── Avatar Upload ── */
+        .avatar-upload-zone {
+            border: 2px dashed rgba(224,64,251,0.3);
+            border-radius: 16px; padding: 30px 20px;
+            text-align: center;
+            background: rgba(224,64,251,0.03);
+            transition: all 0.3s ease; cursor: pointer;
+        }
+        .avatar-upload-zone:hover,
+        .avatar-upload-zone.dragover {
+            border-color: #e040fb;
+            background: rgba(224,64,251,0.08);
+        }
+        .avatar-preview {
+            max-width: 200px; max-height: 200px;
+            border-radius: 16px; margin: 16px auto;
+            display: none;
+            box-shadow: 0 8px 30px rgba(224,64,251,0.3);
+        }
+        .avatar-preview.show { display: block; }
+
+        /* ── Video Output ── */
+        .video-output-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 30px; text-align: center;
+            min-height: 200px;
+        }
+        .video-output-box video {
+            max-width: 100%; max-height: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        /* ── Progress Bar ── */
+        .gen-progress {
+            width: 100%; height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 3px; overflow: hidden;
+            margin: 16px 0; display: none;
+        }
+        .gen-progress.show { display: block; }
+        .gen-progress-bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #e040fb, #7b2fff, #00f5ff);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* ── Alt Tools Grid ── */
+        .alt-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px; margin-top: 16px;
+        }
+        .alt-tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px; padding: 16px;
+            text-decoration: none; text-align: center;
+            transition: all 0.3s ease;
+        }
+        .alt-tool-card:hover {
+            border-color: rgba(224,64,251,0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(224,64,251,0.15);
+        }
+        .alt-tool-card .alt-icon { font-size: 2rem; margin-bottom: 8px; }
+        .alt-tool-card .alt-name {
+            font-weight: 700; font-size: 0.88rem;
+            color: var(--text-head); margin-bottom: 4px;
+        }
+        .alt-tool-card .alt-desc {
+            font-size: 0.72rem; color: var(--text-muted);
+        }
+        .alt-tool-card .alt-tag {
+            display: inline-block; margin-top: 8px;
+            font-size: 0.68rem; padding: 3px 10px;
+            border-radius: 50px;
+            background: rgba(0,230,118,0.1);
+            border: 1px solid rgba(0,230,118,0.25);
+            color: #00e676; font-weight: 600;
+        }
+
+        /* ── Nav Buttons ── */
+        .step-nav { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; flex-wrap: wrap; }
+        .btn-step {
+            padding: 12px 28px; border-radius: 50px;
+            font-weight: 700; font-size: 0.88rem;
+            cursor: pointer; border: none;
+            transition: all 0.3s ease;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-step-next {
+            background: linear-gradient(135deg, #e040fb, #7b2fff);
+            color: #fff;
+        }
+        .btn-step-next:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(224,64,251,0.4); }
+        .btn-step-back {
+            background: var(--bg-card);
+            border: 1px solid var(--border) !important;
+            color: var(--text-body);
+        }
+        .btn-step-back:hover { border-color: rgba(224,64,251,0.3) !important; }
+
+        /* ── Status Badge ── */
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border-radius: 50px;
+            font-size: 0.75rem; font-weight: 600;
+        }
+        .status-badge.processing {
+            background: rgba(255,183,77,0.1);
+            border: 1px solid rgba(255,183,77,0.3);
+            color: #ffb74d;
+        }
+        .status-badge.success {
+            background: rgba(0,230,118,0.1);
+            border: 1px solid rgba(0,230,118,0.3);
+            color: #00e676;
+        }
+        .status-badge.error {
+            background: rgba(255,45,120,0.1);
+            border: 1px solid rgba(255,45,120,0.3);
+            color: #ff2d78;
+        }
+
+        @media (max-width: 600px) {
+            .step-wizard { flex-direction: column; align-items: stretch; gap: 8px; }
+            .step-item + .step-item { margin-left: 0; }
+            .voice-controls { grid-template-columns: 1fr; }
+            .step-nav { justify-content: center; }
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff">
+</head>
+
+<body data-page="tool-avatar-video">
+    <div id="loading-screen">
+        <div class="loader-logo">
+            <span>Akshay AI Tools</span>
+        </div>
+        <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+        <div class="loader-text">Initializing Avatar Studio...</div>
+    </div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="login.html" id="nav-login">Login</a></li>
+                <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+                <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="tool-page">
+        <div class="container">
+            <div class="tool-page-header">
+                <a href="tools.html" class="back-btn">← Back</a>
+                <div class="tool-page-icon card-icon" style="background:linear-gradient(135deg, #e040fb, #7b2fff)">🎭</div>
+                <div class="tool-page-info">
+                    <h1>AI Avatar Video Generator</h1>
+                    <p>Turn your scripts into talking avatar videos — no camera needed</p>
+                </div>
+            </div>
+            <div class="ad-placeholder"></div>
+
+            <div class="tool-workspace">
+                <div class="workspace-topbar">
+                    <span class="workspace-topbar-title">🎭 Avatar Video Studio — Akshay AI</span>
+                    <span style="font-size:0.75rem;background:rgba(224,64,251,0.1);border:1px solid rgba(224,64,251,0.2);color:#e040fb;padding:3px 10px;border-radius:50px;font-weight:600">✨ FREE AI</span>
+                </div>
+                <div class="workspace-body">
+
+                    <!-- Step Wizard -->
+                    <div class="step-wizard">
+                        <div class="step-item active" data-step="1" onclick="goToStep(1)">
+                            <div class="step-num">1</div>
+                            <div class="step-label">📝 Script</div>
+                        </div>
+                        <div class="step-item" data-step="2" onclick="goToStep(2)">
+                            <div class="step-num">2</div>
+                            <div class="step-label">🔊 Voice</div>
+                        </div>
+                        <div class="step-item" data-step="3" onclick="goToStep(3)">
+                            <div class="step-num">3</div>
+                            <div class="step-label">🎬 Video</div>
+                        </div>
+                    </div>
+
+                    <!-- ═══ STEP 1: SCRIPT ═══ -->
+                    <div class="step-panel active" id="step-1">
+                        <div class="lang-select-wrap">
+                            <label>🌐 Language:</label>
+                            <select id="lang-select">
+                                <option value="en-US">🇺🇸 English</option>
+                                <option value="mr-IN">🇮🇳 Marathi</option>
+                                <option value="hi-IN">🇮🇳 Hindi</option>
+                            </select>
+                            <button id="voice-btn" title="Voice Input">🎤</button>
+                        </div>
+
+                        <label style="display:block;font-size:0.82rem;font-weight:600;color:var(--text-body);margin-bottom:8px">
+                            What should your avatar say? Describe the topic or write the script directly:
+                        </label>
+                        <textarea class="script-area" id="avatar-script-input"
+                            placeholder="e.g., 'Explain 3 benefits of meditation in 30 seconds' or paste your full script here..."></textarea>
+
+                        <div class="tool-controls" style="margin-top:16px">
+                            <select class="control-select" id="avatar-script-tone">
+                                <option value="professional & clear">🎯 Professional</option>
+                                <option value="fun & energetic">🔥 Fun & Energetic</option>
+                                <option value="calm & educational">📚 Educational</option>
+                                <option value="friendly & casual">😊 Casual</option>
+                            </select>
+                            <select class="control-select" id="avatar-script-duration">
+                                <option value="15-30 seconds">⚡ Short (15-30s)</option>
+                                <option value="30-60 seconds">📱 Medium (30-60s)</option>
+                                <option value="60-90 seconds">📄 Long (60-90s)</option>
+                            </select>
+                            <button class="btn-primary" id="ai-write-script-btn"
+                                style="margin-left:auto; background:var(--gradient-card); border:1px solid var(--accent-primary) !important; color:var(--text-head) !important;">
+                                🤖 AI Write Script
+                            </button>
+                        </div>
+
+                        <div class="output-area" id="script-output" style="margin-top:16px; min-height:80px; display:none;">
+                            <div class="output-placeholder"><span class="op-icon">📝</span>
+                                <p>Your AI-generated script will appear here</p>
+                            </div>
+                        </div>
+
+                        <div class="step-nav">
+                            <button class="btn-step btn-step-next" onclick="goToStep(2)">Next: Voice 🔊 →</button>
+                        </div>
+                    </div>
+
+                    <!-- ═══ STEP 2: VOICE ═══ -->
+                    <div class="step-panel" id="step-2">
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:16px;color:var(--text-head)">
+                            🔊 Convert Script to Speech
+                        </h3>
+                        <div style="background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;margin-bottom:20px;max-height:150px;overflow-y:auto">
+                            <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:6px;font-weight:600">📝 Your Script:</p>
+                            <div id="voice-script-preview" style="font-size:0.9rem;color:var(--text-head);line-height:1.6">
+                                <em style="color:var(--text-muted)">Go back to Step 1 and write your script first...</em>
+                            </div>
+                        </div>
+
+                        <div class="voice-controls">
+                            <div class="voice-control-group">
+                                <label>🗣️ Voice:</label>
+                                <select id="tts-voice"></select>
+                            </div>
+                            <div class="voice-control-group">
+                                <label>⚡ Speed: <span id="speed-val">1.0x</span></label>
+                                <input type="range" id="tts-speed" min="0.5" max="2" step="0.1" value="1">
+                            </div>
+                            <div class="voice-control-group">
+                                <label>🎵 Pitch: <span id="pitch-val">1.0</span></label>
+                                <input type="range" id="tts-pitch" min="0.5" max="2" step="0.1" value="1">
+                            </div>
+                            <div class="voice-control-group">
+                                <label>🔊 Volume: <span id="vol-val">100%</span></label>
+                                <input type="range" id="tts-volume" min="0" max="1" step="0.1" value="1">
+                            </div>
+                        </div>
+
+                        <div style="display:flex;gap:10px;flex-wrap:wrap">
+                            <button class="btn-primary" id="preview-speech-btn"
+                                style="background:var(--gradient-card); border:1px solid rgba(224,64,251,0.3) !important; color:var(--text-head) !important;">
+                                ▶️ Preview Speech
+                            </button>
+                            <button class="btn-primary" id="stop-speech-btn"
+                                style="background:rgba(255,45,120,0.1); border:1px solid rgba(255,45,120,0.3) !important; color:#ff2d78 !important; display:none;">
+                                ⏹️ Stop
+                            </button>
+                            <button class="btn-primary" id="record-speech-btn"
+                                style="background:linear-gradient(135deg, #e040fb, #7b2fff); color:#fff !important;">
+                                🎙️ Record Audio
+                            </button>
+                        </div>
+
+                        <div class="audio-preview-box" id="audio-result-box">
+                            <span class="status-badge success">✅ Audio Ready</span>
+                            <audio id="recorded-audio" controls style="width:100%;margin:14px 0;border-radius:8px;"></audio>
+                            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                                <a id="download-audio-link" class="btn-primary"
+                                    style="padding:8px 18px;font-size:0.82rem;text-decoration:none;background:var(--gradient-card);border:1px solid var(--border);color:var(--text-head);"
+                                    download="avatar-speech.wav">⬇️ Download Audio</a>
+                            </div>
+                        </div>
+
+                        <!-- Custom Voice Upload -->
+                        <div style="text-align:center; margin-top:20px; padding-top:20px; border-top:1px dashed var(--border)">
+                            <p style="font-size:0.85rem; color:var(--text-body); margin-bottom:12px; font-weight:600;">
+                                Prefer to use your own voice or cloned audio?
+                            </p>
+                            <input type="file" id="custom-voice-input" accept="audio/*" style="display:none">
+                            <button class="btn-primary" onclick="document.getElementById('custom-voice-input').click()"
+                                style="background:rgba(0,230,118,0.08); border:1px dashed rgba(0,230,118,0.4) !important; color:#00e676 !important;">
+                                📁 Upload Custom Audio (MP3/WAV)
+                            </button>
+                        </div>
+
+                        <div class="step-nav">
+                            <button class="btn-step btn-step-back" onclick="goToStep(1)">← Back</button>
+                            <button class="btn-step btn-step-next" onclick="goToStep(3)">Next: Video 🎬 →</button>
+                        </div>
+                    </div>
+
+                    <!-- ═══ STEP 3: VIDEO ═══ -->
+                    <div class="step-panel" id="step-3">
+                        <h3 style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:16px;color:var(--text-head)">
+                            🎬 Generate Avatar Video
+                        </h3>
+
+                        <!-- Avatar Upload -->
+                        <input type="file" id="avatar-file-input" accept="image/*" style="display:none">
+                        <div class="avatar-upload-zone" id="avatar-drop-zone"
+                            ondragover="event.preventDefault();this.classList.add('dragover');"
+                            ondragleave="this.classList.remove('dragover');"
+                            onclick="document.getElementById('avatar-file-input').click()">
+                            <div id="avatar-upload-placeholder">
+                                <span style="font-size:3rem;display:block;margin-bottom:12px;">🧑‍💼</span>
+                                <p style="font-weight:700;margin-bottom:6px;color:var(--text-head);font-size:0.95rem;">Upload Avatar Face Photo</p>
+                                <p style="font-size:0.78rem;color:var(--text-body);margin-bottom:14px;">JPG, PNG — Clear frontal face works best</p>
+                                <span style="padding:10px 26px;border-radius:50px;background:linear-gradient(135deg,#e040fb,#7b2fff);color:#fff;font-weight:700;font-size:0.85rem;display:inline-flex;align-items:center;gap:7px;">
+                                    📁 Choose Photo
+                                </span>
+                            </div>
+                        </div>
+                        <img id="avatar-preview-img" class="avatar-preview" alt="Avatar Preview">
+                        <div id="avatar-actions" style="display:none;text-align:center;margin-bottom:20px;">
+                            <button onclick="clearAvatar()" style="padding:6px 16px;border-radius:50px;border:1px solid rgba(255,45,120,0.4);background:rgba(255,45,120,0.08);color:#ff2d78;font-size:0.78rem;cursor:pointer;font-weight:600;">✕ Remove & Re-upload</button>
+                        </div>
+
+                        <!-- Audio status -->
+                        <div id="video-audio-status" style="margin:16px 0;text-align:center">
+                            <span class="status-badge processing">⚠️ Record audio in Step 2 first</span>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <div style="text-align:center;margin:20px 0">
+                            <button class="btn-primary" id="generate-video-btn"
+                                style="padding:14px 32px;font-size:1rem;background:linear-gradient(135deg, #e040fb, #7b2fff);color:#fff !important;border:none !important;">
+                                🎬 Generate Avatar Video
+                            </button>
+                        </div>
+
+                        <!-- Progress -->
+                        <div class="gen-progress" id="video-progress">
+                            <div class="gen-progress-bar" id="video-progress-bar"></div>
+                        </div>
+                        <div id="video-status-text" style="text-align:center;font-size:0.82rem;color:var(--text-muted);margin-bottom:16px;display:none"></div>
+
+                        <!-- Video Output -->
+                        <div class="video-output-box" id="video-output">
+                            <div class="output-placeholder">
+                                <span class="op-icon">🎬</span>
+                                <p>Your AI avatar video will appear here</p>
+                            </div>
+                        </div>
+
+                        <div class="step-nav">
+                            <button class="btn-step btn-step-back" onclick="goToStep(2)">← Back</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Alternative Free Tools -->
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;margin-top:30px;margin-bottom:36px">
+                <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:6px">🔗 Alternative Free Lip-Sync Tools</h3>
+                <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:16px">If the built-in generator is busy, try these free alternatives:</p>
+                <div class="alt-tools-grid">
+                    <a href="https://huggingface.co/spaces/vinthony/SadTalker" target="_blank" class="alt-tool-card">
+                        <div class="alt-icon">🤗</div>
+                        <div class="alt-name">SadTalker</div>
+                        <div class="alt-desc">Open-source, no signup needed</div>
+                        <span class="alt-tag">100% Free</span>
+                    </a>
+                    <a href="https://www.heygen.com/" target="_blank" class="alt-tool-card">
+                        <div class="alt-icon">🎭</div>
+                        <div class="alt-name">HeyGen</div>
+                        <div class="alt-desc">Realistic avatars, free trial</div>
+                        <span class="alt-tag">Free Trial</span>
+                    </a>
+                    <a href="https://lipsync.video/" target="_blank" class="alt-tool-card">
+                        <div class="alt-icon">👄</div>
+                        <div class="alt-name">LipSync.Video</div>
+                        <div class="alt-desc">Quick & easy, no signup</div>
+                        <span class="alt-tag">100% Free</span>
+                    </a>
+                    <a href="https://pixverse.ai/" target="_blank" class="alt-tool-card">
+                        <div class="alt-icon">🎥</div>
+                        <div class="alt-name">PixVerse</div>
+                        <div class="alt-desc">Cinematic AI videos</div>
+                        <span class="alt-tag">Free Credits</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;margin-bottom:36px">
+                <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:12px">🧠 How It Works</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
+                    <div style="font-size:0.85rem; color:var(--text-body)">
+                        <strong style="color:#e040fb; display:block; margin-bottom:4px">1️⃣ Write Your Script</strong>
+                        Use AI to generate a compelling video script or write your own.
+                    </div>
+                    <div style="font-size:0.85rem; color:var(--text-body)">
+                        <strong style="color:#7b2fff; display:block; margin-bottom:4px">2️⃣ Generate Voice</strong>
+                        Convert your script to speech with customizable voice, speed, and pitch.
+                    </div>
+                    <div style="font-size:0.85rem; color:var(--text-body)">
+                        <strong style="color:#00f5ff; display:block; margin-bottom:4px">3️⃣ Create Video</strong>
+                        Upload a face photo and AI creates a lip-synced talking avatar video.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                    <p>Discover the best free AI tools for students and creators in one place.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Orbital Map</h4>
+                    <a href="index.html">Home</a>
+                    <a href="tools.html">Directory</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy.html">Privacy</a>
+                    <a href="terms-of-service.html">Terms</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Akshay AI Tools. All rights reserved.</span>
+                <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+            </div>
+        </div>
+    </footer>
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+      const revealEls = document.querySelectorAll(
+        'section, .card, .stat-block, .hero > *'
+      );
+      revealEls.forEach(el => el.classList.add('scroll-reveal'));
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealEls.forEach(el => io.observe(el));
+    </script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // ── Step Wizard Navigation ──
+        let currentStep = 1;
+        function goToStep(n) {
+            if (n < 1 || n > 3) return;
+            // Hide all panels
+            document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.step-item').forEach(s => {
+                s.classList.remove('active');
+                const sn = parseInt(s.dataset.step);
+                if (sn < n) s.classList.add('completed');
+                else s.classList.remove('completed');
+            });
+            // Show target
+            document.getElementById('step-' + n).classList.add('active');
+            document.querySelector('.step-item[data-step="' + n + '"]').classList.add('active');
+            currentStep = n;
+
+            // Update step 2 script preview
+            if (n === 2) {
+                const script = document.getElementById('avatar-script-input').value.trim();
+                const preview = document.getElementById('voice-script-preview');
+                if (script) {
+                    preview.textContent = script;
+                    preview.style.color = 'var(--text-head)';
+                } else {
+                    preview.innerHTML = '<em style="color:var(--text-muted)">Go back to Step 1 and write your script first...</em>';
+                }
+            }
+            // Update step 3 audio status
+            if (n === 3) {
+                const audioReady = document.getElementById('audio-result-box').classList.contains('show');
+                const statusEl = document.getElementById('video-audio-status');
+                if (audioReady) {
+                    statusEl.innerHTML = '<span class="status-badge success">✅ Audio ready from Step 2</span>';
+                } else {
+                    statusEl.innerHTML = '<span class="status-badge processing">⚠️ Record audio in Step 2 first</span>';
+                }
+            }
+        }
+
+        // ── Avatar Upload Handlers ──
+        const avatarInput = document.getElementById('avatar-file-input');
+        const avatarPreview = document.getElementById('avatar-preview-img');
+        const dropZone = document.getElementById('avatar-drop-zone');
+
+        avatarInput.addEventListener('change', (e) => handleAvatarFile(e.target.files[0]));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleAvatarFile(e.dataTransfer.files[0]);
+        });
+
+        function handleAvatarFile(file) {
+            if (!file || !file.type.startsWith('image/')) {
+                showToast('Please upload an image file!', 'error', '❌');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                window.avatarBase64 = e.target.result;
+                avatarPreview.src = window.avatarBase64;
+                avatarPreview.classList.add('show');
+                dropZone.style.display = 'none'; // Completely hide the dashed box
+                document.getElementById('avatar-actions').style.display = 'block';
+                showToast('Avatar photo loaded! 🧑‍💼', 'success', '✅');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearAvatar() {
+            window.avatarBase64 = null;
+            avatarPreview.classList.remove('show');
+            avatarPreview.src = '';
+            avatarInput.value = '';
+            dropZone.style.display = 'block'; // Show dashed box again
+            document.getElementById('avatar-actions').style.display = 'none';
+        }
+    </script>
+<script src="help-widget.js"></script></body>
+</html>

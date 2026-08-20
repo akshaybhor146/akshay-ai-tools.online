@@ -1,0 +1,12 @@
+{
+  "name": "akshay-ai-tools",
+  "version": "1.0.0",
+  "description": "Next-level AI tools that defy gravity.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "@gradio/client": "^2.1.0"
+  }
+}

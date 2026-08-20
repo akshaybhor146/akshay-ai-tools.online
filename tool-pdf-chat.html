@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Upload any PDF and ask AI questions about its content. Get instant answers from your documents, notes, and textbooks.">
+    <meta name="keywords" content="chat with pdf, ai pdf reader, pdf question answer, study tool, akshay ai, free pdf ai">
+    <title>Akshay AI Tools — Powering the Future</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body data-page="tool-pdf-chat">
+    <div id="loading-screen">
+        <div class="loader-logo"><span>Akshay AI Tools</span></div>
+        <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+        <div class="loader-text">Loading PDF Chat...</div>
+    </div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="login.html" id="nav-login">Login</a></li>
+                <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+                <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+    <main class="tool-page">
+        <div class="container">
+            <div class="tool-page-header">
+                <a href="tools.html" class="back-btn">← Back</a>
+                <div class="tool-page-icon card-icon" style="background:linear-gradient(135deg, #4caf50, #1b5e20)">📄</div>
+                <div class="tool-page-info">
+                    <h1>Chat with PDF</h1>
+                </div>
+            </div>
+
+            <!-- PDF Upload Area -->
+            <div id="pdf-upload-area" style="background:var(--bg-card);border:2px dashed var(--border);border-radius:16px;padding:40px;text-align:center;margin-bottom:20px;cursor:pointer;transition:var(--transition);">
+                <div style="font-size:3rem;margin-bottom:10px;">📁</div>
+                <p style="font-size:1.1rem;font-weight:600;color:var(--text-head);margin-bottom:6px;">Drop your PDF here or Click to Upload</p>
+                <p style="font-size:0.85rem;color:var(--text-muted);">Supports .pdf files up to 10MB</p>
+                <input type="file" id="pdf-file-input" accept=".pdf" style="display:none;" />
+            </div>
+
+            <!-- PDF Status -->
+            <div id="pdf-status" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 20px;margin-bottom:20px;display:none;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="font-size:1.3rem;">✅</span>
+                    <div>
+                        <div id="pdf-filename" style="font-weight:700;color:var(--text-head);font-size:0.95rem;"></div>
+                        <div id="pdf-page-count" style="font-size:0.8rem;color:var(--text-muted);"></div>
+                    </div>
+                    <button id="pdf-remove-btn" style="margin-left:auto;background:rgba(255,82,82,0.1);border:1px solid rgba(255,82,82,0.3);color:#ff5252;border-radius:8px;padding:4px 12px;cursor:pointer;font-size:0.8rem;">✕ Remove</button>
+                </div>
+            </div>
+
+            <!-- Chat UI -->
+            <div class="tool-workspace" style="padding:0">
+                <div class="workspace-topbar" style="padding:14px 20px">
+                    <div style="display:flex;align-items:center;gap:10px">
+                        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg, #4caf50, #1b5e20);display:flex;align-items:center;justify-content:center;font-size:0.9rem">📄</div>
+                        <div>
+                            <div style="font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700">PDF AI Chat</div>
+                            <div style="font-size:0.72rem;color:var(--accent-primary);display:flex;align-items:center;gap:4px">
+                                <span style="width:5px;height:5px;border-radius:50%;background:var(--accent-primary);display:inline-block;animation:pulse 2s infinite"></span>
+                                Upload PDF to start chatting
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <span id="pdf-ai-status" style="font-size:0.72rem;background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:3px 10px;border-radius:50px;font-weight:600">📄 No PDF loaded</span>
+                        <button onclick="clearPdfChat()" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text-muted);font-size:0.78rem;cursor:pointer">🗑️ Clear</button>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-msg bot">
+                        <div class="chat-avatar">📄</div>
+                        <div class="chat-bubble">Welcome! 📄 Upload a PDF file above and ask me any questions about it. I'll read the document and provide accurate answers! 🚀</div>
+                    </div>
+                </div>
+                <div class="chat-input-row">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Ask a question about your PDF..." autocomplete="off" disabled />
+                    <button class="chat-send" id="chat-send-btn" disabled>➤</button>
+                </div>
+            </div>
+
+            <!-- Suggestions -->
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:36px;margin-top:16px">
+                <h3 style="font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;margin-bottom:10px">💡 What you can ask:</h3>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <button onclick="sendPdfQ('Summarize this document in 5 points')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">📝 Summarize</button>
+                    <button onclick="sendPdfQ('What are the key points of this PDF?')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">🔑 Key Points</button>
+                    <button onclick="sendPdfQ('Explain the main topic in simple words')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">🧠 Explain Simply</button>
+                    <button onclick="sendPdfQ('Create study notes from this document')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">📚 Study Notes</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                    <p>Discover the best free AI tools for students and creators in one place.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Orbital Map</h4>
+                    <a href="index.html">Home</a>
+                    <a href="tools.html">Directory</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy.html">Privacy</a>
+                    <a href="terms-of-service.html">Terms</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Akshay AI Tools. All rights reserved.</span>
+                <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+            </div>
+        </div>
+    </footer>
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+      const revealEls = document.querySelectorAll('section, .card, .stat-block, .hero > *');
+      revealEls.forEach(el => el.classList.add('scroll-reveal'));
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      revealEls.forEach(el => io.observe(el));
+    </script>
+    <script>
+        function sendPdfQ(t) {
+            if (!window._pdfText) { showToast('Please upload a PDF first!', 'error', '⚠'); return; }
+            document.getElementById('chat-input').value = t;
+            document.getElementById('chat-send-btn').click();
+        }
+        function clearPdfChat() {
+            window._pdfChatHistory = [];
+            document.getElementById('chat-messages').innerHTML = '<div class="chat-msg bot"><div class="chat-avatar">📄</div><div class="chat-bubble">Chat cleared! Upload a PDF and ask me anything. 😊</div></div>';
+            showToast('Chat cleared', 'success', '🗑️');
+        }
+    </script>
+    <script src="help-widget.js"></script>
+</body>
+</html>

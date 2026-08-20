@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Akshay AI Tools — Powering the Future</title>
+  <meta name="description" content="Translate text into 50+ languages instantly with AI. Accurate, natural translations powered by our advanced routing engine.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .translator-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start}
+    .swap-btn{width:44px;height:44px;border-radius:50%;background:var(--accent-primary);color:#fff;border:none;font-size:1.2rem;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;margin-top:32px;box-shadow:var(--shadow)}
+    .swap-btn:hover{transform:rotate(180deg) scale(1.1);box-shadow:var(--glow);background:var(--accent-second)}
+    .trans-ta{width:100%;min-height:200px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;color:var(--text-head);font-size:.95rem;outline:none;resize:vertical;font-family:var(--font-body);line-height:1.7;transition:var(--transition)}
+    .trans-ta:focus{border-color:var(--accent-primary);box-shadow:0 0 0 3px rgba(59,35,216,.1)}
+    .ts{padding:8px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:.85rem;outline:none;cursor:pointer}
+    @media(max-width:768px){.translator-grid{grid-template-columns:1fr}.swap-btn{margin:0 auto;transform:rotate(90deg)}.swap-btn:hover{transform:rotate(270deg) scale(1.1)}}
+  </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff"></head>
+<body data-page="tool-translator">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+      
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <a href="tools.html" class="back-btn">← Back</a>
+        <div class="tool-page-icon card-icon cyan">🌐</div>
+        <div class="tool-page-info"><h1>AI Translator</h1><p>Translate any text into 50+ languages utilizing our advanced routing engine</p></div>
+      </div>
+      <div class="tool-workspace">
+        <div class="workspace-topbar">
+          <span class="workspace-topbar-title">🌐 AI Translator</span>
+          <span style="font-size:.75rem;background:rgba(59,35,216,.1);border:1px solid rgba(59,35,216,.2);color:var(--accent-primary);padding:3px 10px;border-radius:50px;font-weight:600">🟢 LIVE AI</span>
+        </div>
+        <div class="workspace-body">
+          <div class="translator-grid">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <label style="font-size:.82rem;font-weight:700;color:var(--text-head)">From:</label>
+                <select class="ts" id="from-lang">
+                  <option value="auto">🔍 Auto Detect</option>
+                  <option value="English">🇺🇸 English</option>
+                  <option value="Marathi">🇮🇳 Marathi</option>
+                  <option value="Hindi">🇮🇳 Hindi</option>
+                  <option value="Spanish">🇪🇸 Spanish</option>
+                  <option value="French">🇫🇷 French</option>
+                  <option value="German">🇩🇪 German</option>
+                  <option value="Japanese">🇯🇵 Japanese</option>
+                  <option value="Chinese">🇨🇳 Chinese</option>
+                  <option value="Arabic">🇸🇦 Arabic</option>
+                  <option value="Korean">🇰🇷 Korean</option>
+                  <option value="Tamil">🇮🇳 Tamil</option>
+                  <option value="Telugu">🇮🇳 Telugu</option>
+                </select>
+              </div>
+              <textarea class="trans-ta" id="translate-input" placeholder="Enter text to translate..."></textarea>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button class="btn-secondary" onclick="clearT()" style="padding:8px 14px;font-size:.82rem">🗑️ Clear</button>
+                <span id="cc" style="margin-left:auto;font-size:.78rem;color:var(--text-muted);align-self:center">0 chars</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center">
+              <button class="swap-btn" id="swap-btn" title="Swap languages">⇄</button>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <label style="font-size:.82rem;font-weight:700;color:var(--text-head)">To:</label>
+                <select class="ts" id="to-lang">
+                  <option value="Marathi">🇮🇳 Marathi</option>
+                  <option value="English">🇺🇸 English</option>
+                  <option value="Hindi">🇮🇳 Hindi</option>
+                  <option value="Spanish">🇪🇸 Spanish</option>
+                  <option value="French">🇫🇷 French</option>
+                  <option value="German">🇩🇪 German</option>
+                  <option value="Japanese">🇯🇵 Japanese</option>
+                  <option value="Chinese">🇨🇳 Chinese</option>
+                  <option value="Arabic">🇸🇦 Arabic</option>
+                  <option value="Korean">🇰🇷 Korean</option>
+                  <option value="Tamil">🇮🇳 Tamil</option>
+                  <option value="Telugu">🇮🇳 Telugu</option>
+                </select>
+              </div>
+              <div id="translate-output" style="min-height:200px;padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;font-size:.95rem;line-height:1.7;color:var(--text-head);white-space:pre-wrap">
+                <div style="text-align:center;padding:60px 20px;color:var(--text-muted)"><span style="font-size:2.5rem;display:block;margin-bottom:8px">🌐</span><p>Translation appears here</p></div>
+              </div>
+              <button class="btn-secondary" onclick="copyT()" style="margin-top:8px;padding:8px 14px;font-size:.82rem">📋 Copy</button>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;margin-top:20px">
+            <button class="btn-neon" id="translate-btn" style="padding:14px 40px;font-size:1rem">🌐 Translate Now</button>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-top:24px;margin-bottom:36px">
+        <h3 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:12px;color:var(--text-head)">⚡ Quick Phrases</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button onclick="setP('Hello, how are you?')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">👋 Hello</button>
+          <button onclick="setP('Thank you very much!')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">🙏 Thanks</button>
+          <button onclick="setP('AI is changing the world.')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">🤖 AI</button>
+          <button onclick="setP('Where is the nearest restaurant?')" class="btn-secondary" style="padding:6px 14px;font-size:.8rem;border-radius:50px">🍕 Travel</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a><p>Best free AI tools for students and creators.</p></div>
+        <div class="footer-col"><h4>Orbital Map</h4><a href="index.html">Home</a><a href="tools.html">Directory</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Akshay AI Tools. All rights reserved.</span><span>Made with ❤️ in India</span></div>
+    </div>
+  </footer>
+  <div id="toast" class="toast"></div>
+  <script src="insforge.js"></script>
+  <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+  <script src="antigravity.js"></script>
+  <script>
+    if(typeof guardProtectedPage==='function'&&!guardProtectedPage()){}
+    document.getElementById('translate-input').addEventListener('input',e=>{document.getElementById('cc').textContent=e.target.value.length+' chars'});
+    document.getElementById('translate-btn').addEventListener('click',async()=>{
+      const text=document.getElementById('translate-input').value.trim();
+      if(!text){showToast('Enter text!','error','⚠');return}
+      const from=document.getElementById('from-lang').value,to=document.getElementById('to-lang').value;
+      if(from===to&&from!=='auto'){showToast('Same language!','error','⚠');return}
+      const btn=document.getElementById('translate-btn'),out=document.getElementById('translate-output');
+      btn.disabled=true;btn.textContent='⏳ Translating...';
+      out.innerHTML='<div class="generating"><div class="gen-dot"></div><div class="gen-dot"></div><div class="gen-dot"></div><span>Translating…</span></div>';
+      const p=from==='auto'?`Translate to ${to}:\n"${text}"`:`Translate from ${from} to ${to}:\n"${text}"`;
+      try{const r=await callAI(p,'You are a professional translator. Return ONLY the translated text.');out.textContent=r;if(typeof HISTORY!=='undefined')HISTORY.add({type:'translator',tool:'AI Translator',prompt:text.substring(0,50)});showToast('Translated! 🌐','success','✓')}catch(e){out.textContent='❌ '+e.message}
+      btn.disabled=false;btn.textContent='🌐 Translate Now';
+    });
+    document.getElementById('swap-btn').addEventListener('click',()=>{
+      const f=document.getElementById('from-lang'),t=document.getElementById('to-lang'),inp=document.getElementById('translate-input'),out=document.getElementById('translate-output');
+      if(f.value==='auto'){showToast('Cannot swap Auto','error','⚠');return}
+      const tmp=f.value;f.value=t.value;t.value=tmp;
+      const ot=out.textContent;if(ot&&!ot.includes('Translation appears')&&!ot.includes('Error')){inp.value=ot;out.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--text-muted)"><span style="font-size:2.5rem;display:block;margin-bottom:8px">🌐</span><p>Translation appears here</p></div>';document.getElementById('cc').textContent=ot.length+' chars'}
+      showToast('Swapped!','success','⇄');
+    });
+    function setP(t){document.getElementById('translate-input').value=t;document.getElementById('cc').textContent=t.length+' chars';showToast('Set!','success','✓')}
+    function clearT(){document.getElementById('translate-input').value='';document.getElementById('translate-output').innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--text-muted)"><span style="font-size:2.5rem;display:block;margin-bottom:8px">🌐</span><p>Translation appears here</p></div>';document.getElementById('cc').textContent='0 chars'}
+    function copyT(){const t=document.getElementById('translate-output').textContent;if(t&&!t.includes('Translation appears'))navigator.clipboard.writeText(t).then(()=>showToast('Copied!','success','📋'))}
+  </script>
+<script src="help-widget.js"></script></body>
+</html>

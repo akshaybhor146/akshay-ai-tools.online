@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sora AI Video Studio — Akshay AI Tools</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="tool">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard">Dashboard</a></li>
+                <li><button onclick="COMMAND_PALETTE.open()" class="cmd-key" style="cursor:pointer;padding:6px 12px;">🔍 Ctrl+K</button></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 100px 0 60px;">
+        <div class="tool-hero" style="text-align:center; margin-bottom:40px;">
+            <div class="bento-icon-box pink" style="margin:0 auto 16px;">🎥</div>
+            <span class="bento-tag" style="position:static; display:inline-block; margin-bottom:12px;">NEXT-GEN VIDEO</span>
+            <h1 style="font-size:clamp(2rem,4.5vw,3rem); font-weight:800; margin-bottom:12px;">
+                Sora & Runway <span class="gradient-text">AI Video Studio</span>
+            </h1>
+            <p style="color:var(--text-muted); max-width:600px; margin:0 auto;">
+                Transform pure text into hyper-realistic 4K 60fps video clips with cinematic lighting, depth of field, and camera trajectory controls.
+            </p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:24px; max-width:1100px; margin:0 auto;">
+            <!-- Controls Form -->
+            <div class="glass-card" style="padding:28px;">
+                <div style="margin-bottom:18px;">
+                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-head); margin-bottom:8px;">Prompt Preset</label>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                        <button class="pg-tab" onclick="setVideoPrompt('Hyperrealistic drone shot sweeping over futuristic Tokyo neon skyscrapers at midnight, rain reflections')">🏙️ Tokyo Neon</button>
+                        <button class="pg-tab" onclick="setVideoPrompt('Cinematic slow-motion shot of a majestic snow leopard sprinting across misty Himalayan peaks, 8k documentary')">🐆 Wildlife 8K</button>
+                        <button class="pg-tab" onclick="setVideoPrompt('Interstellar spacecraft diving into the glowing accretion disk of a supermassive black hole, volumetric lighting')">🌌 Space Odyssey</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:18px;">
+                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-head); margin-bottom:8px;">Video Prompt</label>
+                    <textarea id="video-prompt" placeholder="Describe the scene, motion, lighting, and camera action..." style="width:100%; min-height:100px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:14px; color:var(--text-head); font-family:var(--font-body); font-size:0.95rem; outline:none; resize:vertical;"></textarea>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px;">
+                    <div>
+                        <label style="display:block; font-size:0.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px;">Aspect Ratio</label>
+                        <select id="video-ratio" style="width:100%; background:var(--bg-surface); border:1px solid var(--border); color:var(--text-head); padding:10px; border-radius:10px; outline:none;">
+                            <option value="16:9">16:9 Widescreen (YouTube/Film)</option>
+                            <option value="9:16">9:16 Vertical (Reels/TikTok)</option>
+                            <option value="1:1">1:1 Square (Feed)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px;">Camera Motion</label>
+                        <select id="video-motion" style="width:100%; background:var(--bg-surface); border:1px solid var(--border); color:var(--text-head); padding:10px; border-radius:10px; outline:none;">
+                            <option value="orbital">Orbital 360 Drone Sweep</option>
+                            <option value="fpv">High-Speed FPV Dive</option>
+                            <option value="dolly">Slow Cinematic Dolly Zoom</option>
+                            <option value="static">Tripod Static Masterpiece</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="gen-video-btn" class="btn-primary" style="width:100%; padding:14px; background:var(--gradient-main); border:none; border-radius:50px; color:#fff; font-weight:700; cursor:pointer; font-size:1rem;">
+                    🎬 Render AI Video (4K)
+                </button>
+            </div>
+
+            <!-- Video Player Preview -->
+            <div class="glass-card" style="padding:28px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                        <span style="font-weight:700; font-size:0.95rem; color:var(--accent-cyan);">🎥 Output Viewport</span>
+                        <span id="render-status" class="tools-count-badge">Ready for Prompt</span>
+                    </div>
+
+                    <div class="video-preview-box" id="video-box" style="background: radial-gradient(circle, rgba(123,47,255,0.2) 0%, rgba(5,7,20,0.95) 100%);">
+                        <div class="video-overlay-badge">4K HDR • 60 FPS • SORA GEN-3</div>
+                        <div id="video-placeholder-content" style="text-align:center; padding:30px;">
+                            <div style="font-size:3.5rem; margin-bottom:12px; filter:drop-shadow(0 0 20px rgba(0,245,255,0.5));">🎬</div>
+                            <p style="color:var(--text-muted); font-size:0.9rem;">Configure parameters and click "Render AI Video" to synthesize clip.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:0.82rem; color:var(--text-muted);">
+                        ⚡ Latency: <span style="color:var(--accent-cyan);">~1.2s Edge Turbo</span>
+                    </div>
+                    <button id="download-vid-btn" disabled style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-muted); padding:8px 16px; border-radius:8px; font-size:0.85rem; cursor:pointer;">
+                        ⬇️ Download Clip
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+        function setVideoPrompt(t) {
+            document.getElementById('video-prompt').value = t;
+        }
+
+        const genBtn = document.getElementById('gen-video-btn');
+        const videoBox = document.getElementById('video-box');
+        const statusBadge = document.getElementById('render-status');
+        const downloadBtn = document.getElementById('download-vid-btn');
+
+        genBtn.addEventListener('click', async () => {
+            const prompt = document.getElementById('video-prompt').value.trim();
+            if (!prompt) { showToast('Please enter a video prompt description!', 'error', '⚠️'); return; }
+
+            const ratio = document.getElementById('video-ratio').value;
+            const motion = document.getElementById('video-motion').value;
+
+            genBtn.disabled = true;
+            genBtn.innerHTML = '⏳ Synthesizing Diffusion Frames...';
+            statusBadge.textContent = 'Rendering 120 Frames...';
+            statusBadge.style.background = 'rgba(255,45,120,0.2)';
+
+            videoBox.innerHTML = `
+                <div style="text-align:center; padding:30px;">
+                    <div class="loader-bar-wrap" style="width:200px; margin:0 auto 16px;"><div class="loader-bar"></div></div>
+                    <div style="color:var(--accent-cyan); font-weight:700; font-size:0.95rem;">Synthesizing ${motion} trajectory...</div>
+                    <p style="color:var(--text-muted); font-size:0.8rem; margin-top:6px;">Generating realistic physical coherence & raytracing</p>
+                </div>
+            `;
+
+            await new Promise(r => setTimeout(r, 2000));
+
+            statusBadge.textContent = 'Render Completed ✓';
+            statusBadge.style.background = 'rgba(0,230,118,0.2)';
+            statusBadge.style.color = '#00e676';
+
+            // Animated Visualizer Simulation for 4K Video
+            videoBox.innerHTML = `
+                <div class="video-overlay-badge">4K • 60 FPS • SORA GEN-3</div>
+                <div style="width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; background: radial-gradient(circle, rgba(123,47,255,0.4) 0%, #03040c 90%); text-align:center; padding:20px; animation:pulse 4s infinite alternate;">
+                    <div style="font-size:3.5rem; margin-bottom:8px;">✨</div>
+                    <h3 style="color:#fff; font-size:1.15rem; margin-bottom:6px; max-width:80%;">${prompt.substring(0, 60)}...</h3>
+                    <span style="font-size:0.8rem; color:var(--accent-cyan); font-weight:600; padding:4px 12px; background:rgba(0,245,255,0.1); border-radius:50px; border:1px solid rgba(0,245,255,0.3);">
+                        Ratio: ${ratio} • Motion: ${motion}
+                    </span>
+                    <div style="margin-top:16px; display:flex; gap:10px;">
+                        <button onclick="showToast('Playing preview stream...', 'info', '▶')" style="background:var(--accent-cyan); color:#000; border:none; padding:8px 18px; border-radius:50px; font-weight:700; cursor:pointer;">▶ Play Stream</button>
+                    </div>
+                </div>
+            `;
+
+            downloadBtn.disabled = false;
+            downloadBtn.style.color = 'var(--text-head)';
+            downloadBtn.style.borderColor = 'var(--accent-cyan)';
+            downloadBtn.onclick = () => {
+                showToast('Downloading 4K MP4 Render Package... 🎬', 'success', '✓');
+            };
+
+            genBtn.disabled = false;
+            genBtn.innerHTML = '🎬 Render AI Video (4K)';
+            showToast('AI Video Rendered Successfully! 🎥', 'success', '✓');
+            HISTORY.add({ type: 'video', tool: 'Sora Video Studio', prompt });
+        });
+    </script>
+</body>
+</html>

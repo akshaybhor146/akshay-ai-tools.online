@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Akshay AI Tools</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-head);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 24px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 440px;
+            z-index: 10;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 44px 38px;
+            box-shadow: var(--shadow-hover);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(24px);
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient-main);
+        }
+
+        .auth-logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            display: block;
+            margin-bottom: 24px;
+            text-decoration: none;
+            color: var(--text-head);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .auth-header h1 {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+            color: var(--text-head);
+        }
+
+        .auth-header p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.83rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-body);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-head);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: var(--transition);
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-violet);
+            background: rgba(123,47,255,0.05);
+            box-shadow: 0 0 0 3px rgba(123,47,255,0.15);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: var(--gradient-main);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(123,47,255,0.45);
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 12px;
+            background: rgba(123,47,255,0.1);
+            color: var(--accent-cyan);
+            border: 1px dashed rgba(0,245,255,0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-demo:hover {
+            background: rgba(0,245,255,0.15);
+            border-color: var(--accent-cyan);
+            transform: translateY(-1px);
+        }
+
+        .auth-footer {
+            margin-top: 26px;
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .auth-footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error-box {
+            background: rgba(255,45,120,0.12);
+            color: #ff4578;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            border: 1px solid rgba(255,45,120,0.3);
+            line-height: 1.5;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <a href="index.html" class="auth-logo">Akshay <span class="gradient-text">AI</span></a>
+            <div class="auth-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to your global AI dashboard</p>
+            </div>
+
+            <div id="auth-error" class="error-box"></div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-input" placeholder="name@domain.com" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                    <button type="button" class="toggle-password" id="togglePass" title="Show/Hide Password">👁️</button>
+                </div>
+                <button type="submit" class="btn-auth" id="submitBtn">Sign In →</button>
+            </form>
+
+            <button type="button" class="btn-demo" id="demoBtn">⚡ Quick Demo Login (1-Click)</button>
+
+            <div class="auth-footer">
+                Don't have an account? <a href="signup.html">Join for free</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="insforge.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const errorBox = document.getElementById('auth-error');
+        const submitBtn = document.getElementById('submitBtn');
+        const demoBtn = document.getElementById('demoBtn');
+        const togglePass = document.getElementById('togglePass');
+        const passwordInput = document.getElementById('password');
+
+        // Toggle password visibility
+        togglePass.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePass.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                togglePass.textContent = '👁️';
+            }
+        });
+
+        // 1-Click Demo Login
+        demoBtn.addEventListener('click', () => {
+            AUTH.login({ name: 'Akshay (Demo)', email: 'demo@akshay.ai', photo: '' });
+            showToast('Signed in as Demo User! 🚀', 'success', '✓');
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 400);
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = passwordInput.value;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Authenticating...';
+            errorBox.style.display = 'none';
+
+            // 1. Try InsForge Auth first
+            try {
+                const result = await INSFORGE.auth.signIn({ email, password });
+                if (result.accessToken || result.user) {
+                    const userName = result.user?.name || (result.user?.email ? result.user.email.split('@')[0] : 'User');
+                    AUTH.login({ name: userName, email: result.user?.email || email, photo: '' });
+                    showToast('Welcome back, ' + userName + '! 🎉', 'success', '✓');
+                    setTimeout(() => { window.location.href = 'dashboard.html'; }, 500);
+                    return;
+                }
+            } catch (err) {
+                console.warn('InsForge backend login attempt:', err.message);
+            }
+
+            // 2. Check local users or direct creation
+            const users = JSON.parse(localStorage.getItem('aat_users') || '[]');
+            const localUser = users.find(u => u.email === email && u.password === password);
+
+            if (localUser || (email === 'demo@akshay.ai' && password === 'demo123')) {
+                const uName = localUser ? localUser.name : 'Akshay';
+                AUTH.login({ name: uName, email: email, photo: '' });
+                showToast('Welcome back, ' + uName + '! 🎉', 'success', '✓');
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 500);
+                return;
+            }
+
+            // 3. If account not found, allow quick seamless login or guide to signup
+            if (password.length >= 4) {
+                // Auto-register user locally for instant seamless onboarding
+                const autoName = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, ' ');
+                const formattedName = autoName.charAt(0).toUpperCase() + autoName.slice(1);
+                users.push({ name: formattedName, email, password });
+                localStorage.setItem('aat_users', JSON.stringify(users));
+                AUTH.login({ name: formattedName, email, photo: '' });
+                showToast('Welcome ' + formattedName + '! Account created 🎉', 'success', '✓');
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 500);
+                return;
+            }
+
+            errorBox.innerHTML = 'Invalid credentials. Password must be at least 4 characters, or click <a href="signup.html" style="color:var(--accent-cyan);text-decoration:underline;">Sign Up Free</a>.';
+            errorBox.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Sign In →';
+        });
+    </script>
+</body>
+</html>

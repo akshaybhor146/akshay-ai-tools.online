@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /login.html
+Disallow: /signup.html
+
+Sitemap: https://akshay-ai-tools.online/sitemap.xml

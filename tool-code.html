@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Code Helper — Akshay AI Tools</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="tool-code">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">⚡ Akshay AI</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+      </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <a href="tools.html" class="back-btn">← Back</a>
+        <div class="tool-page-icon card-icon pink">💻</div>
+        <div class="tool-page-info">
+          <h1>AI Code Helper</h1>
+          <p>Real AI code generation by Google Gemini</p>
+        </div>
+      </div>
+      <div class="tool-workspace">
+        <div class="workspace-topbar">
+          <span class="workspace-topbar-title">💻 Code Workspace — Gemini AI</span>
+          <span style="font-size:0.75rem;background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.2);color:var(--accent-cyan);padding:3px 10px;border-radius:50px;font-weight:600">🟢 LIVE AI</span>
+        </div>
+        <div class="workspace-body">
+          <div class="lang-select-wrap">
+            <label>🎤 Voice:</label>
+            <button id="voice-btn" title="Voice Input">🎤</button>
+            <select id="lang-select" style="display:none"><option value="en-US">English</option></select>
+          </div>
+          <label style="display:block;font-size:0.82rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">Describe what code you need</label>
+          <textarea class="prompt-area" id="code-prompt" placeholder="Create a React component for a user profile card with avatar, name, bio and social links..."></textarea>
+          <div class="tool-controls">
+            <select class="control-select" id="code-lang">
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="typescript">TypeScript</option>
+              <option value="react">React JSX</option>
+              <option value="html">HTML/CSS</option>
+              <option value="java">Java</option>
+              <option value="cpp">C++</option>
+              <option value="sql">SQL</option>
+            </select>
+            <select class="control-select" id="code-mode">
+              <option value="generate">✨ Generate</option>
+              <option value="debug">🔍 Debug</option>
+              <option value="refactor">♻️ Refactor</option>
+              <option value="explain">📖 Explain</option>
+            </select>
+            <button class="btn-primary" id="generate-code-btn" style="margin-left:auto">💻 Generate Code</button>
+          </div>
+          <div style="margin-top:20px">
+            <div class="code-header">
+              <span class="code-lang-badge" id="lang-badge">JavaScript</span>
+              <button class="copy-btn" id="copy-code-btn">📋 Copy Code</button>
+            </div>
+            <div class="code-output" id="code-output"><span style="color:#8b949e">// Your AI-generated code will appear here...
+// Powered by Google Gemini AI
+//
+// Examples:
+// "Build a REST API in Node.js with Express"
+// "Write a Python script to scrape websites"
+// "Create a TypeScript generic utility type"</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Examples -->
+      <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:22px;margin-bottom:36px">
+        <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:12px">⚡ Quick Examples</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+          <button onclick="setCode('Create a debounce utility function with TypeScript types','typescript')" class="btn-secondary" style="padding:10px 14px;font-size:0.82rem;text-align:left;border-radius:10px;justify-content:flex-start;gap:8px"><span>⚡</span> Debounce Function</button>
+          <button onclick="setCode('Write a Python class for a binary search tree','python')" class="btn-secondary" style="padding:10px 14px;font-size:0.82rem;text-align:left;border-radius:10px;justify-content:flex-start;gap:8px"><span>🐍</span> Python BST</button>
+          <button onclick="setCode('Build a React custom hook useFetch for data fetching with loading and error states','react')" class="btn-secondary" style="padding:10px 14px;font-size:0.82rem;text-align:left;border-radius:10px;justify-content:flex-start;gap:8px"><span>⚛️</span> React useFetch</button>
+          <button onclick="setCode('Create a responsive navbar in HTML and CSS with hamburger menu','html')" class="btn-secondary" style="padding:10px 14px;font-size:0.82rem;text-align:left;border-radius:10px;justify-content:flex-start;gap:8px"><span>🌐</span> HTML Navbar</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer><div class="container"><div class="footer-bottom"><span>© 2025 Akshay AI Tools</span><a href="tools.html" style="color:var(--accent-cyan);text-decoration:none">← All Tools</a></div></div></footer>
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('code-lang').addEventListener('change', function() {
+      document.getElementById('lang-badge').textContent = this.options[this.selectedIndex].text;
+    });
+    function setCode(prompt, lang) {
+      document.getElementById('code-prompt').value = prompt;
+      document.getElementById('code-lang').value = lang;
+      document.getElementById('lang-badge').textContent = lang.charAt(0).toUpperCase() + lang.slice(1);
+      showToast('Prompt set! Click Generate.','success','✓');
+    }
+  </script>
+</body>
+</html>

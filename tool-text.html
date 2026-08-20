@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Text Generator — Akshay AI Tools</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="tool-text">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">⚡ Akshay AI</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+      </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <a href="tools.html" class="back-btn">← Back</a>
+        <div class="tool-page-icon card-icon violet">✍️</div>
+        <div class="tool-page-info">
+          <h1>AI Text Generator</h1>
+          <p>Real AI content powered by Google Gemini</p>
+        </div>
+      </div>
+      <div class="tool-workspace">
+        <div class="workspace-topbar">
+          <span class="workspace-topbar-title">✍️ Text Generation — Gemini AI</span>
+          <span style="font-size:0.75rem;background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.2);color:var(--accent-cyan);padding:3px 10px;border-radius:50px;font-weight:600">🟢 LIVE AI</span>
+        </div>
+        <div class="workspace-body">
+          <!-- Language + Voice -->
+          <div class="lang-select-wrap">
+            <label>🌐 Language:</label>
+            <select id="lang-select">
+              <option value="en-US">🇺🇸 English</option>
+              <option value="mr-IN">🇮🇳 Marathi</option>
+              <option value="hi-IN">🇮🇳 Hindi</option>
+              <option value="es-ES">🇪🇸 Spanish</option>
+              <option value="fr-FR">🇫🇷 French</option>
+              <option value="de-DE">🇩🇪 German</option>
+              <option value="ja-JP">🇯🇵 Japanese</option>
+            </select>
+            <button id="voice-btn" title="Voice Input">🎤</button>
+          </div>
+          <label style="display:block;font-size:0.82rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">What would you like to write?</label>
+          <textarea class="prompt-area" id="text-prompt" placeholder="Write a blog post about AI and creativity..."></textarea>
+          <div class="tool-controls">
+            <select class="control-select" id="text-tone">
+              <option value="professional">💼 Professional</option>
+              <option value="casual">😊 Casual</option>
+              <option value="creative">🎨 Creative</option>
+              <option value="formal">📋 Formal</option>
+              <option value="humorous">😄 Humorous</option>
+            </select>
+            <select class="control-select" id="text-length">
+              <option value="medium (200 words)">📝 Medium</option>
+              <option value="short (100 words)">⚡ Short</option>
+              <option value="long (500 words)">📄 Long</option>
+            </select>
+            <select class="control-select" id="text-type">
+              <option value="blog post">📰 Blog Post</option>
+              <option value="social media caption">📱 Social Media</option>
+              <option value="email">📧 Email</option>
+              <option value="story">📖 Story</option>
+              <option value="advertisement">📣 Ad Copy</option>
+            </select>
+            <button class="btn-primary" id="generate-text-btn" style="margin-left:auto">✨ Generate</button>
+          </div>
+          <div class="output-area" id="text-output">
+            <div class="output-placeholder"><span class="op-icon">✍️</span><p>Enter a prompt and click Generate</p></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+            <button class="btn-secondary" onclick="copyText()" style="padding:8px 16px;font-size:0.83rem">📋 Copy</button>
+            <button class="btn-secondary" onclick="document.getElementById('generate-text-btn').click()" style="padding:8px 16px;font-size:0.83rem">🔄 Regenerate</button>
+          </div>
+        </div>
+      </div>
+      <!-- Quick Templates -->
+      <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:22px;margin-bottom:36px">
+        <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:12px">⚡ Quick Templates</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button onclick="setPrompt('Write a blog introduction about artificial intelligence transforming modern business')" class="btn-secondary" style="padding:7px 13px;font-size:0.8rem;border-radius:50px">📰 AI Blog</button>
+          <button onclick="setPrompt('Create a catchy product description for premium wireless noise-cancelling headphones')" class="btn-secondary" style="padding:7px 13px;font-size:0.8rem;border-radius:50px">🛍️ Product Desc</button>
+          <button onclick="setPrompt('Write an engaging LinkedIn post about continuous learning in tech')" class="btn-secondary" style="padding:7px 13px;font-size:0.8rem;border-radius:50px">💼 LinkedIn Post</button>
+          <button onclick="setPrompt('Write a short motivational story about overcoming challenges through persistence')" class="btn-secondary" style="padding:7px 13px;font-size:0.8rem;border-radius:50px">📖 Motivational</button>
+          <button onclick="setPrompt('AI बद्दल मराठीत एक ब्लॉग पोस्ट लिहा')" class="btn-secondary" style="padding:7px 13px;font-size:0.8rem;border-radius:50px">🇮🇳 मराठी ब्लॉग</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer><div class="container"><div class="footer-bottom"><span>© 2025 Akshay AI Tools</span><a href="tools.html" style="color:var(--accent-cyan);text-decoration:none">← All Tools</a></div></div></footer>
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+  <script>
+    function setPrompt(t) { document.getElementById('text-prompt').value = t; showToast('Prompt set!','success','✓'); }
+    function copyText() { navigator.clipboard.writeText(document.getElementById('text-output').textContent).then(()=>showToast('Copied!','success','📋')); }
+  </script>
+</body>
+</html>

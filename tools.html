@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Tools Directory — Akshay AI Tools</title>
+    <meta name="description" content="Explore 18+ free AI tools for creators, developers and students. Image generation, code helpers, resume builder, interview copilot & more.">
+    <meta name="keywords" content="free ai tools, ai image generator, ai code helper, resume builder, interview copilot, background remover, akshay ai tools">
+    <meta property="og:title" content="AI Tools Directory — Akshay AI Tools">
+    <meta property="og:description" content="Professional AI suite for creators & developers — 18+ powerful tools, all free.">
+    <meta property="og:image" content="https://akshay-ai-tools.online/favicon.png">
+    <meta property="og:url" content="https://akshay-ai-tools.online/tools.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="login.html" id="nav-login">Login</a></li>
+                <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+                <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+                <li>
+                    <button onclick="COMMAND_PALETTE.open()" title="Search Tools (Ctrl+K)" style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:8px 14px;border-radius:8px;cursor:pointer;font-size:0.78rem;display:flex;align-items:center;gap:6px;">
+                        🔍 <span style="opacity:0.6;font-size:0.7rem;">Ctrl+K</span>
+                    </button>
+                </li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="tools-page">
+        <div class="container">
+
+            <!-- Page Hero -->
+            <div class="tools-hero" style="text-align:center; padding: 70px 0 30px;">
+                <span class="section-tag reveal" style="display:inline-flex; align-items:center; gap:8px; background:rgba(123,47,255,0.12); border:1px solid rgba(123,47,255,0.3); color:var(--accent-cyan); padding:6px 18px; border-radius:50px; font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:20px;">⚡ 24 Next-Gen AI Supertools</span>
+                <h1 class="section-title reveal" style="font-size:clamp(2.4rem,5.5vw,3.8rem); font-weight:800; letter-spacing:-0.03em; margin-bottom:14px; line-height:1.1;">
+                    Explore the Future of <span class="gradient-text">AI Creativity</span>
+                </h1>
+                <p class="section-sub reveal" style="color:var(--text-muted); max-width:540px; margin:0 auto 30px; font-size:1rem;">
+                    Instant AI superpowers for students, creators, and engineers. Everything is free to use.
+                </p>
+
+                <!-- Search Suite -->
+                <div class="tools-search-container reveal">
+                    <div class="search-bar-wrap">
+                        <span style="font-size:1.2rem; opacity:0.7; margin-right:6px;">🔍</span>
+                        <input type="text" id="tool-search" placeholder="Search 24 tools — deep reasoning, video gen, flux, music, code..." autocomplete="off">
+                        <button type="button" class="search-clear-btn" id="search-clear-btn" title="Clear Search">✕</button>
+                        <span class="search-shortcut-badge"><span>Ctrl</span> + <span>K</span></span>
+                    </div>
+
+                    <!-- Category Filter Tabs -->
+                    <div class="filter-tabs-wrap">
+                        <button type="button" class="filter-tab-btn active" data-filter="all">✨ All 24 Tools</button>
+                        <button type="button" class="filter-tab-btn" data-filter="popular">🔥 Popular</button>
+                        <button type="button" class="filter-tab-btn" data-filter="visual">🎨 Visual & Video</button>
+                        <button type="button" class="filter-tab-btn" data-filter="dev">🧠 Reasoning & Dev</button>
+                        <button type="button" class="filter-tab-btn" data-filter="career">💼 Career & Research</button>
+                        <button type="button" class="filter-tab-btn" data-filter="audio">🎙️ Voice & Music</button>
+                        <button type="button" class="filter-tab-btn" data-filter="writing">✍️ Writing & Media</button>
+                    </div>
+                </div>
+
+                <div class="tools-count-bar reveal">
+                    <span id="tools-showing-text" style="font-weight:500;">Showing all tools</span>
+                    <span class="tools-count-badge" id="tools-counter-badge">24 Tools Available</span>
+                </div>
+            </div>
+
+            <!-- Tools Bento Grid -->
+            <div class="bento-grid" id="tools-bento-grid" style="margin-bottom:80px">
+
+                <!-- 1. DeepSeek Reasoning (Featured) -->
+                <a href="tool-reasoning.html" class="bento-item large" data-category="dev popular" style="background: linear-gradient(to bottom, rgba(13,13,21,0.6) 0%, rgba(13,13,21,0.95) 100%), linear-gradient(135deg, rgba(0,245,255,0.25), rgba(123,47,255,0.2));">
+                    <div class="bento-tag" style="color:#00f5ff; border-color:rgba(0,245,255,0.4);">🧠 NEW REASONING</div>
+                    <div class="bento-content">
+                        <div class="bento-icon-box cyan">🧠</div>
+                        <h3 class="bento-title">DeepSeek R1 Reasoning</h3>
+                        <p class="bento-desc">Step-by-step chain-of-thought mathematical proof, logic deduction & recursive algorithmic solver.</p>
+                        <div class="bento-action-row">Launch Reasoning Engine <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 2. Sora Video Studio (Wide) -->
+                <a href="tool-video-gen.html" class="bento-item wide" data-category="visual popular" style="background: linear-gradient(to top, rgba(255,45,120,0.1), transparent);">
+                    <div class="bento-tag" style="color:#ff2d78; border-color:rgba(255,45,120,0.4);">🎥 SORA 4K</div>
+                    <div class="bento-content">
+                        <div class="bento-icon-box pink">🎥</div>
+                        <h3 class="bento-title">Sora & Runway Video Studio</h3>
+                        <p class="bento-desc">Generate cinematic 4K 60fps video scenes from text descriptions with orbital camera trajectories.</p>
+                        <div class="bento-action-row">Generate Video <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 3. FLUX.1 Prompt Studio -->
+                <a href="tool-flux.html" class="bento-item" data-category="visual popular">
+                    <div class="bento-content">
+                        <div class="bento-icon-box gold">🖼️</div>
+                        <h3 class="bento-title">FLUX.1 Studio</h3>
+                        <p class="bento-desc">Architect photorealistic prompts with custom Hasselblad lenses, studio lighting, and negative weights.</p>
+                        <div class="bento-action-row">Engineer Prompt <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 4. Claude Canvas & Artifacts (Wide) -->
+                <a href="tool-canvas.html" class="bento-item wide" data-category="dev popular">
+                    <div class="bento-tag" style="color:#7b2fff; border-color:rgba(123,47,255,0.4);">🎨 CANVAS SANDBOX</div>
+                    <div class="bento-content">
+                        <div class="bento-icon-box violet">🎨</div>
+                        <h3 class="bento-title">Claude Canvas & Artifacts</h3>
+                        <p class="bento-desc">Side-by-side interactive code, document and UI sandbox with live real-time iframe execution.</p>
+                        <div class="bento-action-row">Open Workspace <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 5. Suno AI Music Studio -->
+                <a href="tool-music.html" class="bento-item" data-category="audio popular">
+                    <div class="bento-tag">🎵 SUNO ENGINE</div>
+                    <div class="bento-content">
+                        <div class="bento-icon-box orange">🎵</div>
+                        <h3 class="bento-title">Suno AI Music Studio</h3>
+                        <p class="bento-desc">Compose full-length vocal songs, lo-fi beats, synthwave tracks & sound effects from text.</p>
+                        <div class="bento-action-row">Compose Track <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 6. Perplexity Deep Research -->
+                <a href="tool-research.html" class="bento-item" data-category="career popular">
+                    <div class="bento-content">
+                        <div class="bento-icon-box teal">🕵️</div>
+                        <h3 class="bento-title">Perplexity Deep Research</h3>
+                        <p class="bento-desc">Cross-reference 50M+ academic papers with verified source citations & executive dossiers.</p>
+                        <div class="bento-action-row">Start Research <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 7. AI Image Generator -->
+                <a href="tool-image.html" class="bento-item" data-category="visual popular">
+                    <div class="bento-content">
+                        <div class="bento-icon-box cyan">🎨</div>
+                        <h3 class="bento-title">AI Image Studio</h3>
+                        <p class="bento-desc">Create studio-grade visuals, concept art & 3D renders from text prompts with SDXL.</p>
+                        <div class="bento-action-row">Launch Studio <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 8. AI Chat Advisor (Wide) -->
+                <a href="tool-chat.html" class="bento-item wide" data-category="dev popular">
+                    <div class="bento-tag">⚡ Live AI</div>
+                    <div class="bento-content">
+                        <div class="bento-icon-box violet">🤖</div>
+                        <h3 class="bento-title">AI Chat Advisor</h3>
+                        <p class="bento-desc">Intelligent planning, brainstorming, research and conversational assistance powered by Gemini.</p>
+                        <div class="bento-action-row">Start Chatting <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 9. AI Code Helper -->
+                <a href="tool-code.html" class="bento-item" data-category="dev">
+                    <div class="bento-content">
+                        <div class="bento-icon-box green">💻</div>
+                        <h3 class="bento-title">AI Code Helper</h3>
+                        <p class="bento-desc">Generate, debug, refactor, and explain clean code in 20+ programming languages.</p>
+                        <div class="bento-action-row">Open IDE Helper <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 10. AI Interview Copilot (Tall) -->
+                <a href="tool-interview.html" class="bento-item tall" data-category="career popular" style="background: linear-gradient(to top, rgba(0,230,118,0.1), transparent);">
+                    <div class="bento-tag" style="color:#00e676; border-color:rgba(0,230,118,0.3); background:rgba(0,230,118,0.08);">🎯 POPULAR</div>
+                    <div class="bento-content">
+                        <div class="bento-icon-box green">🎯</div>
+                        <h3 class="bento-title">Interview Copilot</h3>
+                        <p class="bento-desc">Real-time live listening, whisper prompts, and interview answers for coding & HR rounds.</p>
+                        <div class="bento-action-row">Launch Copilot <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 11. Smart Resume Builder -->
+                <a href="tool-resume.html" class="bento-item" data-category="career">
+                    <div class="bento-content">
+                        <div class="bento-icon-box violet">📄</div>
+                        <h3 class="bento-title">Smart Resume Builder</h3>
+                        <p class="bento-desc">Craft ATS-optimized resumes and tailor experiences to match job descriptions.</p>
+                        <div class="bento-action-row">Build Resume <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 12. Chat with PDF (Wide) -->
+                <a href="tool-pdf-chat.html" class="bento-item wide" data-category="career">
+                    <div class="bento-content">
+                        <div class="bento-icon-box pink">📁</div>
+                        <h3 class="bento-title">Chat with PDF</h3>
+                        <p class="bento-desc">Upload reports, textbooks, or whitepapers to extract insights, summaries & instant Q&A.</p>
+                        <div class="bento-action-row">Analyze Document <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 13. AI BG Remover -->
+                <a href="tool-bg-remover.html" class="bento-item" data-category="visual">
+                    <div class="bento-content">
+                        <div class="bento-icon-box cyan">🖼️</div>
+                        <h3 class="bento-title">AI BG Remover</h3>
+                        <p class="bento-desc">One-click instant background removal with transparent PNG export.</p>
+                        <div class="bento-action-row">Remove Background <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 14. AI Voiceover Studio -->
+                <a href="tool-voiceover.html" class="bento-item" data-category="audio">
+                    <div class="bento-content">
+                        <div class="bento-icon-box orange">🎙️</div>
+                        <h3 class="bento-title">AI Voice Studio</h3>
+                        <p class="bento-desc">Human-like text-to-speech with natural pacing for YouTube, podcasts, and reels.</p>
+                        <div class="bento-action-row">Generate Audio <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 15. AI Interior Designer -->
+                <a href="tool-interior.html" class="bento-item" data-category="visual">
+                    <div class="bento-content">
+                        <div class="bento-icon-box gold">🏠</div>
+                        <h3 class="bento-title">AI Interior Designer</h3>
+                        <p class="bento-desc">Upload photos of your room and get personalized architectural renovation concepts.</p>
+                        <div class="bento-action-row">Redesign Space <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 16. AI Presentation Maker (Wide) -->
+                <a href="tool-presentation.html" class="bento-item wide" data-category="career">
+                    <div class="bento-content">
+                        <div class="bento-icon-box teal">📊</div>
+                        <h3 class="bento-title">AI Presentation Maker</h3>
+                        <p class="bento-desc">Generate structured PowerPoint PPTX slide decks in seconds ready to present.</p>
+                        <div class="bento-action-row">Create Slides <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 17. Social Growth AI -->
+                <a href="tool-social.html" class="bento-item" data-category="writing">
+                    <div class="bento-content">
+                        <div class="bento-icon-box pink">📸</div>
+                        <h3 class="bento-title">Social Growth AI</h3>
+                        <p class="bento-desc">Craft viral captions, hashtags, hooks, and content schedules for Instagram & X.</p>
+                        <div class="bento-action-row">Create Content <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 18. YouTube Scriptwriter -->
+                <a href="tool-youtube.html" class="bento-item" data-category="writing">
+                    <div class="bento-content">
+                        <div class="bento-icon-box orange">📺</div>
+                        <h3 class="bento-title">YouTube Scriptwriter</h3>
+                        <p class="bento-desc">Produce high-retention video outlines with compelling hooks and call-to-actions.</p>
+                        <div class="bento-action-row">Write Script <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 19. Neural Translator -->
+                <a href="tool-translator.html" class="bento-item" data-category="writing">
+                    <div class="bento-content">
+                        <div class="bento-icon-box cyan">🌐</div>
+                        <h3 class="bento-title">Neural Translator</h3>
+                        <p class="bento-desc">Nuanced, culturally accurate translations across 50+ international languages.</p>
+                        <div class="bento-action-row">Translate Now <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 20. AI Copy & Blog Writer (Wide) -->
+                <a href="tool-text.html" class="bento-item wide" data-category="writing">
+                    <div class="bento-content">
+                        <div class="bento-icon-box violet">✍️</div>
+                        <h3 class="bento-title">AI Copy & Blog Writer</h3>
+                        <p class="bento-desc">Produce long-form articles, persuasive copywriting, email campaigns, and essays.</p>
+                        <div class="bento-action-row">Start Writing <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 21. Viral Reel Script -->
+                <a href="tool-reels.html" class="bento-item" data-category="writing">
+                    <div class="bento-content">
+                        <div class="bento-icon-box pink">🎬</div>
+                        <h3 class="bento-title">Viral Reels Script</h3>
+                        <p class="bento-desc">Script high-velocity 30-second shorts with viral pacing and visual cues.</p>
+                        <div class="bento-action-row">Generate Reel <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 22. AI Talking Avatar Video -->
+                <a href="tool-avatar-video.html" class="bento-item" data-category="visual">
+                    <div class="bento-content">
+                        <div class="bento-icon-box teal">👤</div>
+                        <h3 class="bento-title">AI Talking Avatar Video</h3>
+                        <p class="bento-desc">Turn text scripts into photorealistic talking avatar presentations with lip-sync.</p>
+                        <div class="bento-action-row">Create Avatar <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 23. AI Content Detector -->
+                <a href="tool-ai-detector.html" class="bento-item" data-category="dev">
+                    <div class="bento-content">
+                        <div class="bento-icon-box gold">🔍</div>
+                        <h3 class="bento-title">AI Content Detector</h3>
+                        <p class="bento-desc">Analyze text to detect synthetic AI patterns with high-precision confidence scoring.</p>
+                        <div class="bento-action-row">Analyze Text <span>→</span></div>
+                    </div>
+                </a>
+
+                <!-- 24. Voice Transcriber -->
+                <a href="tool-voice-text.html" class="bento-item" data-category="audio">
+                    <div class="bento-content">
+                        <div class="bento-icon-box green">🎤</div>
+                        <h3 class="bento-title">Voice Transcriber</h3>
+                        <p class="bento-desc">Convert live voice notes and recorded audio into clean, punctuation-accurate text.</p>
+                        <div class="bento-action-row">Transcribe Voice <span>→</span></div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                    <p>Professional AI suite for creators, students & developers worldwide.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <a href="index.html">Home</a>
+                    <a href="tools.html">All Tools</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Akshay AI Tools. Engineered for Excellence.</span>
+                <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const bentoItems = document.querySelectorAll('.bento-item');
+        const searchInput = document.getElementById('tool-search');
+        const clearBtn = document.getElementById('search-clear-btn');
+        const counterBadge = document.getElementById('tools-counter-badge');
+        const showingText = document.getElementById('tools-showing-text');
+        const filterBtns = document.querySelectorAll('.filter-tab-btn');
+        let currentFilter = 'all';
+
+        // Filter and Search Handler
+        function updateDisplay() {
+            const term = (searchInput ? searchInput.value : '').toLowerCase().trim();
+            if (clearBtn) clearBtn.style.display = term ? 'flex' : 'none';
+
+            let visibleCount = 0;
+
+            bentoItems.forEach(item => {
+                const title = item.querySelector('.bento-title')?.textContent.toLowerCase() || '';
+                const desc = item.querySelector('.bento-desc')?.textContent.toLowerCase() || '';
+                const categories = (item.dataset.category || '').toLowerCase();
+
+                const matchesSearch = !term || title.includes(term) || desc.includes(term);
+                const matchesCategory = currentFilter === 'all' || categories.includes(currentFilter);
+
+                if (matchesSearch && matchesCategory) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (counterBadge) {
+                counterBadge.textContent = `${visibleCount} Tool${visibleCount === 1 ? '' : 's'} Found`;
+            }
+            if (showingText) {
+                if (term) {
+                    showingText.textContent = `Search results for "${term}"`;
+                } else if (currentFilter !== 'all') {
+                    const activeBtn = document.querySelector(`.filter-tab-btn[data-filter="${currentFilter}"]`);
+                    showingText.textContent = `Filtered by ${activeBtn ? activeBtn.textContent.trim() : currentFilter}`;
+                } else {
+                    showingText.textContent = 'Showing all tools';
+                }
+            }
+        }
+
+        // Search Input listener
+        if (searchInput) {
+            searchInput.addEventListener('input', updateDisplay);
+            searchInput.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    COMMAND_PALETTE.open();
+                }
+            });
+        }
+
+        // Clear Search Button
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.focus();
+                    updateDisplay();
+                }
+            });
+        }
+
+        // Category Filter Tabs
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter || 'all';
+                updateDisplay();
+            });
+        });
+
+        // Staggered reveal animation
+        const io = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => {
+                        e.target.style.opacity = '1';
+                        e.target.style.transform = 'translateY(0) scale(1)';
+                    }, i * 40);
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.05 });
+
+        bentoItems.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(24px) scale(0.98)';
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            io.observe(item);
+        });
+
+        updateDisplay();
+      });
+    </script>
+    <script src="help-widget.js"></script>
+</body>
+</html>

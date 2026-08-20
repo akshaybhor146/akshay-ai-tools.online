@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Image Generator — Akshay AI Tools</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="tool-image">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">⚡ Akshay AI</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+      </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <a href="tools.html" class="back-btn">← Back</a>
+        <div class="tool-page-icon card-icon cyan">🎨</div>
+        <div class="tool-page-info">
+          <h1>AI Image Generator</h1>
+          <p>AI-described visuals powered by Google Gemini</p>
+        </div>
+      </div>
+      <div class="tool-workspace">
+        <div class="workspace-topbar">
+          <span class="workspace-topbar-title">🎨 Image Generation Workspace</span>
+          <span style="font-size:0.75rem;background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.2);color:var(--accent-cyan);padding:3px 10px;border-radius:50px;font-weight:600">🟢 GEMINI AI</span>
+        </div>
+        <div class="workspace-body">
+          <div class="lang-select-wrap">
+            <label>🎤 Voice Input:</label>
+            <button id="voice-btn" title="Voice Input">🎤</button>
+            <select id="lang-select" style="display:none"><option value="en-US">English</option><option value="mr-IN">Marathi</option><option value="hi-IN">Hindi</option></select>
+          </div>
+          <label style="display:block;font-size:0.82rem;font-weight:600;color:var(--text-secondary);margin-bottom:8px">Describe your image</label>
+          <textarea class="prompt-area" id="image-prompt" placeholder="A futuristic cityscape at sunset with neon lights, cyberpunk aesthetic, highly detailed..."></textarea>
+          <div class="tool-controls">
+            <select class="control-select" id="image-style">
+              <option value="realistic">🖼️ Realistic</option>
+              <option value="anime">🌸 Anime</option>
+              <option value="digital-art">💎 Digital Art</option>
+              <option value="oil-painting">🎭 Oil Painting</option>
+              <option value="sketch">✏️ Sketch</option>
+            </select>
+            <button class="btn-primary" id="generate-image-btn" style="margin-left:auto">✨ Generate Images</button>
+          </div>
+          <div class="image-grid" id="image-output-grid">
+            <div class="image-placeholder"><span style="font-size:2rem">🎨</span><span>Image 1</span></div>
+            <div class="image-placeholder"><span style="font-size:2rem">🎨</span><span>Image 2</span></div>
+            <div class="image-placeholder"><span style="font-size:2rem">🎨</span><span>Image 3</span></div>
+            <div class="image-placeholder"><span style="font-size:2rem">🎨</span><span>Image 4</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Prompt Tips -->
+      <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:22px;margin-bottom:36px">
+        <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:12px">💡 Quick Prompts</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+          <button onclick="fillP('A majestic mountain at golden hour, dramatic clouds, ultra realistic photography')" style="background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:10px;padding:12px;cursor:pointer;transition:all 0.2s;color:var(--text-primary)" onmouseover="this.style.borderColor='rgba(0,245,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'"><div style="font-size:1.5rem">🏔️</div><div style="font-size:0.8rem;font-weight:600;margin-top:5px">Mountain Landscape</div></button>
+          <button onclick="fillP('Cyberpunk Tokyo street at night, neon signs, rain reflections, cinematic lighting')" style="background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:10px;padding:12px;cursor:pointer;transition:all 0.2s;color:var(--text-primary)" onmouseover="this.style.borderColor='rgba(0,245,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'"><div style="font-size:1.5rem">🌆</div><div style="font-size:0.8rem;font-weight:600;margin-top:5px">Cyberpunk City</div></button>
+          <button onclick="fillP('A magical forest with glowing mushrooms, fairy lights, mystical fog, fantasy art')" style="background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:10px;padding:12px;cursor:pointer;transition:all 0.2s;color:var(--text-primary)" onmouseover="this.style.borderColor='rgba(0,245,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'"><div style="font-size:1.5rem">🌲</div><div style="font-size:0.8rem;font-weight:600;margin-top:5px">Magical Forest</div></button>
+          <button onclick="fillP('Abstract colorful geometric art, vibrant gradients, kaleidoscope pattern, digital art')" style="background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:10px;padding:12px;cursor:pointer;transition:all 0.2s;color:var(--text-primary)" onmouseover="this.style.borderColor='rgba(0,245,255,0.3)'" onmouseout="this.style.borderColor='var(--glass-border)'"><div style="font-size:1.5rem">🎭</div><div style="font-size:0.8rem;font-weight:600;margin-top:5px">Abstract Art</div></button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer><div class="container"><div class="footer-bottom"><span>© 2025 Akshay AI Tools</span><a href="tools.html" style="color:var(--accent-cyan);text-decoration:none">← All Tools</a></div></div></footer>
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+  <script>
+    function fillP(t) { document.getElementById('image-prompt').value = t; showToast('Prompt set!','success','✓'); }
+  </script>
+</body>
+</html>

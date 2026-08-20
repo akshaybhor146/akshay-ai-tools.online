@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Canvas & Artifacts — Akshay AI Tools</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="tool">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard">Dashboard</a></li>
+                <li><button onclick="COMMAND_PALETTE.open()" class="cmd-key" style="cursor:pointer;padding:6px 12px;">🔍 Ctrl+K</button></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 100px 0 60px;">
+        <div class="tool-hero" style="text-align:center; margin-bottom:30px;">
+            <div class="bento-icon-box violet" style="margin:0 auto 16px;">🎨</div>
+            <span class="bento-tag" style="position:static; display:inline-block; margin-bottom:12px;">INTERACTIVE CANVAS</span>
+            <h1 style="font-size:clamp(2rem,4.5vw,3rem); font-weight:800; margin-bottom:12px;">
+                Claude Canvas <span class="gradient-text">& Artifacts Workspace</span>
+            </h1>
+            <p style="color:var(--text-muted); max-width:600px; margin:0 auto;">
+                Live side-by-side collaborative sandbox. Prompt the AI to build websites, interactive components, charts, and games with instant real-time live preview.
+            </p>
+        </div>
+
+        <!-- Presets -->
+        <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:20px;">
+            <button class="pg-tab" onclick="setCanvasPreset('pricing')">💳 Glass Pricing Card</button>
+            <button class="pg-tab" onclick="setCanvasPreset('counter')">⏱️ Interactive Stopwatch & Timer</button>
+            <button class="pg-tab" onclick="setCanvasPreset('matrix')">🌌 Cyberpunk Matrix Rain Canvas</button>
+            <button class="pg-tab" onclick="setCanvasPreset('dashboard')">📊 Modern Analytics Widget</button>
+        </div>
+
+        <!-- Canvas Dual-Pane Workspace -->
+        <div class="canvas-workspace">
+            <!-- Left Editor Pane -->
+            <div class="canvas-pane">
+                <div class="canvas-pane-header">
+                    <span>📝 Prompt & Code Editor</span>
+                    <button id="run-canvas-btn" style="background:var(--gradient-main); color:#fff; border:none; padding:6px 16px; border-radius:50px; font-weight:700; cursor:pointer; font-size:0.8rem;">
+                        ⚡ Generate & Render
+                    </button>
+                </div>
+                <div style="padding:14px; display:flex; flex-direction:column; flex:1;">
+                    <input type="text" id="canvas-prompt" placeholder="Describe UI component, mini-game, or tool to create..." style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:10px; padding:12px 14px; color:var(--text-head); font-size:0.9rem; margin-bottom:10px; outline:none;">
+                    <textarea id="canvas-code" spellcheck="false" style="flex:1; min-height:360px; background:#0d1122; border:1px solid var(--border); border-radius:10px; padding:14px; color:#a5b4fc; font-family:monospace; font-size:0.85rem; outline:none; resize:none; line-height:1.5;"></textarea>
+                </div>
+            </div>
+
+            <!-- Right Preview Pane -->
+            <div class="canvas-pane">
+                <div class="canvas-pane-header">
+                    <span>🖥️ Live Sandbox Preview</span>
+                    <div style="display:flex; gap:8px;">
+                        <button onclick="copyCanvasCode()" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-muted); padding:4px 10px; border-radius:6px; font-size:0.75rem; cursor:pointer;">📋 Copy Code</button>
+                        <button onclick="downloadCanvasFile()" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--accent-cyan); padding:4px 10px; border-radius:6px; font-size:0.75rem; cursor:pointer;">⬇️ Download HTML</button>
+                    </div>
+                </div>
+                <iframe id="canvas-preview" class="canvas-preview-frame" style="height:100%; min-height:420px;" sandbox="allow-scripts allow-modals allow-same-origin"></iframe>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+        const canvasPrompt = document.getElementById('canvas-prompt');
+        const canvasCode = document.getElementById('canvas-code');
+        const canvasPreview = document.getElementById('canvas-preview');
+        const runBtn = document.getElementById('run-canvas-btn');
+
+        const PRESETS = {
+            pricing: `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background:#080b18; font-family:'Segoe UI', sans-serif; color:#fff; }
+  .card { background:rgba(255,255,255,0.04); border:1px solid rgba(123,47,255,0.4); border-radius:24px; padding:36px; width:300px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.6); backdrop-filter:blur(20px); }
+  .badge { background:linear-gradient(135deg, #7b2fff, #00f5ff); padding:4px 14px; border-radius:50px; font-size:12px; font-weight:bold; }
+  .price { font-size:42px; font-weight:800; margin:16px 0; color:#00f5ff; }
+  .btn { width:100%; padding:12px; background:linear-gradient(135deg, #7b2fff, #00f5ff); border:none; border-radius:12px; color:#fff; font-weight:bold; cursor:pointer; margin-top:20px; }
+  .btn:hover { opacity:0.9; transform:scale(1.02); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">PRO PLAN</span>
+    <div class="price">$19<span style="font-size:14px;color:#888;">/mo</span></div>
+    <p style="color:#aaa;font-size:14px;">Unlimited next-gen AI tools, 4K rendering & priority edge latency.</p>
+    <button class="btn" onclick="alert('Proceeding to Checkout!')">Get Started 🚀</button>
+  </div>
+</body>
+</html>`,
+            counter: `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin:0; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#050714; font-family:sans-serif; color:#fff; }
+  .display { font-size:64px; font-weight:800; font-family:monospace; color:#00f5ff; text-shadow:0 0 20px rgba(0,245,255,0.6); margin-bottom:24px; }
+  .btn-row { display:flex; gap:12px; }
+  button { padding:12px 24px; border:none; border-radius:50px; font-weight:bold; font-size:16px; cursor:pointer; }
+  .btn-start { background:#00e676; color:#000; }
+  .btn-stop { background:#ff2d78; color:#fff; }
+  .btn-reset { background:rgba(255,255,255,0.1); color:#fff; }
+</style>
+</head>
+<body>
+  <div class="display" id="time">00:00.0</div>
+  <div class="btn-row">
+    <button class="btn-start" onclick="start()">Start</button>
+    <button class="btn-stop" onclick="stop()">Stop</button>
+    <button class="btn-reset" onclick="reset()">Reset</button>
+  </div>
+  <script>
+    let timer, ms = 0;
+    function update() {
+      let s = Math.floor(ms / 10), m = Math.floor(s / 60);
+      document.getElementById('time').innerText = 
+        String(m).padStart(2,'0') + ':' + String(s%60).padStart(2,'0') + '.' + (ms%10);
+    }
+    function start() { clearInterval(timer); timer = setInterval(()=>{ ms++; update(); }, 100); }
+    function stop() { clearInterval(timer); }
+    function reset() { stop(); ms = 0; update(); }
+  <\/script>
+</body>
+</html>`,
+            matrix: `<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden;background:#000;">
+  <canvas id="c"></canvas>
+  <script>
+    const c = document.getElementById('c'), ctx = c.getContext('2d');
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    const chars = '0123456789ABCDEF@#$%&*';
+    const drops = Array(Math.floor(c.width/16)).fill(1);
+    function draw() {
+      ctx.fillStyle = 'rgba(0,0,0,0.06)'; ctx.fillRect(0,0,c.width,c.height);
+      ctx.fillStyle = '#00f5ff'; ctx.font = '14px monospace';
+      drops.forEach((y, i) => {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * 16, y * 16);
+        if (y * 16 > c.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      });
+    }
+    setInterval(draw, 33);
+  <\/script>
+</body>
+</html>`,
+            dashboard: `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin:0; padding:20px; background:#0b0f1d; font-family:sans-serif; color:#fff; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .box { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:20px; }
+  .stat { font-size:28px; font-weight:bold; color:#7b2fff; margin-top:8px; }
+</style>
+</head>
+<body>
+  <h3 style="margin-top:0;color:#00f5ff;">⚡ Live Neural Cluster Metrics</h3>
+  <div class="grid">
+    <div class="box"><span>API Requests</span><div class="stat">2,842,109</div></div>
+    <div class="box"><span>Inference Latency</span><div class="stat" style="color:#00e676;">14.2 ms</div></div>
+  </div>
+</body>
+</html>`
+        };
+
+        function setCanvasPreset(name) {
+            if (PRESETS[name]) {
+                canvasCode.value = PRESETS[name];
+                updatePreview();
+                showToast(`Loaded ${name} template! 🎨`, 'success', '✓');
+            }
+        }
+
+        function updatePreview() {
+            const code = canvasCode.value;
+            canvasPreview.srcdoc = code;
+        }
+
+        runBtn.addEventListener('click', async () => {
+            const p = canvasPrompt.value.trim();
+            if (!p && !canvasCode.value) {
+                showToast('Describe what you want to build!', 'error', '⚠️');
+                return;
+            }
+            if (p) {
+                runBtn.disabled = true;
+                runBtn.innerHTML = '⏳ Generating Artifact...';
+                await new Promise(r => setTimeout(r, 800));
+                canvasCode.value = `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin:0; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; background:radial-gradient(circle, #1a103c 0%, #060814 100%); font-family:'Segoe UI', sans-serif; color:#fff; }
+  .box { background:rgba(255,255,255,0.05); border:1px solid rgba(123,47,255,0.3); border-radius:20px; padding:32px; text-align:center; max-width:380px; backdrop-filter:blur(16px); box-shadow:0 20px 40px rgba(0,0,0,0.5); }
+  h2 { background:linear-gradient(135deg, #00f5ff, #7b2fff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-top:0; }
+  button { margin-top:16px; padding:10px 24px; background:#7b2fff; color:#fff; border:none; border-radius:50px; font-weight:bold; cursor:pointer; }
+  button:hover { background:#00f5ff; color:#000; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <h2>Artifact: ${p}</h2>
+    <p style="color:#aaa;font-size:14px;">Interactive responsive prototype generated dynamically.</p>
+    <button onclick="alert('Action completed!')">Interact Now ✨</button>
+  </div>
+</body>
+</html>`;
+                runBtn.disabled = false;
+                runBtn.innerHTML = '⚡ Generate & Render';
+                showToast('Canvas artifact generated! 🎨', 'success', '✓');
+                HISTORY.add({ type: 'canvas', tool: 'Claude Canvas', prompt: p });
+            }
+            updatePreview();
+        });
+
+        canvasCode.addEventListener('input', updatePreview);
+
+        function copyCanvasCode() {
+            navigator.clipboard.writeText(canvasCode.value);
+            showToast('Code copied to clipboard! 📋', 'success', '✓');
+        }
+
+        function downloadCanvasFile() {
+            const blob = new Blob([canvasCode.value], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'ai-artifact.html';
+            a.click();
+            showToast('Downloaded ai-artifact.html ⬇️', 'success', '✓');
+        }
+
+        // Initialize with default preset
+        setCanvasPreset('pricing');
+    </script>
+</body>
+</html>

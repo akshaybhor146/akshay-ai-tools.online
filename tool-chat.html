@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chatbot — Akshay AI Tools</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="tool-chat">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">⚡ Akshay AI</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+      </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <a href="tools.html" class="back-btn">← Back</a>
+        <div class="tool-page-icon card-icon gold">🤖</div>
+        <div class="tool-page-info">
+          <h1>AI Chatbot</h1>
+          <p>Real conversations powered by Google Gemini</p>
+        </div>
+      </div>
+      <!-- Language select -->
+      <div class="lang-select-wrap" style="margin-bottom:14px">
+        <label>🌐 Language:</label>
+        <select id="lang-select">
+          <option value="en-US">🇺🇸 English</option>
+          <option value="mr-IN">🇮🇳 Marathi</option>
+          <option value="hi-IN">🇮🇳 Hindi</option>
+          <option value="es-ES">🇪🇸 Spanish</option>
+          <option value="fr-FR">🇫🇷 French</option>
+          <option value="de-DE">🇩🇪 German</option>
+        </select>
+      </div>
+      <div class="tool-workspace" style="padding:0">
+        <div class="workspace-topbar" style="padding:14px 20px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--gradient-main);display:flex;align-items:center;justify-content:center;font-size:0.9rem">🤖</div>
+            <div>
+              <div style="font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700">Akshay AI Assistant</div>
+              <div style="font-size:0.72rem;color:var(--accent-cyan);display:flex;align-items:center;gap:4px">
+                <span style="width:5px;height:5px;border-radius:50%;background:var(--accent-cyan);display:inline-block;animation:pulse 2s infinite"></span> Gemini Powered
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:0.72rem;background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.2);color:var(--accent-cyan);padding:3px 10px;border-radius:50px;font-weight:600">🟢 LIVE AI</span>
+            <button onclick="clearChat()" style="background:var(--glass);border:1px solid var(--glass-border);border-radius:8px;padding:6px 12px;color:var(--text-muted);font-size:0.78rem;cursor:pointer">🗑️ Clear</button>
+          </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-msg bot">
+            <div class="chat-avatar">🤖</div>
+            <div class="chat-bubble">Hello! I'm Akshay AI — powered by Google Gemini! 🚀<br>Ask me anything — coding, writing, ideas, questions. I'm here to help! What's on your mind?</div>
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" class="chat-input" id="chat-input" placeholder="Ask me anything..." autocomplete="off" />
+          <button id="voice-btn" title="Voice Input" style="width:40px;height:40px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);cursor:pointer;font-size:1rem;flex-shrink:0">🎤</button>
+          <button class="chat-send" id="chat-send-btn">➤</button>
+        </div>
+      </div>
+      <!-- Suggestions -->
+      <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:20px;margin-bottom:36px;margin-top:16px">
+        <h3 style="font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;margin-bottom:10px">💬 Try asking:</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button onclick="sendQ('What are the top AI trends in 2025?')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">🔮 AI Trends</button>
+          <button onclick="sendQ('Explain machine learning simply')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">🧠 Explain ML</button>
+          <button onclick="sendQ('Give me 5 startup ideas using AI')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">💡 Startup Ideas</button>
+          <button onclick="sendQ('Write a poem about technology')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">🎭 Write Poem</button>
+          <button onclick="sendQ('AI बद्दल मराठीत सांग')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">🇮🇳 मराठीत बोल</button>
+          <button onclick="sendQ('What programming language should I learn in 2025?')" class="btn-secondary" style="padding:6px 12px;font-size:0.78rem;border-radius:50px">💻 Learn Coding</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer><div class="container"><div class="footer-bottom"><span>© 2025 Akshay AI Tools</span><a href="tools.html" style="color:var(--accent-cyan);text-decoration:none">← All Tools</a></div></div></footer>
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+  <script>
+    function sendQ(t) { document.getElementById('chat-input').value = t; document.getElementById('chat-send-btn').click(); }
+    function clearChat() {
+      chatHistory = [];
+      document.getElementById('chat-messages').innerHTML = '<div class="chat-msg bot"><div class="chat-avatar">🤖</div><div class="chat-bubble">Chat cleared! Fresh start. Ask me anything! 😊</div></div>';
+      showToast('Chat cleared','success','🗑️');
+    }
+  </script>
+</body>
+</html>

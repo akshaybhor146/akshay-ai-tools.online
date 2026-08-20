@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshay AI Tools — Next-Gen AI Superplatform</title>
+    <meta name="description" content="Discover 24+ free next-generation AI tools: DeepSeek R1 reasoning, Sora 4K video generation, FLUX.1 photorealism, Claude Canvas, and Suno AI music.">
+    <meta name="google-site-verification" content="9fK4B8ztE4VjaKHiMMGkkwd-Pv7QmmYX018aT9aBvCw" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-extra.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff">
+</head>
+<body>
+    <!-- Background Canvas & Glowing Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="tools.html">24 Tools</a></li>
+                <li><a href="login.html" id="nav-login">Login</a></li>
+                <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+                <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+                <li>
+                    <button onclick="COMMAND_PALETTE.open()" title="Search Tools (Ctrl+K)" style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:8px 14px;border-radius:8px;cursor:pointer;font-size:0.78rem;display:flex;align-items:center;gap:6px;">
+                        🔍 <span style="opacity:0.6;font-size:0.7rem;">Ctrl+K</span>
+                    </button>
+                </li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section: Futuristic Command Center & Live Interactive Sandbox -->
+    <section class="hero container" style="min-height:92vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding-top:50px; position:relative;">
+        <div class="hero-content" style="max-width:1050px; z-index:10;">
+            
+            <div class="hero-badge reveal">
+                <span class="hero-badge-dot"></span>
+                ⚡ 24 Next-Gen Neural AI Models Live
+            </div>
+
+            <h1 class="gradient-text reveal" style="font-size:clamp(2.8rem, 8vw, 5.5rem); font-weight:800; line-height:1.02; margin-bottom:20px; letter-spacing:-0.04em;">
+                The Next Frontier of <br><span style="color:#fff; text-shadow:0 0 40px rgba(123,47,255,0.6);">Artificial Intelligence.</span>
+            </h1>
+
+            <p class="reveal" style="font-size:1.15rem; color:var(--text-body); max-width:680px; margin:0 auto 24px; font-weight:400; line-height:1.6;">
+                Access a supercharged suite of 24 specialized AI engines — DeepSeek R1 reasoning, Sora 4K video, FLUX photorealism, Claude Canvas, Suno audio, and code intelligence. Free for everyone.
+            </p>
+
+            <!-- Interactive Live Playground Sandbox -->
+            <div class="hero-playground reveal">
+                <div class="playground-nav">
+                    <button class="pg-tab active" data-mode="reasoning" onclick="switchHeroMode('reasoning', this)">🧠 DeepSeek Reasoning</button>
+                    <button class="pg-tab" data-mode="image" onclick="switchHeroMode('image', this)">🎨 FLUX 4K Visualizer</button>
+                    <button class="pg-tab" data-mode="code" onclick="switchHeroMode('code', this)">💻 Code Intelligence</button>
+                    <button class="pg-tab" data-mode="copy" onclick="switchHeroMode('copy', this)">✍️ Viral Copywriting</button>
+                </div>
+                <div class="playground-input-row">
+                    <input type="text" id="hero-pg-input" placeholder="Enter problem, concept, or prompt to test neural inference..." autocomplete="off">
+                    <button id="hero-pg-btn" onclick="executeHeroSandbox()" class="btn-primary" style="padding:12px 24px; background:var(--gradient-main); border:none; border-radius:12px; color:#fff; font-weight:700; cursor:pointer; white-space:nowrap;">
+                        ⚡ Run Model
+                    </button>
+                </div>
+                <div id="hero-pg-output" class="playground-output-area"></div>
+            </div>
+
+            <!-- LoveX AI Featured CTA -->
+            <a href="lovex.html" style="display:inline-flex; align-items:center; gap:12px; margin:0 auto 24px; padding:14px 28px; background:linear-gradient(135deg, rgba(123,47,255,0.25), rgba(0,245,255,0.1)); border:1px solid rgba(123,47,255,0.5); border-radius:50px; text-decoration:none; color:var(--text-head); font-weight:700; font-size:0.95rem; box-shadow:0 0 30px rgba(123,47,255,0.2); transition:var(--transition);" onmouseover="this.style.boxShadow='0 0 50px rgba(123,47,255,0.5)'" onmouseout="this.style.boxShadow='0 0 30px rgba(123,47,255,0.2)'">
+                <span style="width:34px; height:34px; border-radius:50%; background:var(--gradient-main); display:inline-flex; align-items:center; justify-content:center; font-size:1rem;">💜</span>
+                <span>Chat with LoveX AI — Your Neural Companion</span>
+                <span style="background:rgba(0,245,255,0.15); border:1px solid rgba(0,245,255,0.3); color:var(--accent-cyan); font-size:0.7rem; padding:3px 10px; border-radius:20px;">✦ NEW</span>
+            </a>
+
+            <!-- Quick Suggestion Badges -->
+            <div class="hero-suggestions reveal" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:24px;">
+                <button onclick="setHeroPrompt('Prove why time complexity of merge sort is O(n log n)')" class="pg-tab">📐 Math & Algo Proof</button>
+                <button onclick="setHeroPrompt('Cyberpunk rain-slicked Tokyo alleyway with neon koi fish in 8k')" class="pg-tab">🏙️ 4K Visual Prompt</button>
+                <button onclick="setHeroPrompt('Write a clean async debounce hook in React TypeScript')" class="pg-tab">⚡ React TS Hook</button>
+                <button onclick="setHeroPrompt('Create a high-retention viral hook for a 30s tech reel')" class="pg-tab">🎬 Viral Reel Hook</button>
+            </div>
+        </div>
+
+        <div class="hero-visual" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:85vw; height:85vh; z-index:1; pointer-events:none; opacity:0.15; background:radial-gradient(circle, var(--accent-primary) 0%, transparent 70%); filter:blur(120px);"></div>
+    </section>
+
+    <!-- LoveX AI Hero Banner -->
+    <section class="container" style="padding: 30px 0 20px;">
+        <a href="lovex.html" style="display:flex; align-items:center; justify-content:space-between; gap:20px; padding:22px 30px; background:linear-gradient(135deg, rgba(123,47,255,0.15), rgba(0,245,255,0.05)); border:1px solid rgba(123,47,255,0.4); border-radius:20px; text-decoration:none; flex-wrap:wrap; transition:var(--transition);" onmouseover="this.style.borderColor='rgba(123,47,255,0.7)'" onmouseout="this.style.borderColor='rgba(123,47,255,0.4)'">
+            <div style="display:flex; align-items:center; gap:16px;">
+                <div style="width:54px; height:54px; border-radius:50%; background:var(--gradient-main); display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 0 30px rgba(123,47,255,0.5); flex-shrink:0;">💜</div>
+                <div>
+                    <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--accent-cyan); margin-bottom:3px;">✦ NEW RELEASE — PREMIUM CHATBOT</div>
+                    <h2 style="font-size:1.4rem; font-weight:800; color:var(--text-head); letter-spacing:-0.02em; margin:0;">LoveX AI — Your Brilliant Neural Companion</h2>
+                    <p style="font-size:0.88rem; color:var(--text-muted); margin:4px 0 0;">Full ChatGPT-style interface · Multi-model · Conversation memory · Voice input</p>
+                </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:0.82rem; font-weight:700; color:#fff; background:var(--gradient-main); padding:10px 22px; border-radius:50px;">Try LoveX AI →</span>
+            </div>
+        </a>
+    </section>
+
+    <!-- Gen AI Spotlight Showcase -->
+    <section class="container" style="padding: 60px 0 30px;">
+        <div class="section-header reveal" style="text-align:center; margin-bottom:40px;">
+            <span class="section-tag" style="background:rgba(0,245,255,0.1); border-color:rgba(0,245,255,0.3); color:var(--accent-cyan);">⭐ SPOTLIGHT GEN AI</span>
+            <h2 style="font-size:clamp(2rem,4.5vw,3rem); margin-top:12px; letter-spacing:-0.03em;">New Breakthrough <span class="gradient-text">AI Architectures</span></h2>
+            <p style="color:var(--text-muted); max-width:540px; margin:8px auto 0;">Experience the most advanced generative models released this year.</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px;">
+            <a href="tool-reasoning.html" class="bento-item reveal" style="border-color:rgba(0,245,255,0.3);">
+                <div class="bento-tag" style="color:#00f5ff;">REASONING</div>
+                <div class="bento-content">
+                    <div class="bento-icon-box cyan">🧠</div>
+                    <h3 class="bento-title">DeepSeek R1</h3>
+                    <p class="bento-desc">Chain-of-thought logic deduction & mathematical proof generator.</p>
+                    <div class="bento-action-row">Launch Engine <span>→</span></div>
+                </div>
+            </a>
+            <a href="tool-video-gen.html" class="bento-item reveal" style="border-color:rgba(255,45,120,0.3);">
+                <div class="bento-tag" style="color:#ff2d78;">4K SORA</div>
+                <div class="bento-content">
+                    <div class="bento-icon-box pink">🎥</div>
+                    <h3 class="bento-title">Sora Video Studio</h3>
+                    <p class="bento-desc">Text-to-Video generation with cinematic orbital camera physics.</p>
+                    <div class="bento-action-row">Generate Video <span>→</span></div>
+                </div>
+            </a>
+            <a href="tool-flux.html" class="bento-item reveal" style="border-color:rgba(255,215,0,0.3);">
+                <div class="bento-tag" style="color:#ffd700;">FLUX.1</div>
+                <div class="bento-content">
+                    <div class="bento-icon-box gold">🖼️</div>
+                    <h3 class="bento-title">FLUX.1 Studio</h3>
+                    <p class="bento-desc">Ultra-photorealistic prompts with custom lenses & lighting.</p>
+                    <div class="bento-action-row">Engineer Prompt <span>→</span></div>
+                </div>
+            </a>
+            <a href="tool-canvas.html" class="bento-item reveal" style="border-color:rgba(123,47,255,0.3);">
+                <div class="bento-tag" style="color:#7b2fff;">CANVAS</div>
+                <div class="bento-content">
+                    <div class="bento-icon-box violet">🎨</div>
+                    <h3 class="bento-title">Claude Canvas</h3>
+                    <p class="bento-desc">Interactive live code & markdown sandbox with instant preview.</p>
+                    <div class="bento-action-row">Open Sandbox <span>→</span></div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Core Tools Quick Access Grid -->
+    <section id="tools-grid" class="container" style="padding:60px 0 90px;">
+        <div class="section-header reveal" style="text-align:center; margin-bottom:48px;">
+            <h2 style="font-size:clamp(2rem,4.5vw,3rem); margin-bottom:10px; color:var(--text-head); letter-spacing:-0.03em;">Complete <span class="gradient-text">24-Tool Suite</span></h2>
+            <p style="color:var(--text-muted);">Explore all active neural models and creative superpowers.</p>
+        </div>
+
+        <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <!-- 1. Suno AI Music -->
+            <a href="tool-music.html" class="bento-item wide reveal">
+                <div class="bento-tag">🎵 SUNO AUDIO</div>
+                <div class="bento-content">
+                    <div class="bento-icon-box orange">🎵</div>
+                    <h3 class="bento-title">Suno AI Music Studio</h3>
+                    <p class="bento-desc">Compose vocal songs, synthwave beats, and orchestral trailers with visual audio equalization.</p>
+                    <div class="bento-action-row">Compose Track <span>→</span></div>
+                </div>
+            </a>
+
+            <!-- 2. Perplexity Research -->
+            <a href="tool-research.html" class="bento-item wide reveal">
+                <div class="bento-tag">🕵️ CITATIONS</div>
+                <div class="bento-content">
+                    <div class="bento-icon-box teal">🕵️</div>
+                    <h3 class="bento-title">Perplexity Deep Research</h3>
+                    <p class="bento-desc">Cross-reference 50M+ academic sources with verified citations & executive summaries.</p>
+                    <div class="bento-action-row">Start Research <span>→</span></div>
+                </div>
+            </a>
+
+            <!-- 3. AI Chatbot -->
+            <a href="tool-chat.html" class="bento-item reveal">
+                <div class="bento-tag">⚡ Live AI</div>
+                <div class="bento-content">
+                    <div class="bento-icon-box violet">🤖</div>
+                    <h3 class="bento-title">AI Chat Advisor</h3>
+                    <p class="bento-desc">Conversational brain for brainstorming, research, and deep insights.</p>
+                    <div class="bento-action-row">Start Chatting <span>→</span></div>
+                </div>
+            </a>
+
+            <!-- 4. Viral Reel Script -->
+            <a href="tool-reels.html" class="bento-item reveal">
+                <div class="bento-tag">🔥 Viral</div>
+                <div class="bento-content">
+                    <div class="bento-icon-box pink">🎬</div>
+                    <h3 class="bento-title">Viral Reel Script</h3>
+                    <p class="bento-desc">High-engagement scripts for social media with viral hooks and cues.</p>
+                    <div class="bento-action-row">Generate Script <span>→</span></div>
+                </div>
+            </a>
+
+            <!-- 5. AI Interior Design -->
+            <a href="tool-interior.html" class="bento-item reveal">
+                <div class="bento-content">
+                    <div class="bento-icon-box gold">🏠</div>
+                    <h3 class="bento-title">AI Interior Designer</h3>
+                    <p class="bento-desc">Redesign living spaces with architectural photorealistic concepts.</p>
+                    <div class="bento-action-row">Redesign Space <span>→</span></div>
+                </div>
+            </a>
+
+            <!-- 6. AI Code Helper -->
+            <a href="tool-code.html" class="bento-item reveal">
+                <div class="bento-content">
+                    <div class="bento-icon-box green">💻</div>
+                    <h3 class="bento-title">AI Code Helper</h3>
+                    <p class="bento-desc">Intelligent code generation, debugging, and refactoring in 20+ languages.</p>
+                    <div class="bento-action-row">Write Code <span>→</span></div>
+                </div>
+            </a>
+        </div>
+
+        <div style="text-align:center; margin-top:44px;">
+            <a href="tools.html" class="btn-primary" style="display:inline-flex; align-items:center; gap:8px; padding:14px 32px; background:var(--gradient-main); color:#fff; border-radius:50px; text-decoration:none; font-weight:700; font-size:1rem; box-shadow:var(--shadow-glow);">
+                Explore All 24 AI Supertools <span>→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Platform Performance & Security Stats -->
+    <section id="stats" style="padding:70px 0; background:var(--bg-card); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+        <div class="container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:40px; text-align:center;">
+            <div class="stat-item reveal">
+                <div class="gradient-text stat-number" style="font-family:var(--font-display); font-size:3.5rem; font-weight:800;">24+</div>
+                <p style="text-transform:uppercase; letter-spacing:2px; font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Specialized Models</p>
+            </div>
+            <div class="stat-item reveal" style="transition-delay:0.1s;">
+                <div class="gradient-text stat-number" style="font-family:var(--font-display); font-size:3.5rem; font-weight:800;">0ms</div>
+                <p style="text-transform:uppercase; letter-spacing:2px; font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Cold Start Latency</p>
+            </div>
+            <div class="stat-item reveal" style="transition-delay:0.2s;">
+                <div class="gradient-text stat-number" style="font-family:var(--font-display); font-size:3.5rem; font-weight:800;">100%</div>
+                <p style="text-transform:uppercase; letter-spacing:2px; font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Free & Accessible</p>
+            </div>
+            <div class="stat-item reveal" style="transition-delay:0.3s;">
+                <div class="gradient-text stat-number" style="font-family:var(--font-display); font-size:3.5rem; font-weight:800;">4K HDR</div>
+                <p style="text-transform:uppercase; letter-spacing:2px; font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Render Fidelity</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                    <p>Next-generation artificial intelligence suite engineered for global creators, developers, and researchers.</p>
+                    <div style="display:inline-flex; align-items:center; gap:8px; margin-top:12px; font-size:0.78rem; color:#00e676; background:rgba(0,230,118,0.08); padding:4px 12px; border-radius:50px; border:1px solid rgba(0,230,118,0.2);">
+                        <span style="width:6px; height:6px; background:#00e676; border-radius:50%;"></span>
+                        All 24 Neural Clusters Operational
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Generative AI</h4>
+                    <a href="tool-reasoning.html">DeepSeek R1 Reasoning</a>
+                    <a href="tool-video-gen.html">Sora AI Video Studio</a>
+                    <a href="tool-flux.html">FLUX.1 Prompt Studio</a>
+                    <a href="tool-canvas.html">Claude Canvas Artifacts</a>
+                    <a href="tool-music.html">Suno AI Music Studio</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Productivity</h4>
+                    <a href="tool-research.html">Deep Research Engine</a>
+                    <a href="tool-interview.html">Interview Copilot</a>
+                    <a href="tool-code.html">AI Code Helper</a>
+                    <a href="tool-resume.html">Smart Resume Builder</a>
+                    <a href="tool-pdf-chat.html">Chat with PDF</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal & Company</h4>
+                    <a href="about.html">About Akshay AI</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                    <a href="contact.html">Contact Engineering</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Akshay AI Tools. Engineered for Excellence.</span>
+                <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+      let currentHeroMode = 'reasoning';
+
+      function switchHeroMode(mode, btn) {
+        currentHeroMode = mode;
+        document.querySelectorAll('.hero-playground .pg-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const input = document.getElementById('hero-pg-input');
+        const placeholders = {
+            reasoning: 'Enter complex logic, math theorem, or code optimization problem...',
+            image: 'Describe a 4K photorealistic scene (e.g. cybernetic phoenix at sunrise)...',
+            code: 'Describe the function, component, or algorithm to write in any language...',
+            copy: 'Enter your article topic, marketing hook, or viral reel script idea...'
+        };
+        input.placeholder = placeholders[mode] || 'Enter prompt to test model...';
+      }
+
+      function setHeroPrompt(txt) {
+        const input = document.getElementById('hero-pg-input');
+        input.value = txt;
+        input.focus();
+      }
+
+      async function executeHeroSandbox() {
+        const input = document.getElementById('hero-pg-input');
+        const prompt = input.value.trim();
+        if (!prompt) {
+            showToast('Enter a prompt in the sandbox!', 'error', '⚠️');
+            return;
+        }
+        const btn = document.getElementById('hero-pg-btn');
+        const output = document.getElementById('hero-pg-output');
+
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Inferencing...';
+        output.style.display = 'block';
+        output.textContent = 'Allocating neural kernel & streaming response...';
+
+        const result = await callGemini(prompt, `You are in ${currentHeroMode} mode.`);
+
+        output.textContent = result;
+        btn.disabled = false;
+        btn.innerHTML = '⚡ Run Model';
+        showToast('Inference generated! 🚀', 'success', '✓');
+        HISTORY.add({ type: currentHeroMode, tool: `Hero Sandbox (${currentHeroMode})`, prompt });
+      }
+    </script>
+    <script src="help-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Akshay AI Tools — Powering the Future</title>
+  <meta name="description" content="Create a professional, ATS-friendly resume in minutes with our AI Resume Builder. Get noticed by recruiters with high-quality CV generation. Free for job seekers.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff"></head>
+<body data-page="tool-resume">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <canvas id="particles-canvas" style="position:fixed;inset:0;z-index:-1;pointer-events:none;"></canvas>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html" class="active">Tools</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+      
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main class="tool-page">
+    <div class="container">
+      <div class="tool-page-header">
+        <a href="tools.html" class="back-btn">← Back</a>
+        <div class="tool-page-icon card-icon violet">📄</div>
+        <div class="tool-page-info">
+          <h1>AI Resume Builder</h1>
+          <p>Create a professional, ATS-friendly CV with AI</p>
+        </div>
+      </div>
+      <div class="tool-workspace">
+        <div class="workspace-topbar">
+          <span class="workspace-topbar-title">📄 Resume Builder — Akshay AI Tools</span>
+          <span style="font-size:0.75rem;background:rgba(59,35,216,0.1);border:1px solid rgba(59,35,216,0.2);color:var(--accent-primary);padding:3px 10px;border-radius:50px;font-weight:600">🟢 LIVE AI</span>
+        </div>
+        <div class="workspace-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+            <div class="form-group" style="margin:0"><label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">👤 Full Name</label><input type="text" id="r-name" placeholder="Akshay Sharma" style="width:100%;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.93rem;outline:none;transition:var(--transition)"/></div>
+            <div class="form-group" style="margin:0"><label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">💼 Job Title</label><input type="text" id="r-title" placeholder="Full Stack Developer" style="width:100%;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.93rem;outline:none"/></div>
+            <div class="form-group" style="margin:0"><label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">📧 Email</label><input type="text" id="r-email" placeholder="akshay@email.com" style="width:100%;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.93rem;outline:none"/></div>
+            <div class="form-group" style="margin:0"><label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">📱 Phone</label><input type="text" id="r-phone" placeholder="+91 98765 43210" style="width:100%;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.93rem;outline:none"/></div>
+          </div>
+          <div class="form-group" style="margin-bottom:14px"><label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">🎓 Education</label><input type="text" id="r-edu" placeholder="B.Tech Computer Science — MIT Pune, 2023" style="width:100%;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.93rem;outline:none"/></div>
+          <div class="form-group" style="margin-bottom:14px"><label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">💡 Skills (comma separated)</label><input type="text" id="r-skills" placeholder="React, Node.js, Python, AI/ML, MongoDB" style="width:100%;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.93rem;outline:none"/></div>
+          <div class="form-group" style="margin-bottom:14px"><label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">🏢 Work Experience</label><textarea id="r-exp" placeholder="2 years at TCS as Frontend Developer, built 5+ client projects..." style="width:100%;min-height:90px;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.93rem;outline:none;resize:vertical;font-family:var(--font-body)"></textarea></div>
+          <div class="form-group" style="margin-bottom:14px"><label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:6px">🌟 Achievements / Projects</label><textarea id="r-achieve" placeholder="Built AI tools website, won hackathon, open source contributions..." style="width:100%;min-height:70px;padding:12px 15px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.93rem;outline:none;resize:vertical;font-family:var(--font-body)"></textarea></div>
+          <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;align-items:center">
+            <select id="r-style" style="padding:10px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;color:var(--text-head);font-size:0.88rem;outline:none;cursor:pointer">
+              <option value="professional">💼 Professional</option>
+              <option value="creative">🎨 Creative</option>
+              <option value="modern">✨ Modern</option>
+              <option value="minimal">⚡ Minimal</option>
+            </select>
+            <button class="btn-neon" id="generate-resume-btn" style="margin-left:auto;padding:12px 28px">📄 Generate Resume</button>
+          </div>
+          <div id="resume-output" style="margin-top:20px;min-height:300px;padding:24px;background:var(--bg-surface);border:1px solid var(--border);border-radius:16px;font-family:'Courier New',monospace;font-size:0.84rem;line-height:1.9;white-space:pre-wrap;color:var(--text-body);box-shadow:var(--shadow)">
+            <div style="text-align:center;padding:60px 20px;color:var(--text-muted)"><span style="font-size:3rem;display:block;margin-bottom:12px">📄</span><p>Fill in your details and click Generate Resume</p></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+            <button class="btn-secondary" onclick="copyResume()" style="padding:10px 18px;font-size:0.85rem">📋 Copy Resume</button>
+            <button class="btn-secondary" onclick="printResume()" style="padding:10px 18px;font-size:0.85rem">🖨️ Print / Save PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a><p>Discover the best free AI tools for students and creators in one place.</p></div>
+        <div class="footer-col"><h4>Orbital Map</h4><a href="index.html">Home</a><a href="tools.html">Directory</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="privacy-policy.html">Privacy Policy</a><a href="terms-of-service.html">Terms of Service</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Akshay AI Tools. All rights reserved.</span><span>Made with ❤️ in India</span></div>
+    </div>
+  </footer>
+  <div id="toast" class="toast"></div>
+  <script src="insforge.js"></script>
+  <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+  <script src="antigravity.js"></script>
+  <script>
+    // Auth guard
+    if (typeof guardProtectedPage === 'function' && !guardProtectedPage()) { /* redirects */ }
+
+    document.getElementById('generate-resume-btn').addEventListener('click', async () => {
+      const name = document.getElementById('r-name').value.trim();
+      if (!name) { showToast('Please enter your name!','error','⚠'); return; }
+      const title = document.getElementById('r-title').value.trim();
+      const email = document.getElementById('r-email').value.trim();
+      const phone = document.getElementById('r-phone').value.trim();
+      const edu = document.getElementById('r-edu').value.trim();
+      const skills = document.getElementById('r-skills').value.trim();
+      const exp = document.getElementById('r-exp').value.trim();
+      const achieve = document.getElementById('r-achieve').value.trim();
+      const style = document.getElementById('r-style').value;
+      const btn = document.getElementById('generate-resume-btn');
+      const output = document.getElementById('resume-output');
+      btn.disabled = true; btn.textContent = '⏳ Generating...';
+      output.innerHTML = '<div class="generating"><div class="gen-dot"></div><div class="gen-dot"></div><div class="gen-dot"></div><span>Building your resume…</span></div>';
+      const prompt = `Create a ${style} professional resume for:
+Name: ${name} | Title: ${title} | Email: ${email} | Phone: ${phone}
+Education: ${edu}
+Skills: ${skills}
+Experience: ${exp}
+Achievements: ${achieve}
+Format it as a clean, ATS-friendly text resume with the following sections:
+1. CONTACT INFORMATION (header)
+2. PROFESSIONAL SUMMARY (2-3 powerful sentences)
+3. SKILLS (organized by category)
+4. WORK EXPERIENCE (with bullet points and quantified achievements)
+5. EDUCATION
+6. PROJECTS & ACHIEVEMENTS
+7. CERTIFICATIONS (if applicable)
+Make it impressive, professional and optimized for ATS systems. Use action verbs and quantify achievements where possible.`;
+      try {
+        const result = await callAI(prompt, 'You are a professional resume writer and career consultant. Create ATS-optimized, professional resumes. Return ONLY the resume text, no markdown formatting.');
+        output.textContent = '';
+        typewriterEffect(output, result, 8, () => {
+          showToast('Resume generated! 📄','success','✓');
+          if (typeof HISTORY !== 'undefined') HISTORY.add({ type: 'resume', tool: 'AI Resume Builder', prompt: name + ' - ' + title });
+        });
+      } catch(err) {
+        output.textContent = '❌ Error: ' + err.message;
+        showToast('Error generating resume','error','❌');
+      }
+      btn.disabled = false; btn.textContent = '📄 Generate Resume';
+    });
+    function copyResume() { const t = document.getElementById('resume-output').textContent; if (t) navigator.clipboard.writeText(t).then(()=>showToast('Resume copied!','success','📋')); }
+    function printResume() { const c = document.getElementById('resume-output').textContent; if (!c) return; const w = window.open('','_blank'); w.document.write('<html><head><title>Akshay AI Tools — Powering the Future</title><style>body{font-family:Arial,sans-serif;padding:40px;font-size:13px;line-height:1.8;color:#222;max-width:800px;margin:0 auto}pre{white-space:pre-wrap;word-wrap:break-word}</style>    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+</head><body><pre>'+c+'</pre><script src="help-widget.js"></script></body></html>'); w.document.close(); w.print(); }
+  </script>
+<script src="help-widget.js"></script></body>
+</html>

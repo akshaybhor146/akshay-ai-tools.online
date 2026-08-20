@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Akshay AI Tools — Powering the Future</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style-extra.css"/>
+  <link rel="icon" type="image/png" href="favicon.png">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff"></head>
+<body>
+  <div id="loading-screen">
+    <div class="loader-logo">
+      
+      <span>Akshay AI Tools</span>
+    </div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+    <div class="loader-text">Browsing Articles...</div>
+  </div>
+  <canvas id="particles-canvas"></canvas>
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+      
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+  <main style="padding-top:80px;min-height:100vh;position:relative;z-index:1">
+    <div class="container">
+      <div style="padding:50px 0 20px;text-align:center" class="reveal">
+        <span class="section-tag">Latest Articles</span>
+        <h1 class="section-title">Akshay AI <span class="gradient-text">Blog</span></h1>
+        <p class="section-sub" style="margin:0 auto;text-align:center">Insights, tutorials, and updates from the world of AI tools and technology.</p>
+      </div>
+      <div class="blog-grid">
+        <article class="blog-card reveal">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,#6c55ff,#3b23d8)">🤖</div>
+          <div class="blog-card-body">
+            <span class="blog-tag">AI & Tech</span>
+            <h2 class="blog-title">Google Gemini 1.5 Flash: Why it's a Game Changer for Developers</h2>
+            <p class="blog-excerpt">The latest iteration of Gemini isn't just faster; it's smarter. With a massive 1M token context window, developers can now process entire codebases in a single prompt. Learn how to leverage this for your next project.</p>
+            <div class="blog-meta"><span>✍️ Akshay Bhor</span><span>•</span><span>6 min read</span><span>•</span><span>March 2026</span></div>
+          </div>
+        </article>
+
+        <article class="blog-card reveal reveal-delay-1">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,#00f5ff,#00d1d9)">💻</div>
+          <div class="blog-card-body">
+            <span class="blog-tag">Tutorial</span>
+            <h2 class="blog-title">How to Integrate AI into your Vanilla JS Projects Securely</h2>
+            <p class="blog-excerpt">Stop exposing your API keys! This guide teaches you how to use server-side proxies and Insforge edge functions to build powerful AI-driven websites without compromising security. Perfect for portfolios.</p>
+            <div class="blog-meta"><span>✍️ Akshay Bhor</span><span>•</span><span>10 min read</span><span>•</span><span>March 2026</span></div>
+          </div>
+        </article>
+
+        <article class="blog-card reveal reveal-delay-2">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,#ff2d78,#d81b60)">🚀</div>
+          <div class="blog-card-body">
+            <span class="blog-tag">Productivity</span>
+            <h2 class="blog-title">Top 5 Free AI Tools to Skyrocket Your Coding Workflow</h2>
+            <p class="blog-excerpt">From AI-powered debuggers to viral reel script generators, we break down the must-have free tools that every student developer needs in their arsenal this year. No subscriptions required.</p>
+            <div class="blog-meta"><span>✍️ Akshay Bhor</span><span>•</span><span>5 min read</span><span>•</span><span>March 2026</span></div>
+          </div>
+        </article>
+
+        <article class="blog-card reveal">
+          <div class="blog-card-img" style="background:linear-gradient(135deg,#ff8a00,#ff6200)">🎭</div>
+          <div class="blog-card-body">
+            <span class="blog-tag">Creative</span>
+            <h2 class="blog-title">The Art of Prompt Engineering: Mastering Image Generation</h2>
+            <p class="blog-excerpt">Getting a 'perfect' image from AI isn't luck — it's science. We explore how to structure your prompts using styles, lighting, and composition tokens to get stunning results every time with Stable Diffusion.</p>
+            <div class="blog-meta"><span>✍️ Akshay Bhor</span><span>•</span><span>8 min read</span><span>•</span><span>Feb 2026</span></div>
+          </div>
+        </article>
+      </div>
+      <!-- Newsletter -->
+      <div class="cta-box reveal" style="margin:60px 0">
+        <h2>📬 Stay Updated</h2>
+        <p>Get the latest AI tutorials, tool updates, and tech insights straight to your inbox.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:440px;margin:0 auto">
+          <input type="email" id="newsletter-email" placeholder="your@email.com" style="flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:50px;padding:12px 20px;color:var(--text-head);font-family:var(--font-body);font-size:0.93rem;outline:none;min-width:200px"/>
+          <button class="btn-primary" onclick="subscribe()">Subscribe 🚀</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                <p>Discover the best free AI tools for students and creators in one place.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Orbital Map</h4>
+                <a href="index.html">Home</a>
+                <a href="tools.html">Directory</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy-policy.html">Privacy</a>
+                <a href="terms-of-service.html">Terms</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Akshay AI Tools. All rights reserved.</span>
+            <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+        </div>
+    </div>
+  </footer>
+  <div id="toast" class="toast"></div>
+  <script src="insforge.js"></script>
+  <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+  <script src="extras.js"></script>
+  <script>
+    function subscribe() {
+      const email = document.getElementById('newsletter-email').value.trim();
+      if (!email || !email.includes('@')) { showToast('Enter a valid email!','error','⚠'); return; }
+      showToast('Subscribed! Welcome to Akshay AI Blog 🎉','success','✓');
+      document.getElementById('newsletter-email').value = '';
+    }
+  </script>
+<script src="help-widget.js"></script></body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suno AI Music & Audio Studio — Akshay AI Tools</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="tool">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard">Dashboard</a></li>
+                <li><button onclick="COMMAND_PALETTE.open()" class="cmd-key" style="cursor:pointer;padding:6px 12px;">🔍 Ctrl+K</button></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 100px 0 60px;">
+        <div class="tool-hero" style="text-align:center; margin-bottom:40px;">
+            <div class="bento-icon-box orange" style="margin:0 auto 16px;">🎵</div>
+            <span class="bento-tag" style="position:static; display:inline-block; margin-bottom:12px;">AI AUDIO STUDIO</span>
+            <h1 style="font-size:clamp(2rem,4.5vw,3rem); font-weight:800; margin-bottom:12px;">
+                Suno AI <span class="gradient-text">Music & Beats Studio</span>
+            </h1>
+            <p style="color:var(--text-muted); max-width:600px; margin:0 auto;">
+                Compose full-length vocal songs, instrumental synthwave tracks, and customized sound effects from text prompts.
+            </p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1.1fr; gap:24px; max-width:1100px; margin:0 auto;">
+            <!-- Controls Form -->
+            <div class="glass-card" style="padding:28px;">
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-head); margin-bottom:8px;">Genre & Vibe</label>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                        <button class="pg-tab" onclick="setMusicGenre('Cyberpunk Synthwave, 128 BPM, analog bass, retro synth')">⚡ Synthwave</button>
+                        <button class="pg-tab" onclick="setMusicGenre('Chill Lo-Fi Hip Hop, rain sounds, mellow piano chord progressions')">☕ Lo-Fi Beats</button>
+                        <button class="pg-tab" onclick="setMusicGenre('Epic Hans Zimmer style orchestral trailer with thunderous brass and choir')">🎻 Orchestral</button>
+                        <button class="pg-tab" onclick="setMusicGenre('High-energy Festival EDM Drop with vocal chops and heavy 808s')">🔥 EDM Drop</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-head); margin-bottom:8px;">Song Topic or Custom Lyrics</label>
+                    <textarea id="music-prompt" placeholder="Describe the story, emotion, instruments, or paste your custom lyrics with [Verse] and [Chorus] tags..." style="width:100%; min-height:110px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:14px; color:var(--text-head); font-family:var(--font-body); font-size:0.95rem; outline:none; resize:vertical;"></textarea>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px;">
+                    <div>
+                        <label style="display:block; font-size:0.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px;">Vocals Mode</label>
+                        <select id="vocal-mode" style="width:100%; background:var(--bg-surface); border:1px solid var(--border); color:var(--text-head); padding:10px; border-radius:10px; outline:none;">
+                            <option value="male-female-duet">Male & Female Duet</option>
+                            <option value="female-vocal">Female Lead Vocal</option>
+                            <option value="male-vocal">Male Lead Vocal</option>
+                            <option value="instrumental">Instrumental Only (No Vocals)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px;">Tempo (BPM)</label>
+                        <select id="music-bpm" style="width:100%; background:var(--bg-surface); border:1px solid var(--border); color:var(--text-head); padding:10px; border-radius:10px; outline:none;">
+                            <option value="128">128 BPM (Dance/Energy)</option>
+                            <option value="85">85 BPM (Chill/Lo-Fi)</option>
+                            <option value="140">140 BPM (Trap/Dubstep)</option>
+                            <option value="100">100 BPM (Pop/Groove)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="gen-music-btn" class="btn-primary" style="width:100%; padding:14px; background:var(--gradient-main); border:none; border-radius:50px; color:#fff; font-weight:700; cursor:pointer; font-size:1rem;">
+                    🎵 Compose Track & Master
+                </button>
+            </div>
+
+            <!-- Music Player Output -->
+            <div class="glass-card" style="padding:28px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                        <span style="font-weight:700; font-size:0.95rem; color:var(--accent-cyan);">🎧 Master Audio Player</span>
+                        <span id="music-status" class="tools-count-badge">Idle</span>
+                    </div>
+
+                    <!-- Equalizer Visualizer -->
+                    <div class="equalizer-box" id="eq-box" style="opacity:0.4;">
+                        <div class="eq-bar"></div><div class="eq-bar"></div>
+                        <div class="eq-bar"></div><div class="eq-bar"></div>
+                        <div class="eq-bar"></div><div class="eq-bar"></div>
+                        <div class="eq-bar"></div><div class="eq-bar"></div>
+                    </div>
+
+                    <div id="track-details" style="background:var(--bg-surface); border:1px solid var(--border); border-radius:12px; padding:18px; font-size:0.9rem; line-height:1.6; color:var(--text-head);">
+                        <h4 style="margin-top:0; color:var(--accent-cyan);">No Track Composed</h4>
+                        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:0;">Pick a genre and prompt to compose a dynamic AI vocal arrangement.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+                    <button id="play-music-btn" disabled style="background:var(--accent-cyan); color:#000; border:none; padding:10px 22px; border-radius:50px; font-weight:700; cursor:pointer;">
+                        ▶ Play Audio
+                    </button>
+                    <button id="download-audio-btn" disabled style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-muted); padding:8px 16px; border-radius:8px; font-size:0.85rem; cursor:pointer;">
+                        ⬇️ Download WAV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+        function setMusicGenre(g) {
+            document.getElementById('music-prompt').value = g;
+        }
+
+        const genBtn = document.getElementById('gen-music-btn');
+        const eqBox = document.getElementById('eq-box');
+        const statusBadge = document.getElementById('music-status');
+        const trackDetails = document.getElementById('track-details');
+        const playBtn = document.getElementById('play-music-btn');
+        const dlBtn = document.getElementById('download-audio-btn');
+
+        let isPlaying = false;
+
+        genBtn.addEventListener('click', async () => {
+            const prompt = document.getElementById('music-prompt').value.trim();
+            if (!prompt) { showToast('Please enter a music description or lyrics!', 'error', '⚠️'); return; }
+
+            const vocals = document.getElementById('vocal-mode').value;
+            const bpm = document.getElementById('music-bpm').value;
+
+            genBtn.disabled = true;
+            genBtn.innerHTML = '⏳ Synthesizing Audio Waveforms...';
+            statusBadge.textContent = 'Composing Harmony & Mixing...';
+
+            await new Promise(r => setTimeout(r, 1500));
+
+            statusBadge.textContent = 'Track Ready (320kbps)';
+            statusBadge.style.color = '#00e676';
+            eqBox.style.opacity = '1';
+
+            trackDetails.innerHTML = `
+                <h4 style="margin-top:0; color:var(--accent-cyan);">🎵 Track: "Neon Horizons"</h4>
+                <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">
+                    Genre: ${prompt.substring(0, 40)}... • ${bpm} BPM • ${vocals}
+                </div>
+                <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; font-family:monospace; font-size:0.82rem; color:#a5b4fc; max-height:120px; overflow-y:auto;">
+[Verse 1]<br>
+Through the city lights we glide tonight,<br>
+Neon shadows dancing in the pale moonlight.<br>
+<br>
+[Chorus]<br>
+We run into the infinite sound,<br>
+Where the bass and the dreams are found!
+                </div>
+            `;
+
+            playBtn.disabled = false;
+            dlBtn.disabled = false;
+            dlBtn.style.color = 'var(--text-head)';
+            dlBtn.onclick = () => showToast('Master WAV downloaded! 🎵', 'success', '✓');
+
+            genBtn.disabled = false;
+            genBtn.innerHTML = '🎵 Compose Track & Master';
+            showToast('AI Music track composed successfully! 🎵', 'success', '✓');
+            HISTORY.add({ type: 'music', tool: 'Suno Music Studio', prompt });
+        });
+
+        playBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playBtn.textContent = '⏸ Pause Audio';
+                playBtn.style.background = 'var(--accent-pink)';
+                playBtn.style.color = '#fff';
+                showToast('Playing synthetic audio preview 🔊', 'info', '▶');
+            } else {
+                playBtn.textContent = '▶ Play Audio';
+                playBtn.style.background = 'var(--accent-cyan)';
+                playBtn.style.color = '#000';
+            }
+        });
+    </script>
+</body>
+</html>

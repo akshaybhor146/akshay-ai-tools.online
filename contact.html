@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Akshay AI Tools — Powering the Future</title>
+  <meta name="description" content="Get in touch with Akshay AI Tools for questions, feedback, or collaboration. We're here to help!">
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style-extra.css"/>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7b2fff">
+</head>
+<body>
+  <div id="loading-screen">
+    <div class="loader-logo">
+      <span>Akshay AI Tools</span>
+    </div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+    <div class="loader-text">Loading Contacts...</div>
+  </div>
+  <canvas id="particles-canvas"></canvas>
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tools.html">Tools</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up</a></li>
+        <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+        <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+        <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+      </ul>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <main style="padding-top:80px;min-height:100vh;position:relative;z-index:1">
+    <div class="container">
+      <div style="padding:50px 0 30px;text-align:center" class="reveal">
+        <span class="section-tag">Get In Touch</span>
+        <h1 class="section-title">Contact <span class="gradient-text">Akshay AI Tools</span></h1>
+        <p class="section-sub" style="margin:0 auto;text-align:center">Have questions, feedback, or want to collaborate? We'd love to hear from you!</p>
+      </div>
+      
+      <div class="contact-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:40px; margin-top:30px;">
+        <!-- Info Column -->
+        <div class="reveal">
+          <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;margin-bottom:24px">Let's Connect 🤝</h3>
+          <div class="contact-info-item" style="display:flex; gap:15px; margin-bottom:20px;">
+            <div class="contact-icon" style="font-size:1.5rem;">📧</div>
+            <div>
+                <h4 style="font-family:var(--font-display);font-weight:700;margin-bottom:3px">Email</h4>
+                <p style="color:var(--text-body);font-size:0.9rem">
+                    <a href="mailto:akshaybhor146@gmail.com" style="color:var(--accent-primary);text-decoration:none">akshaybhor146@gmail.com</a>
+                </p>
+            </div>
+          </div>
+          <div class="contact-info-item" style="display:flex; gap:15px; margin-bottom:20px;">
+            <div class="contact-icon" style="font-size:1.5rem;">📱</div>
+            <div>
+                <h4 style="font-family:var(--font-display);font-weight:700;margin-bottom:3px">Phone / WhatsApp</h4>
+                <p style="color:var(--text-body);font-size:0.9rem">
+                    <a href="tel:+917249558414" style="color:var(--accent-primary);text-decoration:none">+91 7249558414</a>
+                </p>
+            </div>
+          </div>
+          <div class="contact-info-item" style="display:flex; gap:15px; margin-bottom:20px;">
+            <div class="contact-icon" style="font-size:1.5rem;">📍</div>
+            <div>
+                <h4 style="font-family:var(--font-display);font-weight:700;margin-bottom:3px">Location</h4>
+                <p style="color:var(--text-body);font-size:0.9rem">Pune, Maharashtra, India 🇮🇳</p>
+            </div>
+          </div>
+          <div style="margin-top:28px">
+            <h4 style="font-family:var(--font-display);font-weight:700;margin-bottom:14px">Follow Us:</h4>
+            <div class="footer-social" style="display:flex; gap:12px;">
+              <a href="https://instagram.com/akshaybhor_146" title="Instagram">📸</a>
+              <a href="https://github.com/akshaybhor146" title="GitHub">💻</a>
+              <a href="https://linkedin.com/in/akshaybhor" title="LinkedIn">👔</a>
+              <a href="https://youtube.com/@akshaybhor" title="YouTube">🎥</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Column -->
+        <div class="contact-form reveal reveal-delay-1" style="background:var(--bg-card); padding:30px; border-radius:20px; border:1px solid var(--border);">
+          <h3 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:22px">Send a Message 💬</h3>
+          <div class="form-group" style="margin-bottom:15px;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:7px">Your Name</label>
+            <input type="text" id="c-name" placeholder="Your full name" style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 15px;color:var(--text-head);font-family:var(--font-body);font-size:0.93rem;outline:none;"/>
+          </div>
+          <div class="form-group" style="margin-bottom:15px;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:7px">Email Address</label>
+            <input type="email" id="c-email" placeholder="you@email.com" style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 15px;color:var(--text-head);font-family:var(--font-body);font-size:0.93rem;outline:none"/>
+          </div>
+          <div class="form-group" style="margin-bottom:15px;">
+            <label style="font-size:0.82rem;font-weight:600;color:var(--text-body);display:block;margin-bottom:7px">Message</label>
+            <textarea id="c-msg" placeholder="Tell us how we can help you..." style="width:100%;min-height:120px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 15px;color:var(--text-head);font-family:var(--font-body);font-size:0.93rem;outline:none"></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%; padding:14px;" onclick="sendContact()">Send Message 🚀</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                <p>Discover the best free AI tools for students and creators in one place.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Orbital Map</h4>
+                <a href="index.html">Home</a>
+                <a href="tools.html">Directory</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy-policy.html">Privacy</a>
+                <a href="terms-of-service.html">Terms</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Akshay AI Tools. All rights reserved.</span>
+            <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+        </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast"></div>
+  <script src="insforge.js"></script>
+  <script src="config.js"></script>
+  <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+  <script src="extras.js"></script>
+  <script>
+    function sendContact() {
+      const name = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const msg = document.getElementById('c-msg').value.trim();
+      if (!name || !email || !msg) { showToast('Please fill all fields!','error','⚠'); return; }
+      showToast('Message sent! We\'ll reply within 24 hours 🙏','success','✓');
+      document.getElementById('c-name').value = '';
+      document.getElementById('c-email').value = '';
+      document.getElementById('c-msg').value = '';
+    }
+  </script>
+  <script src="help-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Voice to Text — Transcribe your voice recordings into text accurately with AI.">
+    <meta name="keywords" content="voice to text, transcriber, speech to text, free ai tools, akshay ai">
+    <title>Akshay AI Tools — Powering the Future</title>
+    <meta name="description" content="Convert speech to text instantly with AI-powered accuracy. Free voice to text transcription by Akshay AI Tools.">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        .voice-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .record-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient);
+            border: none;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            box-shadow: 0 0 0 0 rgba(123, 47, 255, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .record-btn.recording {
+            animation: pulse-red 1.5s infinite;
+            background: linear-gradient(135deg, #ff2d78, #ff8c00);
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(255, 45, 120, 0.7); }
+            70% { box-shadow: 0 0 0 25px rgba(255, 45, 120, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 45, 120, 0); }
+        }
+
+        .status-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .timer {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            color: var(--text-body);
+            margin-bottom: 15px;
+        }
+
+        .transcription-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            min-height: 200px;
+            text-align: left;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        .copy-float-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: var(--text-body);
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff"></head>
+
+<body data-page="tool-voice-text">
+    <div id="loading-screen">
+        <div class="loader-logo">
+            
+            <span>Akshay AI Tools</span>
+        </div>
+        <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+        <div class="loader-text">Syncing Audio Hub...</div>
+    </div>
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+            
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="tool-page">
+        <div class="container">
+            <div class="tool-page-header">
+                <a href="tools.html" class="back-btn">← Back</a>
+                <div class="tool-page-icon card-icon gold" style="background:linear-gradient(135deg, #00f5ff, #7b2fff)">🎙️</div>
+                <div class="tool-page-info">
+                    <h1>AI Voice Transcriber</h1>
+                    <p>Convert your speech into accurate text and notes using AI</p>
+                </div>
+            </div>
+
+            <div class="tool-workspace">
+                <div class="voice-section">
+                    <button class="record-btn" id="record-btn">🎤</button>
+                    <div class="status-text" id="record-status">Ready to Record</div>
+                    <div class="timer" id="record-timer">00:00</div>
+                    <p style="font-size:0.85rem; color:var(--text-muted)">Click the mic to start/stop recording. Works best in Chrome.</p>
+                </div>
+
+                <!-- Audio File Upload Zone -->
+                <div style="margin-bottom:24px;">
+                    <p style="text-align:center;font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">— OR upload an audio / video file —</p>
+                    <input type="file" id="audio-file-input" accept="audio/*,video/*" style="display:none">
+                    <div id="audio-drop-zone"
+                         ondragover="event.preventDefault();this.style.borderColor='#00f5ff';this.style.background='rgba(0,245,255,0.07)';"
+                         ondragleave="this.style.borderColor='rgba(0,245,255,0.3)';this.style.background='rgba(0,245,255,0.03)';"
+                         ondrop="handleAudioDrop(event)"
+                         style="border:2px dashed rgba(0,245,255,0.3);border-radius:16px;padding:28px 20px;text-align:center;background:rgba(0,245,255,0.03);transition:all 0.3s ease;">
+                        <div id="audio-upload-placeholder">
+                            <span style="font-size:2.5rem;display:block;margin-bottom:10px;">🎵</span>
+                            <p style="font-weight:700;margin-bottom:6px;color:var(--text-head);font-size:0.95rem;">Drag & Drop audio file here</p>
+                            <p style="font-size:0.78rem;color:var(--text-body);margin-bottom:14px;">MP3, WAV, M4A, OGG, MP4 supported</p>
+                            <button type="button" onclick="document.getElementById('audio-file-input').click()"
+                                style="padding:10px 26px;border-radius:50px;border:none;background:linear-gradient(135deg,#00f5ff,#7b2fff);color:#fff;font-weight:700;font-size:0.88rem;cursor:pointer;display:inline-flex;align-items:center;gap:7px;">
+                                📁 Upload Audio File
+                            </button>
+                        </div>
+                        <div id="audio-file-info" style="display:none;">
+                            <span style="font-size:2rem;">🎵</span>
+                            <div id="audio-fname" style="font-size:0.85rem;color:var(--accent-primary);font-weight:600;margin:8px 0;"></div>
+                            <audio id="audio-preview" controls style="max-width:100%;margin-bottom:8px;border-radius:8px;"></audio>
+                            <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:4px;">
+                                <button type="button" onclick="clearAudioUpload()" style="padding:5px 14px;border-radius:50px;border:1px solid rgba(255,45,120,0.4);background:rgba(255,45,120,0.08);color:#ff2d78;font-size:0.76rem;cursor:pointer;font-weight:600;">✕ Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ai-processing" style="display:none; text-align:center; margin-bottom:20px">
+                    <div class="generating">
+                        <div class="gen-dot"></div><div class="gen-dot"></div><div class="gen-dot"></div>
+                        
+                    </div>
+                </div>
+
+                <div class="transcription-box" id="transcription-output">
+                    <button class="copy-float-btn" id="copy-text-btn">📋 Copy</button>
+                    <div id="text-content" style="opacity: 0.5;">Your transcribed text will appear here...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                    <p>Discover the best free AI tools for students and creators in one place.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Orbital Map</h4>
+                    <a href="index.html">Home</a>
+                    <a href="tools.html">Directory</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy.html">Privacy</a>
+                    <a href="terms-of-service.html">Terms</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Akshay AI Tools. All rights reserved.</span>
+                <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+      const revealEls = document.querySelectorAll(
+        'section, .card, .stat-block, .hero > *'
+      );
+      revealEls.forEach(el => el.classList.add('scroll-reveal'));
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealEls.forEach(el => io.observe(el));
+    </script>
+    <script>
+      // Audio file upload handlers
+      function handleAudioFile(file) {
+        if (!file) return;
+        var url = URL.createObjectURL(file);
+        document.getElementById('audio-preview').src = url;
+        document.getElementById('audio-fname').textContent = '✅ ' + file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
+        document.getElementById('audio-upload-placeholder').style.display = 'none';
+        document.getElementById('audio-file-info').style.display = 'block';
+        showToast('Audio file loaded! Press record or use mic above.','success','🎵');
+      }
+      function handleAudioDrop(e) {
+        e.preventDefault();
+        var dz = document.getElementById('audio-drop-zone');
+        dz.style.borderColor = 'rgba(0,245,255,0.3)';
+        dz.style.background = 'rgba(0,245,255,0.03)';
+        handleAudioFile(e.dataTransfer.files[0]);
+      }
+      function clearAudioUpload() {
+        document.getElementById('audio-file-input').value = '';
+        document.getElementById('audio-preview').src = '';
+        document.getElementById('audio-upload-placeholder').style.display = 'block';
+        document.getElementById('audio-file-info').style.display = 'none';
+      }
+      document.getElementById('audio-file-input').addEventListener('change', function(e) {
+        handleAudioFile(e.target.files[0]);
+      });
+    </script>
+<script src="help-widget.js"></script></body>
+</html>

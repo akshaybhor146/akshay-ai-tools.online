@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLUX.1 & Midjourney Prompt Studio — Akshay AI Tools</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="tool">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html" class="active">Tools</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard">Dashboard</a></li>
+                <li><button onclick="COMMAND_PALETTE.open()" class="cmd-key" style="cursor:pointer;padding:6px 12px;">🔍 Ctrl+K</button></li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 100px 0 60px;">
+        <div class="tool-hero" style="text-align:center; margin-bottom:40px;">
+            <div class="bento-icon-box gold" style="margin:0 auto 16px;">🖼️</div>
+            <span class="bento-tag" style="position:static; display:inline-block; margin-bottom:12px;">PROMPT ARCHITECT</span>
+            <h1 style="font-size:clamp(2rem,4.5vw,3rem); font-weight:800; margin-bottom:12px;">
+                FLUX.1 & Midjourney <span class="gradient-text">Prompt Studio</span>
+            </h1>
+            <p style="color:var(--text-muted); max-width:600px; margin:0 auto;">
+                Engineer studio-grade, photorealistic image prompts with custom lens parameters, cinematic color grading, and negative weight isolation.
+            </p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.1fr 1fr; gap:24px; max-width:1100px; margin:0 auto;">
+            <!-- Controls Form -->
+            <div class="glass-card" style="padding:28px;">
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; font-size:0.85rem; font-weight:700; color:var(--text-head); margin-bottom:8px;">Base Concept</label>
+                    <textarea id="flux-prompt" placeholder="e.g. Cyberpunk samurai resting under a glowing sakura tree in neo-Kyoto..." style="width:100%; min-height:90px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:14px; color:var(--text-head); font-family:var(--font-body); font-size:0.95rem; outline:none; resize:vertical;"></textarea>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+                    <div>
+                        <label style="display:block; font-size:0.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px;">Camera & Lens</label>
+                        <select id="flux-lens" style="width:100%; background:var(--bg-surface); border:1px solid var(--border); color:var(--text-head); padding:10px; border-radius:10px; outline:none;">
+                            <option value="Hasselblad 80mm f/2.8, shallow depth of field">Hasselblad 80mm f/2.8 (Portrait)</option>
+                            <option value="Sony A7R V with 24mm f/1.4 GM">Sony A7R V 24mm (Ultra-Wide)</option>
+                            <option value="Leica M11 with 50mm Noctilux">Leica M11 50mm (Street/Film)</option>
+                            <option value="Macro 100mm f/2.8 IS">100mm Macro (Extreme Detail)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px;">Lighting Atmosphere</label>
+                        <select id="flux-light" style="width:100%; background:var(--bg-surface); border:1px solid var(--border); color:var(--text-head); padding:10px; border-radius:10px; outline:none;">
+                            <option value="Volumetric golden hour sunlight, God rays">Volumetric Golden Hour</option>
+                            <option value="Cyberpunk neon rim lighting, deep shadows">Cyberpunk Neon Rim</option>
+                            <option value="Moody cinematic studio chiaroscuro">Studio Chiaroscuro</option>
+                            <option value="Soft diffused overcast natural daylight">Soft Natural Daylight</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; font-size:0.82rem; font-weight:600; color:var(--text-muted); margin-bottom:6px;">Engine Weight: FLUX.1 Pro Dev</label>
+                    <input type="range" id="flux-stylize" min="1" max="100" value="85" style="width:100%; accent-color:var(--accent-violet);">
+                </div>
+
+                <button id="enhance-flux-btn" class="btn-primary" style="width:100%; padding:14px; background:var(--gradient-main); border:none; border-radius:50px; color:#fff; font-weight:700; cursor:pointer; font-size:1rem;">
+                    ✨ Engineer Masterpiece Prompt
+                </button>
+            </div>
+
+            <!-- Output Architecture -->
+            <div class="glass-card" style="padding:28px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <span style="font-weight:700; font-size:0.95rem; color:var(--accent-cyan);">💎 Formatted Prompt Blueprint</span>
+                        <button id="copy-flux-btn" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-muted); padding:4px 12px; border-radius:6px; font-size:0.78rem; cursor:pointer;">📋 Copy</button>
+                    </div>
+
+                    <div id="flux-output" style="background:var(--bg-surface); border:1px solid var(--border); border-radius:12px; padding:18px; font-size:0.9rem; line-height:1.6; color:var(--text-head); min-height:160px; white-space:pre-wrap;">
+Enter your base concept and click "Engineer Masterpiece Prompt" to generate ready-to-paste prompts for FLUX.1, Midjourney v6, and Stable Diffusion XL.
+                    </div>
+                </div>
+
+                <div style="margin-top:20px; padding:14px; background:rgba(0,245,255,0.05); border:1px solid rgba(0,245,255,0.2); border-radius:10px;">
+                    <div style="font-size:0.8rem; font-weight:700; color:var(--accent-cyan); margin-bottom:4px;">💡 Pro Tip for Midjourney v6</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">Use `--v 6.0 --ar 16:9 --style raw --stylize 250` appended at the end for hyper-detailed photorealism.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+        const enhanceBtn = document.getElementById('enhance-flux-btn');
+        const outputEl = document.getElementById('flux-output');
+        const copyBtn = document.getElementById('copy-flux-btn');
+
+        enhanceBtn.addEventListener('click', async () => {
+            const prompt = document.getElementById('flux-prompt').value.trim();
+            if (!prompt) { showToast('Please enter a base concept!', 'error', '⚠️'); return; }
+
+            const lens = document.getElementById('flux-lens').value;
+            const light = document.getElementById('flux-light').value;
+            const stylize = document.getElementById('flux-stylize').value;
+
+            enhanceBtn.disabled = true;
+            enhanceBtn.innerHTML = '⏳ Engineering Weights...';
+
+            await new Promise(r => setTimeout(r, 600));
+
+            const engineered = `/imagine prompt: ${prompt}, shot on ${lens}, ${light}, raytraced ambient occlusion, subsurface scattering on textures, 8k resolution, award-winning cinematography, photorealistic Hasselblad color grading, uncompressed RAW photograph --ar 16:9 --style raw --stylize ${stylize} --v 6.0\n\n--negative_prompt: CGI, 3D render, cartoon, plastic skin, deformed fingers, low resolution, overexposed, watermark, bad anatomy`;
+
+            outputEl.textContent = engineered;
+            enhanceBtn.disabled = false;
+            enhanceBtn.innerHTML = '✨ Engineer Masterpiece Prompt';
+            showToast('FLUX.1 prompt engineered! 🖼️', 'success', '✓');
+            HISTORY.add({ type: 'flux', tool: 'FLUX Prompt Studio', prompt });
+        });
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(outputEl.innerText);
+            showToast('Prompt copied to clipboard! 📋', 'success', '✓');
+        });
+    </script>
+</body>
+</html>

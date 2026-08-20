@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Akshay AI Tools | The Mission & Vision</title>
+    <meta name="description" content="Meet Akshay Bhor, the developer behind Akshay AI Tools. Our mission is to democratize AI for every student, creator, and developer worldwide.">
+    <meta property="og:title" content="About — Akshay AI Tools">
+    <meta property="og:description" content="Our mission is to democratize AI for everyone. Professional tools, completely free.">
+    <meta property="og:image" content="https://akshay-ai-tools.online/favicon.png">
+    <meta property="og:url" content="https://akshay-ai-tools.online/about.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3879352344616673" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="login.html" id="nav-login">Login</a></li>
+                <li><a href="signup.html" id="nav-signup" class="nav-btn">Sign Up Free</a></li>
+                <li><a href="dashboard.html" id="nav-dashboard" style="display:none">Dashboard</a></li>
+                <li><a href="#" id="nav-logout" style="display:none" onclick="handleLogout();return false;">Logout</a></li>
+                <li>
+                    <button onclick="COMMAND_PALETTE.open()" title="Search Tools (Ctrl+K)" style="background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:8px 14px;border-radius:8px;cursor:pointer;font-size:0.78rem;display:flex;align-items:center;gap:6px;">
+                        🔍 <span style="opacity:0.6;font-size:0.7rem;">Ctrl+K</span>
+                    </button>
+                </li>
+                <li><button id="theme-toggle" class="theme-toggle-btn">🌙</button></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding: 140px 0 100px;">
+
+        <!-- Hero Section -->
+        <div style="text-align:center; margin-bottom: 100px;">
+            <div class="hero-badge reveal" style="display:inline-flex; align-items:center; gap:8px; margin-bottom:24px;">
+                <span class="hero-badge-dot"></span>
+                Built in India. Used Worldwide.
+            </div>
+            <h1 class="gradient-text reveal" style="font-size:clamp(3rem, 8vw, 5.5rem); font-weight:800; line-height:0.95; letter-spacing:-0.04em; margin-bottom:24px;">
+                Democratizing AI<br>for Everyone.
+            </h1>
+            <p class="reveal" style="font-size:1.2rem; color:var(--text-muted); max-width:600px; margin:0 auto; line-height:1.8;">
+                We believe powerful AI tools shouldn't be locked behind expensive subscriptions. 
+                Akshay AI Tools is a professional-grade platform — completely free.
+            </p>
+        </div>
+
+        <!-- Mission Bento Grid -->
+        <div class="bento-grid reveal" style="margin-bottom:80px;">
+
+            <!-- Founder Card (Large) -->
+            <div class="bento-item large" style="background: linear-gradient(to top, rgba(123,47,255,0.15), rgba(13,13,21,0.95)); justify-content:center; align-items:center; text-align:center;">
+                <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:16px;">
+                    <div style="width:100px; height:100px; border-radius:50%; background:var(--gradient); padding:3px; box-shadow:0 0 40px rgba(123,47,255,0.4);">
+                        <img src="https://ui-avatars.com/api/?name=Akshay+Bhor&background=0d0d15&color=b388ff&size=150&bold=true" alt="Akshay Bhor" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">
+                    </div>
+                    <div>
+                        <h2 style="font-size:1.6rem; font-weight:800; color:#fff; margin-bottom:4px;">Akshay Bhor</h2>
+                        <p style="color:var(--accent-primary); font-size:0.85rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;">Founder & Full-Stack Developer</p>
+                    </div>
+                    <p style="color:var(--text-muted); font-size:0.9rem; max-width:280px; line-height:1.7;">
+                        "I built this platform because I believe AI should empower everyone — not just those who can afford it."
+                    </p>
+                    <div style="display:flex; gap:12px; margin-top:8px;">
+                        <a href="mailto:bhorakshay146@gmail.com" style="color:var(--accent-second); font-size:0.8rem; border:1px solid var(--border); padding:6px 14px; border-radius:50px; text-decoration:none;">📧 Email</a>
+                        <a href="https://instagram.com/akshaybhor_146" target="_blank" style="color:var(--accent-second); font-size:0.8rem; border:1px solid var(--border); padding:6px 14px; border-radius:50px; text-decoration:none;">📸 Instagram</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Story (Wide) -->
+            <div class="bento-item wide" style="justify-content:flex-start; min-height:250px;">
+                <div class="bento-content" style="transform:none;">
+                    <div class="bento-icon">📖</div>
+                    <h3 class="bento-title">The Story</h3>
+                    <p class="bento-desc" style="font-size:0.95rem; line-height:1.8; margin-top:8px;">
+                        Hi! I'm Akshay Bhor. I noticed that AI is incredibly powerful, but premium tools are too expensive for students and independent creators. So I built a central hub using open-source models and modern architecture — where anyone can access state-of-the-art AI generation tools, completely free.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Free Forever -->
+            <div class="bento-item">
+                <div class="bento-content">
+                    <div class="bento-icon">💸</div>
+                    <h3 class="bento-title">100% Free</h3>
+                    <p class="bento-desc">No subscriptions. No paywalls. Cost should never be a barrier to creativity and innovation.</p>
+                </div>
+            </div>
+
+            <!-- Secure -->
+            <div class="bento-item">
+                <div class="bento-content">
+                    <div class="bento-icon">🔒</div>
+                    <h3 class="bento-title">Secured</h3>
+                    <p class="bento-desc">All AI calls are proxied through edge functions. Your API keys never touch the browser.</p>
+                </div>
+            </div>
+
+            <!-- Fast -->
+            <div class="bento-item">
+                <div class="bento-content">
+                    <div class="bento-icon">⚡</div>
+                    <h3 class="bento-title">Blazing Fast</h3>
+                    <p class="bento-desc">Built on modern web tech with PWA support — works offline and loads instantly.</p>
+                </div>
+            </div>
+
+            <!-- Global -->
+            <div class="bento-item">
+                <div class="bento-content">
+                    <div class="bento-icon">🌍</div>
+                    <h3 class="bento-title">Global Reach</h3>
+                    <p class="bento-desc">Used by creators, students & developers worldwide. Multilingual support for 50+ languages.</p>
+                </div>
+            </div>
+
+            <!-- Tools Count (Wide) -->
+            <div class="bento-item wide" style="background:linear-gradient(135deg, rgba(123,47,255,0.1), rgba(179,136,255,0.05)); text-align:center; justify-content:center; align-items:center;">
+                <div class="bento-content" style="transform:none; display:flex; flex-direction:column; align-items:center;">
+                    <div style="font-size:4rem; font-weight:900; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1; margin-bottom:8px;">18+</div>
+                    <div style="font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:var(--text-head);">AI Tools. Completely Free.</div>
+                    <p style="color:var(--text-muted); font-size:0.85rem; margin-top:10px;">And we're adding more every week.</p>
+                    <a href="tools.html" class="btn-primary" style="margin-top:20px; padding:10px 28px; font-size:0.9rem;">Explore All Tools →</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CTA Section -->
+        <div class="glass-card reveal" style="text-align:center; padding:70px 40px; background:linear-gradient(135deg, rgba(123,47,255,0.06), rgba(179,136,255,0.03));">
+            <h2 style="font-size:clamp(2rem, 5vw, 3rem); font-weight:800; letter-spacing:-0.03em; margin-bottom:16px;">
+                Ready to <span class="gradient-text">Create?</span>
+            </h2>
+            <p style="color:var(--text-muted); font-size:1.05rem; max-width:500px; margin:0 auto 36px;">
+                Join thousands of creators using Akshay AI Tools to build, create, and grow.
+            </p>
+            <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                <a href="signup.html" class="btn-primary" style="padding:14px 36px;">🚀 Get Started Free</a>
+                <a href="tools.html" class="btn-secondary" style="padding:14px 36px;">Browse Tools →</a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo"><span>Akshay AI Tools</span></a>
+                    <p>Professional AI suite for creators, students & developers worldwide.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <a href="index.html">Home</a>
+                    <a href="tools.html">All Tools</a>
+                    <a href="about.html">About</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Akshay AI Tools. Engineered for Excellence.</span>
+                <span>Made with <span style="color:var(--accent-primary);">❤️</span> in India</span>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+    <script src="insforge.js"></script>
+    <script src="config.js"></script>
+    <script src="cmd-palette.js"></script>
+    <script src="script.js"></script>
+    <script src="antigravity.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const revealEls = document.querySelectorAll('.reveal, .glass-card, .bento-item');
+        const io = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('is-visible'), i * 80);
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.08 });
+        revealEls.forEach(el => io.observe(el));
+      });
+    </script>
+    <script src="help-widget.js"></script>
+</body>
+</html>

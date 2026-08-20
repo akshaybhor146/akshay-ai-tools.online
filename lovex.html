@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveX AI — Your Brilliant AI Companion | Akshay AI Tools</title>
+    <meta name="description" content="LoveX AI: A next-generation conversational AI with warmth, brilliance, and creative energy. Built on Akshay AI Tools platform.">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b2fff">
+    <style>
+        /* Prevent body scroll since lovex takes full viewport */
+        body { overflow: hidden; background: #050714; }
+        body::before { display: none; }
+    </style>
+</head>
+<body>
+
+<!-- LoveX AI — Full-Screen Layout -->
+<div class="lovex-layout" id="lovex-layout">
+
+    <!-- ═══ LEFT SIDEBAR ═══ -->
+    <aside class="lovex-sidebar" id="lovex-sidebar">
+        <!-- Brand Header -->
+        <div class="lovex-sidebar-header">
+            <a href="index.html" class="lovex-brand" title="Back to Akshay AI Tools">
+                <div class="lovex-avatar-ring">💜</div>
+                <div class="lovex-brand-text">
+                    <div class="lovex-brand-name">LoveX AI</div>
+                    <div class="lovex-brand-sub">Neural Companion</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- New Chat -->
+        <button class="lovex-new-chat-btn" id="new-chat-btn" onclick="startNewChat()">
+            ✦ New Conversation
+        </button>
+
+        <!-- Chat History -->
+        <div class="lovex-history" id="lovex-history">
+            <div class="lovex-history-section" id="today-section">
+                <div class="lovex-history-label">Today</div>
+                <!-- dynamically populated -->
+            </div>
+            <div class="lovex-history-section" id="earlier-section" style="display:none;">
+                <div class="lovex-history-label">Earlier</div>
+                <!-- dynamically populated -->
+            </div>
+            <div id="empty-history" style="padding:20px 8px; text-align:center; font-size:0.8rem; color:var(--text-muted);">
+                No past conversations yet.<br>Start chatting to build your history.
+            </div>
+        </div>
+
+        <!-- Sidebar Footer: User + Links -->
+        <div class="lovex-sidebar-footer">
+            <a href="tools.html" class="lovex-opt" style="font-size:0.82rem; text-decoration:none;">
+                ⚡ <span>Back to All 24 Tools</span>
+            </a>
+            <a href="dashboard.html" class="lovex-opt" style="font-size:0.82rem; text-decoration:none;">
+                📊 <span>My Dashboard</span>
+            </a>
+            <div class="lovex-user-badge" id="lovex-user-badge">
+                <div class="lovex-user-avatar" id="lovex-user-initial">?</div>
+                <div class="lovex-user-info">
+                    <div class="lovex-user-name" id="lovex-user-display-name">Guest</div>
+                    <div class="lovex-user-plan">⚡ LoveX Free Tier</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ═══ MAIN CHAT AREA ═══ -->
+    <main class="lovex-chat-main">
+
+        <!-- Topbar -->
+        <div class="lovex-topbar">
+            <div class="lovex-topbar-left">
+                <button class="lovex-sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+
+                <!-- Model Selector Pill -->
+                <div class="lovex-model-pill" onclick="toggleSettingsDrawer()" title="Switch Model & Tone">
+                    <div class="lovex-model-dot"></div>
+                    <span class="lovex-model-name" id="active-model-name">LoveX Gemini Pro</span>
+                    <span style="color:var(--text-muted); font-size:0.8rem;">▾</span>
+                </div>
+
+                <span id="chat-session-title" style="font-size:0.82rem; color:var(--text-muted); max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></span>
+            </div>
+
+            <div class="lovex-topbar-right">
+                <button class="lovex-icon-btn" onclick="clearCurrentChat()" title="Clear Chat">🗑️</button>
+                <button class="lovex-icon-btn" onclick="exportChatMarkdown()" title="Export Chat as Markdown">⬇️</button>
+                <a href="index.html" class="lovex-icon-btn" title="Go to Homepage">🏠</a>
+            </div>
+        </div>
+
+        <!-- Model & Tone Settings Drawer -->
+        <div class="lovex-settings-drawer" id="settings-drawer">
+            <div class="lovex-settings-title">🤖 Choose Model</div>
+            <div class="lovex-model-opts">
+                <div class="lovex-opt active" id="model-gemini" onclick="selectModel('LoveX Gemini Pro', 'model-gemini')">
+                    🧠 <span>LoveX Gemini Pro</span>
+                    <span style="margin-left:auto; font-size:0.65rem; color:var(--accent-cyan); background:rgba(0,245,255,0.1); padding:2px 8px; border-radius:20px;">DEFAULT</span>
+                </div>
+                <div class="lovex-opt" id="model-creative" onclick="selectModel('LoveX Creative', 'model-creative')">
+                    🎨 <span>LoveX Creative</span>
+                    <span style="margin-left:auto; font-size:0.65rem; color:#ffd700; background:rgba(255,215,0,0.1); padding:2px 8px; border-radius:20px;">ARTS</span>
+                </div>
+                <div class="lovex-opt" id="model-code" onclick="selectModel('LoveX Code', 'model-code')">
+                    💻 <span>LoveX Code</span>
+                    <span style="margin-left:auto; font-size:0.65rem; color:#00e676; background:rgba(0,230,118,0.1); padding:2px 8px; border-radius:20px;">DEV</span>
+                </div>
+            </div>
+            <div class="lovex-settings-title">🎭 Response Tone</div>
+            <div class="lovex-tone-opts">
+                <div class="lovex-opt active" id="tone-warm" onclick="selectTone('Warm & Friendly', 'tone-warm')">💛 Warm & Friendly</div>
+                <div class="lovex-opt" id="tone-prof" onclick="selectTone('Professional', 'tone-prof')">🎯 Professional</div>
+                <div class="lovex-opt" id="tone-playful" onclick="selectTone('Playful & Witty', 'tone-playful')">🎉 Playful & Witty</div>
+                <div class="lovex-opt" id="tone-precise" onclick="selectTone('Analytical', 'tone-precise')">🔬 Analytical</div>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="lovex-messages" id="lovex-messages">
+
+            <!-- Empty State (shows when no messages) -->
+            <div class="lovex-empty-state" id="lovex-empty">
+                <div class="lovex-empty-hero">
+                    <div class="lovex-empty-avatar">💜</div>
+                    <h1 class="lovex-empty-title">Hi, I'm LoveX AI 💜</h1>
+                    <p class="lovex-empty-sub">Your brilliant neural companion — ask me anything. I'm warm, capable, and always here to help you think deeper, create bolder, and learn faster.</p>
+                </div>
+
+                <div class="lovex-starter-grid">
+                    <div class="lovex-starter-card" onclick="useStarterPrompt(this)">
+                        <span class="sc-icon">🧠</span>
+                        <div class="sc-title">Explain Quantum Computing</div>
+                        <div class="sc-desc">Break down the fundamentals with real-world analogies</div>
+                    </div>
+                    <div class="lovex-starter-card" onclick="useStarterPrompt(this)">
+                        <span class="sc-icon">✍️</span>
+                        <div class="sc-title">Write a Viral LinkedIn Post</div>
+                        <div class="sc-desc">About my expertise with engaging hooks and storytelling</div>
+                    </div>
+                    <div class="lovex-starter-card" onclick="useStarterPrompt(this)">
+                        <span class="sc-icon">💻</span>
+                        <div class="sc-title">Debug My React Code</div>
+                        <div class="sc-desc">Paste your error and I'll fix it with a clear explanation</div>
+                    </div>
+                    <div class="lovex-starter-card" onclick="useStarterPrompt(this)">
+                        <span class="sc-icon">🚀</span>
+                        <div class="sc-title">Startup Idea Validator</div>
+                        <div class="sc-desc">Validate my SaaS idea with market research and feedback</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Composer -->
+        <div class="lovex-composer-wrap">
+            <div class="lovex-composer" id="lovex-composer">
+                <textarea
+                    id="lovex-input"
+                    class="lovex-composer-textarea"
+                    placeholder="Message LoveX AI... (Enter to send, Shift+Enter for new line)"
+                    rows="1"
+                    autocomplete="off"
+                ></textarea>
+                <div class="lovex-composer-actions">
+                    <button class="lovex-voice-btn" id="lovex-voice-btn" onclick="toggleVoiceInput()" title="Voice Input">🎤</button>
+                    <button class="lovex-send-btn" id="lovex-send-btn" onclick="sendLoveXMessage()" title="Send Message">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="lovex-composer-hint">LoveX AI may produce inaccurate information. Use critical thinking. &nbsp;•&nbsp; Powered by Google Gemini</div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Mobile Sidebar Overlay -->
+<div id="sidebar-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:40;" onclick="toggleSidebar()"></div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<!-- Scripts -->
+<script src="insforge.js"></script>
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+<script>
+/* ═══════════════════════════════════════
+   LOVEX AI — CORE CHAT ENGINE
+   ═══════════════════════════════════════ */
+
+// State
+let lovexMessages = [];           // Current chat messages
+let lovexChatId   = null;         // InsForge DB session ID
+let currentModel  = 'LoveX Gemini Pro';
+let currentTone   = 'Warm & Friendly';
+let isSidebarOpen = true;
+let isVoiceActive = false;
+let recognition   = null;
+
+// ── Sidebar Toggle ──
+function toggleSidebar() {
+    const sidebar  = document.getElementById('lovex-sidebar');
+    const overlay  = document.getElementById('sidebar-overlay');
+    const layout   = document.getElementById('lovex-layout');
+    isSidebarOpen  = !isSidebarOpen;
+    
+    if (window.innerWidth <= 768) {
+        sidebar.classList.toggle('open', isSidebarOpen);
+        overlay.style.display = isSidebarOpen ? 'block' : 'none';
+    } else {
+        layout.style.gridTemplateColumns = isSidebarOpen ? '260px 1fr' : '0px 1fr';
+        sidebar.style.overflow = isSidebarOpen ? '' : 'hidden';
+    }
+}
+
+// ── Settings Drawer ──
+function toggleSettingsDrawer() {
+    document.getElementById('settings-drawer').classList.toggle('open');
+}
+
+document.addEventListener('click', e => {
+    const drawer = document.getElementById('settings-drawer');
+    const pill   = document.querySelector('.lovex-model-pill');
+    if (!drawer.contains(e.target) && !pill.contains(e.target)) {
+        drawer.classList.remove('open');
+    }
+});
+
+// ── Model / Tone Selector ──
+function selectModel(name, id) {
+    currentModel = name;
+    document.getElementById('active-model-name').textContent = name;
+    document.querySelectorAll('.lovex-model-opts .lovex-opt').forEach(o => o.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    showToast(`Switched to ${name} 🤖`, 'success', '✓');
+}
+
+function selectTone(tone, id) {
+    currentTone = tone;
+    document.querySelectorAll('.lovex-tone-opts .lovex-opt').forEach(o => o.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    showToast(`Tone: ${tone} 🎭`, 'info', '✓');
+}
+
+// ── System Prompt per model+tone ──
+function buildSystemPrompt() {
+    const toneGuide = {
+        'Warm & Friendly':   'Be warm, empathetic, and conversational like a brilliant supportive friend. Use occasional emojis, celebrate the user\'s curiosity.',
+        'Professional':      'Be precise, structured, and professional. Use clear headings and bullet points. Avoid emojis.',
+        'Playful & Witty':   'Be energetic, fun, and witty. Add humor and personality while staying helpful and accurate.',
+        'Analytical':        'Be rigorous, data-driven, and logical. Break down problems step by step with evidence.'
+    };
+
+    const modelGuide = {
+        'LoveX Gemini Pro':   'You are LoveX AI, a brilliant neural companion powered by Google Gemini Pro.',
+        'LoveX Creative':     'You are LoveX Creative, an artistic and imaginative AI that specializes in creative writing, poetry, storytelling, and design thinking.',
+        'LoveX Code':         'You are LoveX Code, an expert AI software engineer. Provide clean, well-commented code with explanations. Detect language automatically.'
+    };
+
+    return `${modelGuide[currentModel] || modelGuide['LoveX Gemini Pro']}
+
+Your name is LoveX AI. You were built by Akshay AI Tools as a premium conversational companion. You are warm, brilliant, and always helpful.
+
+Tone: ${toneGuide[currentTone] || toneGuide['Warm & Friendly']}
+
+When formatting responses:
+- Use **bold** for important terms
+- Use bullet points for lists
+- Use code blocks (\`\`\`language\`) for all code
+- Keep responses focused and valuable — no fluff`;
+}
+
+// ── Starter Prompts ──
+function useStarterPrompt(card) {
+    const title = card.querySelector('.sc-title').textContent;
+    const desc  = card.querySelector('.sc-desc').textContent;
+    const input = document.getElementById('lovex-input');
+    input.value = `${title} — ${desc}`;
+    input.focus();
+    autoResizeTextarea(input);
+}
+
+// ── Send Message ──
+async function sendLoveXMessage() {
+    const input = document.getElementById('lovex-input');
+    const text  = input.value.trim();
+    if (!text) return;
+
+    // Hide empty state
+    document.getElementById('lovex-empty').style.display = 'none';
+
+    // Clear input
+    input.value = '';
+    autoResizeTextarea(input);
+
+    // Disable send
+    const sendBtn = document.getElementById('lovex-send-btn');
+    sendBtn.disabled = true;
+
+    // Set session title from first message
+    const titleEl = document.getElementById('chat-session-title');
+    if (lovexMessages.length === 0) {
+        titleEl.textContent = text.slice(0, 60) + (text.length > 60 ? '…' : '');
+    }
+
+    // Add user message to history
+    lovexMessages.push({ role: 'user', content: text });
+
+    // Render user bubble
+    appendMessage('user', text);
+
+    // Show typing indicator
+    const typingId = showTyping();
+
+    try {
+        // Build conversation context
+        const systemPrompt = buildSystemPrompt();
+        const contextMessages = lovexMessages.slice(-10); // last 10 messages for context
+        const conversationContext = contextMessages
+            .slice(0, -1)
+            .map(m => `${m.role === 'user' ? 'User' : 'LoveX AI'}: ${m.content}`)
+            .join('\n');
+        
+        const fullPrompt = conversationContext 
+            ? `${conversationContext}\n\nUser: ${text}\n\nLoveX AI:`
+            : text;
+
+        // Call Gemini (with fallback)
+        const response = await callGemini(fullPrompt, systemPrompt);
+
+        // Remove typing
+        removeTyping(typingId);
+
+        // Add AI message to history
+        lovexMessages.push({ role: 'ai', content: response });
+
+        // Render AI bubble with streaming typewriter
+        await appendMessageStreaming('ai', response);
+
+        // Persist to InsForge DB
+        await saveChatToInsForge(text, response);
+
+        // Update sidebar history
+        updateSidebarHistory();
+
+    } catch (err) {
+        removeTyping(typingId);
+        const errMsg = 'I encountered a brief connection issue. Please try again! 💜';
+        appendMessage('ai', errMsg);
+        lovexMessages.push({ role: 'ai', content: errMsg });
+    }
+
+    sendBtn.disabled = false;
+    scrollToBottom();
+}
+
+// ── Render User/AI bubble ──
+function appendMessage(role, content) {
+    const messages = document.getElementById('lovex-messages');
+    const user = AUTH?.getUser();
+    const userInitial = user?.name ? user.name[0].toUpperCase() : 'U';
+
+    const isUser = role === 'user';
+    const formatted = isUser ? escapeHtml(content) : formatMarkdown(content);
+
+    const div = document.createElement('div');
+    div.className = `lovex-msg ${isUser ? 'user' : 'ai'}`;
+    div.innerHTML = `
+        <div class="lovex-msg-avatar">${isUser ? userInitial : '💜'}</div>
+        <div class="lovex-msg-content">
+            <div class="lovex-msg-name">${isUser ? 'You' : 'LoveX AI'}</div>
+            <div class="lovex-bubble">${formatted}</div>
+            ${!isUser ? `
+            <div class="lovex-msg-actions">
+                <button class="lovex-msg-act-btn" onclick="copyBubble(this)">📋 Copy</button>
+                <button class="lovex-msg-act-btn" onclick="regenerateResponse()">🔄 Regenerate</button>
+            </div>` : ''}
+        </div>
+    `;
+    messages.appendChild(div);
+    scrollToBottom();
+    return div;
+}
+
+// ── Streaming Typewriter Effect ──
+async function appendMessageStreaming(role, content) {
+    const messages  = document.getElementById('lovex-messages');
+    const formatted = formatMarkdown(content);
+
+    const div = document.createElement('div');
+    div.className = 'lovex-msg ai';
+    div.innerHTML = `
+        <div class="lovex-msg-avatar">💜</div>
+        <div class="lovex-msg-content">
+            <div class="lovex-msg-name">LoveX AI</div>
+            <div class="lovex-bubble" id="streaming-bubble"></div>
+            <div class="lovex-msg-actions">
+                <button class="lovex-msg-act-btn" onclick="copyBubble(this)">📋 Copy</button>
+                <button class="lovex-msg-act-btn" onclick="regenerateResponse()">🔄 Regenerate</button>
+            </div>
+        </div>
+    `;
+    messages.appendChild(div);
+
+    const bubble = div.querySelector('#streaming-bubble');
+    bubble.removeAttribute('id');
+
+    // Stream character by character (fast)
+    let i = 0;
+    const chars = content.split('');
+    await new Promise(resolve => {
+        const interval = setInterval(() => {
+            if (i < chars.length) {
+                i += Math.min(6, chars.length - i);
+                bubble.innerHTML = formatMarkdown(content.slice(0, i));
+                scrollToBottom();
+            } else {
+                clearInterval(interval);
+                bubble.innerHTML = formatted;
+                resolve();
+            }
+        }, 12);
+    });
+
+    scrollToBottom();
+}
+
+// ── Typing Indicator ──
+function showTyping() {
+    const messages = document.getElementById('lovex-messages');
+    const id = 'typing-' + Date.now();
+    const div = document.createElement('div');
+    div.className = 'lovex-msg ai';
+    div.id = id;
+    div.innerHTML = `
+        <div class="lovex-msg-avatar">💜</div>
+        <div class="lovex-msg-content">
+            <div class="lovex-msg-name">LoveX AI</div>
+            <div class="lovex-typing">
+                <div class="lovex-typing-dot"></div>
+                <div class="lovex-typing-dot"></div>
+                <div class="lovex-typing-dot"></div>
+            </div>
+        </div>
+    `;
+    messages.appendChild(div);
+    scrollToBottom();
+    return id;
+}
+
+function removeTyping(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+}
+
+// ── Utilities ──
+function scrollToBottom() {
+    const messages = document.getElementById('lovex-messages');
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatMarkdown(text) {
+    return text
+        .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^# (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^[-•] (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>');
+}
+
+function copyBubble(btn) {
+    const bubble = btn.closest('.lovex-msg-content').querySelector('.lovex-bubble');
+    navigator.clipboard.writeText(bubble.innerText).then(() => showToast('Copied!', 'success', '📋'));
+}
+
+// ── Clear Chat ──
+function startNewChat() {
+    lovexMessages = [];
+    lovexChatId   = null;
+    document.getElementById('lovex-messages').innerHTML = '';
+    document.getElementById('lovex-empty').style.display = 'flex';
+    document.getElementById('chat-session-title').textContent = '';
+    // re-add empty state
+    document.getElementById('lovex-messages').appendChild(document.getElementById('lovex-empty'));
+    showToast('New conversation started! 💜', 'success', '✦');
+}
+
+function clearCurrentChat() {
+    if (lovexMessages.length === 0) return;
+    lovexMessages = [];
+    document.getElementById('lovex-messages').innerHTML = '';
+    const emptyState = document.getElementById('lovex-empty');
+    emptyState.style.display = 'flex';
+    document.getElementById('lovex-messages').appendChild(emptyState);
+    document.getElementById('chat-session-title').textContent = '';
+    showToast('Chat cleared 🗑️', 'info', '✓');
+}
+
+// ── Regenerate ──
+async function regenerateResponse() {
+    if (lovexMessages.length < 2) return;
+    // Remove last AI response
+    lovexMessages.pop();
+    const lastUserMsg = lovexMessages[lovexMessages.length - 1];
+    if (!lastUserMsg || lastUserMsg.role !== 'user') return;
+
+    // Remove last AI bubble from DOM
+    const messages = document.getElementById('lovex-messages');
+    const bubbles = messages.querySelectorAll('.lovex-msg.ai');
+    if (bubbles.length > 0) bubbles[bubbles.length - 1].remove();
+
+    const typingId = showTyping();
+    const systemPrompt = buildSystemPrompt();
+    const response = await callGemini(lastUserMsg.content, systemPrompt);
+    removeTyping(typingId);
+    lovexMessages.push({ role: 'ai', content: response });
+    await appendMessageStreaming('ai', response);
+    showToast('Response regenerated! 🔄', 'success', '✓');
+}
+
+// ── Export Chat ──
+function exportChatMarkdown() {
+    if (lovexMessages.length === 0) {
+        showToast('Nothing to export yet!', 'error', '⚠️');
+        return;
+    }
+    const md = lovexMessages.map(m => 
+        `**${m.role === 'user' ? 'You' : 'LoveX AI'}:**\n${m.content}`
+    ).join('\n\n---\n\n');
+    const blob = new Blob([`# LoveX AI Chat Export\n\n${md}`], { type: 'text/markdown' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `lovex-chat-${Date.now()}.md`;
+    a.click();
+    showToast('Chat exported! ⬇️', 'success', '✓');
+}
+
+// ── InsForge DB Persistence ──
+async function saveChatToInsForge(userMsg, aiResp) {
+    try {
+        const user = INSFORGE?.auth?.getUser?.() || SESSION?.getUser?.();
+        if (!user) return; // Only save for logged-in users
+        
+        await INSFORGE.db.insert('lovex_messages', [{
+            user_id: user.id || user.email,
+            session_id: lovexChatId || generateSessionId(),
+            role_user: userMsg,
+            role_ai: aiResp,
+            model: currentModel,
+            tone: currentTone,
+            created_at: new Date().toISOString()
+        }]);
+    } catch (e) {
+        // DB error — silent fail, local state still works
+        console.log('InsForge save skipped:', e.message);
+    }
+}
+
+async function loadChatHistoryFromInsForge() {
+    try {
+        const user = INSFORGE?.auth?.getUser?.() || SESSION?.getUser?.();
+        if (!user) return;
+
+        const records = await INSFORGE.db.select('lovex_messages', 
+            `user_id=eq.${encodeURIComponent(user.id || user.email)}&order=created_at.desc&limit=30`
+        );
+
+        if (records && records.length > 0) {
+            renderSidebarHistory(records);
+        }
+    } catch (e) {
+        console.log('InsForge load skipped:', e.message);
+    }
+}
+
+function generateSessionId() {
+    lovexChatId = 'lx_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+    return lovexChatId;
+}
+
+// ── Sidebar History Rendering ──
+function updateSidebarHistory() {
+    const todaySection = document.getElementById('today-section');
+    const emptyHistory = document.getElementById('empty-history');
+    
+    if (lovexMessages.length > 0) {
+        emptyHistory.style.display = 'none';
+        const title = document.getElementById('chat-session-title').textContent || 'Conversation';
+        
+        // Check if this session already exists
+        const existing = todaySection.querySelector('[data-session="current"]');
+        if (!existing) {
+            const item = document.createElement('div');
+            item.className = 'lovex-chat-item active';
+            item.dataset.session = 'current';
+            item.innerHTML = `<span class="lovex-chat-item-icon">💬</span> ${title.slice(0, 35)}`;
+            todaySection.appendChild(item);
+        }
+    }
+}
+
+function renderSidebarHistory(records) {
+    const todaySection = document.getElementById('today-section');
+    const emptyHistory = document.getElementById('empty-history');
+    
+    if (records.length > 0) {
+        emptyHistory.style.display = 'none';
+        // Group by session
+        const sessions = {};
+        records.forEach(r => {
+            if (!sessions[r.session_id]) sessions[r.session_id] = r;
+        });
+
+        Object.values(sessions).slice(0, 8).forEach(s => {
+            const item = document.createElement('div');
+            item.className = 'lovex-chat-item';
+            item.innerHTML = `<span class="lovex-chat-item-icon">💬</span> ${(s.role_user || 'Chat').slice(0, 32)}`;
+            item.onclick = () => loadSession(s.session_id);
+            todaySection.appendChild(item);
+        });
+    }
+}
+
+// ── Auto-resize Textarea ──
+function autoResizeTextarea(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 180) + 'px';
+}
+
+// ── Voice Input ──
+function toggleVoiceInput() {
+    const btn = document.getElementById('lovex-voice-btn');
+    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        showToast('Voice input not supported in this browser', 'error', '⚠️');
+        return;
+    }
+    
+    if (isVoiceActive) {
+        recognition?.stop();
+        isVoiceActive = false;
+        btn.classList.remove('listening');
+        btn.textContent = '🎤';
+        return;
+    }
+
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SR();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+        isVoiceActive = true;
+        btn.classList.add('listening');
+        btn.textContent = '🔴';
+        showToast('Listening... speak now', 'info', '🎤');
+    };
+
+    recognition.onresult = e => {
+        const transcript = e.results[0][0].transcript;
+        document.getElementById('lovex-input').value = transcript;
+        autoResizeTextarea(document.getElementById('lovex-input'));
+    };
+
+    recognition.onend = () => {
+        isVoiceActive = false;
+        btn.classList.remove('listening');
+        btn.textContent = '🎤';
+    };
+
+    recognition.start();
+}
+
+// ── Keyboard Controls ──
+document.getElementById('lovex-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendLoveXMessage();
+    }
+});
+
+document.getElementById('lovex-input').addEventListener('input', function() {
+    autoResizeTextarea(this);
+});
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load user info
+    const user = SESSION?.getUser?.() || AUTH?.getUser?.();
+    if (user) {
+        document.getElementById('lovex-user-display-name').textContent = user.name || user.email || 'User';
+        document.getElementById('lovex-user-initial').textContent = (user.name || 'U')[0].toUpperCase();
+    }
+
+    // Load HISTORY
+    HISTORY.add({ type: 'chat', tool: 'LoveX AI', prompt: 'Session started' });
+
+    // Try loading InsForge chat history
+    await loadChatHistoryFromInsForge();
+});
+
+// Responsive sidebar
+if (window.innerWidth <= 768) {
+    isSidebarOpen = false;
+    document.getElementById('lovex-layout').style.gridTemplateColumns = '1fr';
+}
+</script>
+
+</body>
+</html>
